@@ -1,0 +1,18 @@
+import { PlugCard } from "@/game-generation/common/Card";
+import { NumberUpperLimit } from "../binary/NumberUpperLimit";
+import { EvaluationResult } from "../EvaluationResult";
+import { weaken } from "../weaken";
+
+export function RoundCard(inner: PlugCard): EvaluationResult {
+    const newValue = Math.round(inner.value / 10) * 10;
+    if (newValue > NumberUpperLimit) {
+        return {
+            success: false,
+            errorReason: "Too big"
+        };
+    }
+    return {
+        success: true,
+        cards: [weaken({ ...inner, value: newValue })]
+    };
+}
