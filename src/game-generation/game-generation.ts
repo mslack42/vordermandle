@@ -49,7 +49,7 @@ function shuffle<T>(arr: T[]): T[] {
     }).sort((a, b) => a.shuffle - b.shuffle)
     return shuffleWraps.map(sw => sw.value)
 }
-const maxSockets = 2
+const maxSockets = 1
 
 export function generateGame(profile: GameProfile): CountdownGame {
     const target: Target = {
