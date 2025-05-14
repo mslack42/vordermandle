@@ -7,33 +7,34 @@ import {
 import { HandCard } from "./HandCard";
 
 const nonsense: Nonsense[] = [
+  // "JUSTANEXTRANUMBER"
   //// Below sockets nonsense only seems to run reasonably when they replace 2 numbers (since they spawn numbers, I presume)
-  // "splitSocket",
-  // "cloneSocket",
-  // "partsSocket",
+  "splitSocket",
+  "cloneSocket",
+  "partsSocket",
   //// Below socket nonsense seems to run reasonably so long as they replace a number
-  // "reverseSocket",
-  // "triangleSocket",
-  // "squareSocket",
-  // "rotateSocket",
-  // "primeSocket",
-  // "roundSocket",
+  "reverseSocket",
+  "triangleSocket",
+  "squareSocket",
+  "rotateSocket",
+  "primeSocket",
+  "roundSocket",
   //// Below nonsense doesn't seem to slow things down too much
-  // "incrementOne",
-  // "decrementOne",
+  "incrementOne",
+  "decrementOne",
    "incrementMany",
    "reversePlug",
    "rotatePlug",
-  //"alternate",
-  // "bigNumber",
+  "alternate",
+  "bigNumber",
   "reversePlug2",
   "rotatePlug2",
   "doublerPlug",
-  // "targetIncrementOne",
-  // "targetIncrementMany",
-  // "targetDecrementOne",
-  // "targetDecrementMany",
-  // "targetReverse",
+  "targetIncrementOne",
+  "targetIncrementMany",
+  "targetDecrementOne",
+  "targetDecrementMany",
+  "targetReverse",
 ];
 
 export default function Game() {

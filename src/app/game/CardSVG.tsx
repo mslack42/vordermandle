@@ -1,3 +1,4 @@
+import { SocketFunction } from "@/game-generation/common/Card";
 import { CardModifier } from "@/game-generation/common/CardModifier";
 
 type CardSVGProps = {
@@ -131,7 +132,7 @@ const Modifier = (props: { modifier: CardModifier }) => {
         rx={25}
         ry={20}
         style={{
-          fill: hasStrength ? "purple" :"red",
+          fill: hasStrength ? "purple" : "red",
           fillOpacity: 1,
           stroke: "#1a1a1a",
           strokeWidth: 0.3,
@@ -199,5 +200,74 @@ const Modifier = (props: { modifier: CardModifier }) => {
         </>
       )}
     </>
+  );
+};
+
+type SocketSVGProps = {
+  size: number;
+  socketFn: SocketFunction;
+};
+
+export const SocketSVG = (props: SocketSVGProps) => {
+  const headerFn = (def: SocketFunction) => {
+    switch (def) {
+      case "clone":
+        return <>CLONE</>;
+      case "parts":
+        return <>PARTS</>;
+      case "prime":
+        return <>PRIME</>;
+      case "reverse":
+        return <>REV</>;
+      case "rotate":
+        return <>ROT</>;
+      case "round":
+        return <>~10</>;
+      case "split":
+        return <>SPLIT</>;
+      case "square":
+        return <>SQ</>;
+      case "triangle":
+        return <>TRI</>;
+      default:
+        <></>;
+    }
+  };
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={props.size * 220 / 270}
+      height={props.size}
+      viewBox="0 0 220 270"
+    >
+      <path
+        d="M3 3v260h190V3Zm9 55h170v196H13Z"
+        style={{
+          fill: "#ff8080",
+          stroke: "#1a1a1a",
+          strokeWidth: 6,
+          strokeDasharray: "none",
+        }}
+      />
+      <text
+        xmlSpace="preserve"
+        x={95}
+        y={50}
+        style={{
+          fontSize: "47.3589px",
+          textAlign: "center",
+          direction: "ltr",
+          textAnchor: "middle",
+          fill: "#fff",
+          fillOpacity: 1,
+          stroke: "#fff",
+          strokeWidth: 4,
+          strokeDasharray: "none",
+          strokeOpacity: 1,
+        }}
+      >
+        {headerFn(props.socketFn)}{" "}
+      </text>
+    </svg>
   );
 };

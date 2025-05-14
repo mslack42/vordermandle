@@ -1,6 +1,6 @@
 "use client";
 import { Card, NumberCard, AlternateCard, SocketCard } from "@/game-generation/common/Card";
-import { CardSVG } from "./CardSVG";
+import { CardSVG, SocketSVG } from "./CardSVG";
 
 type HandCardProps = {
   card: Card;
@@ -39,10 +39,6 @@ type HandSocketCardProps = {
 function HandSocketCard(props: HandSocketCardProps) {
   const { card } = props;
   return (
-    <div className="w-14 h-18 bg-slate-400 justify-center flex flex-col">
-      <p>{card.socketFunction}</p>
-      <div className="w-full flex flex-row justify-center"><div className="bg-black w-8 h-10"></div></div>
-      
-    </div>
+    <SocketSVG size={120} socketFn={card.socketFunction}/>
   );
 }
