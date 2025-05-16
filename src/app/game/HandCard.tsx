@@ -5,13 +5,13 @@ import { CardSVG, SocketSVG } from "./CardSVG";
 type HandCardProps = {
   card: Card;
 };
-export function HandCard(props: HandCardProps) {
+export function HandCard(props: HandCardProps & React.PropsWithChildren) {
   const { card } = props;
   return (
     <>
       {card.cardType == "number" ? <HandNumberCard card={card} /> : <></>}
       {card.cardType == "alternate" ? <HandAlternateCard card={card} /> : <></>}
-      {card.cardType == "socket" ? <HandSocketCard card={card} /> : <></>}
+      {card.cardType == "socket" ? <HandSocketCard card={card} >{props.children}</HandSocketCard> : <></>}
     </>
   );
 }
@@ -36,9 +36,9 @@ function HandAlternateCard(props: HandAlternateCardProps) {
 type HandSocketCardProps = {
   card: SocketCard;
 };
-function HandSocketCard(props: HandSocketCardProps) {
+function HandSocketCard(props: HandSocketCardProps & React.PropsWithChildren) {
   const { card } = props;
   return (
-    <SocketSVG size={120} socketFn={card.socketFunction}/>
+    <SocketSVG size={120} socketFn={card.socketFunction}>{props.children}</SocketSVG>
   );
 }

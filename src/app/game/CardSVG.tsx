@@ -208,7 +208,7 @@ type SocketSVGProps = {
   socketFn: SocketFunction;
 };
 
-export const SocketSVG = (props: SocketSVGProps) => {
+export const SocketSVG = (props: SocketSVGProps & React.PropsWithChildren) => {
   const headerFn = (def: SocketFunction) => {
     switch (def) {
       case "clone":
@@ -234,9 +234,11 @@ export const SocketSVG = (props: SocketSVGProps) => {
     }
   };
   return (
+    <div className="relative">
+
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width={props.size * 220 / 270}
+      width={(props.size * 220) / 270}
       height={props.size}
       viewBox="0 0 220 270"
     >
@@ -249,19 +251,31 @@ export const SocketSVG = (props: SocketSVGProps) => {
           strokeDasharray: "none",
         }}
       />
+      <rect
+        style={{
+          fill: "#ff0010",
+          stroke: "#1a1a1a",
+          strokeWidth: 6,
+          strokeDasharray: "none",
+        }}
+        width="180"
+        height="180"
+        x="15"
+        y="65"
+      />
       <text
         xmlSpace="preserve"
-        x={95}
-        y={50}
+        x={108}
+        y={45}
         style={{
-          fontSize: "47.3589px",
+          fontSize: "36px",
           textAlign: "center",
           direction: "ltr",
           textAnchor: "middle",
           fill: "#fff",
           fillOpacity: 1,
           stroke: "#fff",
-          strokeWidth: 4,
+          strokeWidth: 2,
           strokeDasharray: "none",
           strokeOpacity: 1,
         }}
@@ -269,5 +283,9 @@ export const SocketSVG = (props: SocketSVGProps) => {
         {headerFn(props.socketFn)}{" "}
       </text>
     </svg>
+    <div className="absolute bottom-[13px] left-[8px] right-[13px] top-[30px]">
+      {props.children}
+    </div>
+    </div>
   );
 };

@@ -4,10 +4,12 @@ import {
   generateGame,
   Nonsense,
 } from "@/game-generation/game-generation";
-import { HandCard } from "./HandCard";
+import { CountdownGame } from "@/game-generation/common/CountdownGame";
+import { useEffect, useState } from "react";
+import { GamePlay } from "./GamePlay";
 
 const nonsense: Nonsense[] = [
-  // "JUSTANEXTRANUMBER"
+  // "JUST_AN_EXTRA_NUMBER" - new modifier idea
   //// Below sockets nonsense only seems to run reasonably when they replace 2 numbers (since they spawn numbers, I presume)
   "splitSocket",
   "cloneSocket",
@@ -22,9 +24,9 @@ const nonsense: Nonsense[] = [
   //// Below nonsense doesn't seem to slow things down too much
   "incrementOne",
   "decrementOne",
-   "incrementMany",
-   "reversePlug",
-   "rotatePlug",
+  "incrementMany",
+  "reversePlug",
+  "rotatePlug",
   "alternate",
   "bigNumber",
   "reversePlug2",
@@ -38,24 +40,19 @@ const nonsense: Nonsense[] = [
 ];
 
 export default function Game() {
-  const profile: GameProfile = {
-    bigsCount: 2,
-    nonsenseCounts: 3,
-    useExpertBigs: false,
-    legalNonsense: nonsense,
-  };
-  const game = generateGame(profile);
+  const [game, setGame] = useState<CountdownGame | null>(null);
+  useEffect(() => {
+    const profile: GameProfile = {
+      bigsCount: 2,
+      nonsenseCounts: 3,
+      useExpertBigs: false,
+      legalNonsense: nonsense,
+    };
+    setGame(generateGame(profile));
+  }, []);
   return (
     <div>
-      <h1>Game page</h1>
-      <p>{JSON.stringify(game.target)}</p>
-      <p>{JSON.stringify(game.cards)}</p>
-      <div className="flex flex-row w-full">
-        {game.cards.map((c, i) => (
-          <HandCard card={c} key={i} />
-        ))}
-      </div>
+      {game == null ? <p>Loading game...</p> : <GamePlay game={game} />}
     </div>
   );
 }
-
