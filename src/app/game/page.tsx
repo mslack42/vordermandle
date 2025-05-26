@@ -6,7 +6,9 @@ import {
 } from "@/game-generation/game-generation";
 import { CountdownGame } from "@/game-generation/common/CountdownGame";
 import { useEffect, useState } from "react";
-import { GamePlay } from "./GamePlay";
+// import { GamePlay } from "./GamePlay";
+// import { PlayArea } from "./PlayArea";
+import { SwishInterface } from "./SwishInterface";
 
 const nonsense: Nonsense[] = [
   // "JUST_AN_EXTRA_NUMBER" - new modifier idea
@@ -52,7 +54,9 @@ export default function Game() {
   }, []);
   return (
     <div>
-      {game == null ? <p>Loading game...</p> : <GamePlay game={game} />}
+      {/* {game == null ? <p>Loading game...</p> : <GamePlay game={game} />}
+      {game == null ? <p>Loading game...</p> : <PlayArea game={game} />} */}
+      {game == null ? <p>Loading game</p> : <SwishInterface game={game} />}
     </div>
   );
 }
