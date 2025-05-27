@@ -2,13 +2,14 @@ import { Card, NumberCard } from "../common/Card";
 import { CardModifier } from "../common/CardModifier";
 import { Target } from "../common/Target";
 
+
 export function evolveCards(cards: Card[]) {
     return cards.map(c => {
         evolveCard(c)
     })
 }
 
-function evolveCard(c: Card): Card {
+export function evolveCard(c: Card): Card {
     switch (c.cardType) {
         case "alternate": {
             return {

@@ -5,13 +5,18 @@ export function weaken(card: Card) {
     if (newCard.cardType == "number") {
         if (newCard.modifier.modifierType == "reverse" || newCard.modifier.modifierType == "rotate") {
             newCard.value = apply(newCard.value, newCard.modifier.modifierType)
-            newCard.modifier = {...newCard.modifier}
+            newCard.modifier = { ...newCard.modifier }
             newCard.modifier.strength--;
             if (newCard.modifier.strength <= 0) {
                 newCard.modifier = {
                     modifierType: "none"
                 };
             }
+        }
+        if (newCard.modifier.modifierType == "double" || newCard.modifier.modifierType == "increment") {
+            newCard.modifier = {
+                modifierType: "none"
+            };
         }
     }
     return newCard;

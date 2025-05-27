@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from "uuid";
 import { Operator } from "./Operator";
 import { CardWithId } from "./CardWithId";
 import { DragCard } from "./DragCard";
+import { Target } from "@/game-generation/common/Target";
 
 type PlayingInterfaceContextState = {
   hand: CardWithId[];
@@ -27,6 +28,9 @@ type PlayingInterfaceContextState = {
   setDraggingCard: Dispatch<SetStateAction<DragCard>>;
   operatorChoice: Operator | null;
   setOperatorChoice: Dispatch<SetStateAction<Operator | null>>;
+  target: Target,
+  setTarget: Dispatch<SetStateAction<Target>>,
+  resetGame: () => void
 };
 export const PlayingInterfaceContext = createContext<PlayingInterfaceContextState>({
   hand: [],
@@ -34,11 +38,14 @@ export const PlayingInterfaceContext = createContext<PlayingInterfaceContextStat
   sockettedCards: {},
   draggingCard: null,
   operatorChoice: null,
+  target: {value:1},
   setHand: () => {},
   setPlay: () => {},
   setSockettedCards: () => {},
   setDraggingCard: () => {},
   setOperatorChoice: () => {},
+  setTarget: () => {},
+  resetGame: () => {}
 });
 
 type PlayingInterfaceContextProviderProps = {
@@ -63,6 +70,21 @@ export const PlayingInterfaceContextProvider = (props: PlayingInterfaceContextPr
     [key: string]: CardWithId;
   }>({});
   const [operatorChoice, setOperatorChoice] = useState<Operator | null>(null);
+  const [target, setTarget] = useState<Target>(game.target)
+
+  const resetGame = () => {
+    setPlay([])
+    setHand(game.cards.map((c) => {
+      return {
+        card: c,
+        id: uuidv4(),
+      };
+    }))
+    setDraggingCard(null)
+    setSockettedCards({})
+    setOperatorChoice(null)
+    setTarget(game.target)
+  }
 
   const state: PlayingInterfaceContextState = {
     hand,
@@ -75,6 +97,9 @@ export const PlayingInterfaceContextProvider = (props: PlayingInterfaceContextPr
     setDraggingCard,
     operatorChoice,
     setOperatorChoice,
+    target,
+    setTarget,
+    resetGame
   };
 
   return (
