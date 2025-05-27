@@ -54,8 +54,6 @@ export default function Game() {
   }, []);
   return (
     <div>
-      {/* {game == null ? <p>Loading game...</p> : <GamePlay game={game} />}
-      {game == null ? <p>Loading game...</p> : <PlayArea game={game} />} */}
       {game == null ? <p>Loading game</p> : <SwishInterface game={game} />}
     </div>
   );

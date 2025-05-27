@@ -1,0 +1,59 @@
+import { useSortable, SortableContext, rectSortingStrategy } from "@dnd-kit/sortable";
+import { useContext, useEffect } from "react";
+import { CardBox } from "./CardBox";
+import { EqualsButton } from "./EqualsButton";
+import { OperatorChoice } from "./OperatorChoice";
+import { PlayingInterfaceContext } from "./PlayingInterfaceContext";
+import { CardWithId } from "./CardWithId";
+
+type PlayBoxProps = {
+  cards: CardWithId[];
+};
+export function PlayBox(props: PlayBoxProps) {
+  const { setNodeRef } = useSortable({
+    id: "play",
+  });
+  const { draggingCard, operatorChoice, setOperatorChoice, sockettedCards } = useContext(PlayingInterfaceContext);
+  let cardComponents = props.cards.map((c) => {
+    if (c.id == draggingCard?.card.id) {
+      return <CardBox card={c} home={"hand"} key={c.id} grayed disabled />;
+    }
+    return <CardBox card={c} key={c.id} home={"play"} />;
+  });
+  if (props.cards.length == 2 &&
+    props.cards.every((c) => c.card.cardType != "socket")) {
+    cardComponents = [
+      cardComponents[0],
+      <OperatorChoice
+        key="op"
+        setOperatorChoice={(op) => setOperatorChoice(op)}
+        operatorChoice={operatorChoice} />,
+      cardComponents[1],
+    ];
+    if (operatorChoice) {
+      cardComponents.push(<EqualsButton key="eq" />);
+    }
+  } else if (props.cards.length == 1 &&
+    props.cards[0].card.cardType == "socket" &&
+    sockettedCards["socket" + props.cards[0].id] != null) {
+    cardComponents.push(<EqualsButton key="eq" />);
+  }
+  useEffect(() => {
+    if (operatorChoice != null && cardComponents.length < 2) {
+      setOperatorChoice(null);
+    }
+  }, [cardComponents.length, operatorChoice, setOperatorChoice]);
+  return (
+    <SortableContext
+      items={props.cards.map((c) => c.id)}
+      strategy={rectSortingStrategy}
+    >
+      <div
+        className="w-full h-32 bg-blue-300 flex flex-row justify-center gap-3"
+        ref={setNodeRef}
+      >
+        {cardComponents}
+      </div>
+    </SortableContext>
+  );
+}
