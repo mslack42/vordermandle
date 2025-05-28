@@ -7,6 +7,7 @@ import { SolutionStep } from "@/game-generation/evaluate/SolutionStep";
 import { v4 as uuidv4 } from "uuid";
 import { evolveCard, evolveTarget } from "@/game-generation/evaluate/evolve";
 import { CardWithId } from "./CardWithId";
+import { HandCard } from "./HandCard";
 export function EqualsButton() {
   const {
     target,
@@ -86,6 +87,7 @@ export function EqualsButton() {
   };
 
   return (
+    <>
     <div
       className={
         "h-24 w-24 text-lg rounded-xl " +
@@ -100,5 +102,17 @@ export function EqualsButton() {
         {pendingResult?.success == false ? pendingResult.errorReason : "="}
       </button>
     </div>
+      {pendingResult?.success ? (
+        pendingResult.cards.map((c, i) => {
+          return (
+            <div key={"pending" + i} className="opacity-50">
+              <HandCard card={c}></HandCard>
+            </div>
+          );
+        })
+      ) : (
+        <></>
+      )}
+    </>
   );
 }
