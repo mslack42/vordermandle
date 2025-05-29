@@ -1,8 +1,8 @@
 import { CountdownGame } from "@/game-generation/common/CountdownGame";
 import { CardPlayArea } from "./CardPlayArea";
-import { PlayingInterfaceContext, PlayingInterfaceContextProvider } from "./PlayingInterfaceContext";
+import { PlayingInterfaceContextProvider } from "./PlayingInterfaceContext";
 import { TargetBox } from "./TargetBox";
-import { useContext } from "react";
+import { GameHistory } from "./GameHistory";
 
 type Props = {
   game: CountdownGame;
@@ -13,15 +13,10 @@ export function SwishInterface(props: Props) {
   return (
     <>
       <PlayingInterfaceContextProvider game={game}>
-        <TargetBox/>
+        <TargetBox />
+        <GameHistory />
         <CardPlayArea />
-        <ResetGameButton/>
       </PlayingInterfaceContextProvider>
     </>
   );
-}
-
-function ResetGameButton() {
-  const {resetGame} = useContext(PlayingInterfaceContext)
-  return <button onClick={resetGame}>Reset Game</button>
 }

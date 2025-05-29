@@ -235,57 +235,56 @@ export const SocketSVG = (props: SocketSVGProps & React.PropsWithChildren) => {
   };
   return (
     <div className="relative">
-
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width={(props.size * 220) / 270}
-      height={props.size}
-      viewBox="0 0 220 270"
-    >
-      <path
-        d="M3 3v260h190V3Zm9 55h170v196H13Z"
-        style={{
-          fill: "#ff8080",
-          stroke: "#1a1a1a",
-          strokeWidth: 6,
-          strokeDasharray: "none",
-        }}
-      />
-      <rect
-        style={{
-          fill: "#ff0010",
-          stroke: "#1a1a1a",
-          strokeWidth: 6,
-          strokeDasharray: "none",
-        }}
-        width="180"
-        height="180"
-        x="15"
-        y="65"
-      />
-      <text
-        xmlSpace="preserve"
-        x={108}
-        y={45}
-        style={{
-          fontSize: "36px",
-          textAlign: "center",
-          direction: "ltr",
-          textAnchor: "middle",
-          fill: "#fff",
-          fillOpacity: 1,
-          stroke: "#fff",
-          strokeWidth: 2,
-          strokeDasharray: "none",
-          strokeOpacity: 1,
-        }}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width={(props.size * 220) / 270}
+        height={props.size}
+        viewBox="0 0 220 270"
       >
-        {headerFn(props.socketFn)}{" "}
-      </text>
-    </svg>
-    <div className="absolute bottom-[13px] left-[8px] right-[13px] top-[30px]">
-      {props.children}
-    </div>
+        <path
+          d="M3 3v260h190V3Zm9 55h170v196H13Z"
+          style={{
+            fill: "#ff8080",
+            stroke: "#1a1a1a",
+            strokeWidth: 6,
+            strokeDasharray: "none",
+          }}
+        />
+        <rect
+          style={{
+            fill: "#ff0010",
+            stroke: "#1a1a1a",
+            strokeWidth: 6,
+            strokeDasharray: "none",
+          }}
+          width="169"
+          height="195"
+          x="13"
+          y="58"
+        />
+        <text
+          xmlSpace="preserve"
+          x={108}
+          y={45}
+          style={{
+            fontSize: "36px",
+            textAlign: "center",
+            direction: "ltr",
+            textAnchor: "middle",
+            fill: "#fff",
+            fillOpacity: 1,
+            stroke: "#fff",
+            strokeWidth: 2,
+            strokeDasharray: "none",
+            strokeOpacity: 1,
+          }}
+        >
+          {headerFn(props.socketFn)}{" "}
+        </text>
+      </svg>
+      <div className="absolute bottom-[13px] left-[8px] right-[13px] top-[30px]">
+        {props.children}
+      </div>
     </div>
   );
 };

@@ -178,8 +178,8 @@ export function CardPlayArea() {
       onDragStart={(evt) => handleDragStart(evt)}
       onDragEnd={(evt) => handleDragEnd(evt)}
     >
-      <HandBox cards={hand} />
       <PlayBox cards={play} />
+      <HandBox cards={hand} />
       <DragOverlay
         dropAnimation={{
           duration: 200,
