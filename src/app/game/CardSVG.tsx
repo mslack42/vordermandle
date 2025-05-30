@@ -115,7 +115,7 @@ const Modifier = (props: { modifier: CardModifier }) => {
       case "increment":
         return (
           <>
-            {[mod.incrementBy > 0 ? "+" : "-", String(mod.incrementBy)].join(
+            {[mod.incrementBy > 0 ? "+" : "", String(mod.incrementBy)].join(
               ""
             )}
           </>
