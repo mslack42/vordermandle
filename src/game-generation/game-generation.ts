@@ -419,9 +419,8 @@ export function generateGame(profile: GameProfile): CountdownGame {
 
     // TODO capture solution?
     target.value = chosenSolution.unmodifiedSolutionValue!
-    console.dir(chosenSolution.stepsTaken)
 
     return {
-        cards, target
+        cards, target, solution: chosenSolution.stepsTaken
     }
 }

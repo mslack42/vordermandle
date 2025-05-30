@@ -43,11 +43,13 @@ function GameHistoryRow(props: GameHistoryRowProps) {
     ];
   }
   return (
-    <div className="flex flex-row w-full justify-center align-middle scale-50">
-      {lhsParts.map((p) => p)}
-      <p>=</p>
-      {stepResult.success &&
-        stepResult.cards.map((c, i) => <HandCard key={i} card={c} />)}
+    <div className="flex flex-row w-full justify-center align-middle scale-75 gap-4">
+      <div className="opacity-50 flex flex-row">
+        {lhsParts.map((p) => p)}
+        <p>=</p>
+        {stepResult.success &&
+          stepResult.cards.map((c, i) => <HandCard key={i} card={c} />)}
+      </div>
       <button onClick={() => rewindToStep(stepNumber)}>Rewind</button>
     </div>
   );
