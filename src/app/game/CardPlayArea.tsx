@@ -175,6 +175,7 @@ export function CardPlayArea() {
   };
   return (
     <DndContext
+    id="cardplaycontextid"
       onDragStart={(evt) => handleDragStart(evt)}
       onDragEnd={(evt) => handleDragEnd(evt)}
     >
