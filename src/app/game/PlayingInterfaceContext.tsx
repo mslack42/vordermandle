@@ -196,6 +196,7 @@ export const PlayingInterfaceContextProvider = (
     const newGameHistory = gameHistory.slice(0,stepNumber-1)
     const newStateSnapshot = gameHistory[stepNumber-1][2]
     setHand(newStateSnapshot[0])
+    setPlay([])
     setSockettedCards(newStateSnapshot[1])
     setTarget(newStateSnapshot[2])
     setGameHistory(newGameHistory)
