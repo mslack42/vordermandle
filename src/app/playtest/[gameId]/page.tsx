@@ -1,7 +1,7 @@
 import { SwishInterface } from "@/components/SwishInterface"
 import { getGame } from "@/sheetsDB/getGamesList"
 
-export default async function PlayTestGame({params}){
+export default async function PlayTestGame({params}: {params:Promise<{gameId:string}>}){
     const {gameId} =await params
     const game = await getGame(gameId)
     return     <div>
