@@ -123,10 +123,10 @@ function getNextPossibleSteps(arg1: Card, arg2: Card, others: Card[], root: Pote
         if (ev.success) {
             return [ns, ev.cards];
         } else {
-            return null;
+            return [null,[]];
         }
     }
-    ).filter(x => x != null);
+    ).filter(x => x[0] != null) as [SolutionStep, Card[]][];
     const nextPotentials: PotentialSolution[] = nextEvaluations.map(p => {
         const [step, newCards] = p;
         return {
