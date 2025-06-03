@@ -11,7 +11,7 @@ const beginningOfTime = new Date(2025, 4, 1);
 export default async function MonthOfGames({
   params,
 }: {
-  params: RouteParams;
+  params: Promise<RouteParams>;
 }) {
   const { year, month } = await params;
 

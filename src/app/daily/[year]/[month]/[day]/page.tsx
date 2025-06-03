@@ -9,7 +9,7 @@ type RouteParams = {
 
 const beginningOfTime = new Date(2025, 4, 1);
 
-export default async function DailyGames({ params }: { params: RouteParams }) {
+export default async function DailyGames({ params }: { params: Promise<RouteParams> }) {
   const { year, month, day } = await params;
 
   const thisPageDay = new Date(year, month - 1, day);

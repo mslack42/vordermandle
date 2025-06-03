@@ -13,7 +13,7 @@ type RouteParams = {
 export default async function DailyGameAtIndex({
   params,
 }: {
-  params: RouteParams;
+  params: Promise<RouteParams>;
 }) {
   const { year, month, day, puzzleIndex } = await params;
   let game: CountdownGame;
