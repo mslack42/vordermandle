@@ -6,9 +6,7 @@ import {
 } from "@/game-generation/game-generation";
 import { CountdownGame } from "@/game-generation/common/CountdownGame";
 import { useEffect, useState } from "react";
-// import { GamePlay } from "./GamePlay";
-// import { PlayArea } from "./PlayArea";
-import { SwishInterface } from "./SwishInterface";
+import { SwishInterface } from "../../components/SwishInterface";
 
 const nonsense: Nonsense[] = [
   // "JUST_AN_EXTRA_NUMBER" - new modifier idea

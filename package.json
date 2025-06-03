@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "generateGames": "npx tsx --env-file .env ./src/scripts/generateGames.ts"
+    "generateGames": "npx tsx --env-file .env ./src/scripts/generateGames.ts",
+    "generateMonth": "npx tsx --env-file .env ./src/scripts/generateDailyGames.ts"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

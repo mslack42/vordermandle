@@ -1,11 +1,19 @@
-import { getGamesList } from "@/sheetsDB/getGamesList"
+import { getGamesList } from "@/sheetsDB/getGamesList";
 
- export default  async function PlayTestGames() {
-    const gameIds = await getGamesList()
+export const revalidate = 60;
 
-    return <ul>
-        {gameIds.map(g => {
-           return <li key={g}><button>{g}</button></li>
-        })}
+export default async function PlayTestGames() {
+  const gameIds = await getGamesList();
+
+  return (
+    <ul>
+      {gameIds.map((g) => {
+        return (
+          <li key={g}>
+            <button>{g}</button>
+          </li>
+        );
+      })}
     </ul>
+  );
 }

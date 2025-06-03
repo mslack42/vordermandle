@@ -415,12 +415,14 @@ export function generateGame(profile: GameProfile): CountdownGame {
     // Now to find a target
 
     const hardestSolutions = findHardestSolutions(cards, target.modifier!)
-    const chosenSolution = hardestSolutions[Math.floor(Math.random() * hardestSolutions.length)]
+    const chosenSolution = hardestSolutions[Math.floor(Math.random() * 0.999 * hardestSolutions.length)]
 
-    // TODO capture solution?
-    target.value = chosenSolution.unmodifiedSolutionValue!
+    if (chosenSolution && chosenSolution.unmodifiedSolutionValue) {
+        target.value = chosenSolution.unmodifiedSolutionValue!
 
-    return {
-        cards, target, solution: chosenSolution.stepsTaken
+        return {
+            cards, target, solution: chosenSolution.stepsTaken
+        }
     }
+    return generateGame(profile)
 }
