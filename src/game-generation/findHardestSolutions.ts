@@ -61,10 +61,25 @@ function collectSolutions(
             );
             const evolvedNextSteps: PotentialSolution[] = nextSteps.map(ns => {
                 return {
-                        ...ns,
-                        cards: evolveCards(ns.cards),                        
+                    ...ns,
+                    cards: evolveCards(ns.cards),
                 }
             })
+            // Collect the pre-evolution cards
+            for (const sol of nextSteps) {
+                const solutionValues = [...sol.cards]
+                    .filter(c => c.cardType != "socket")
+                    .map(c => c.value)
+                    .filter(v => v >= 100 && v <= 999)
+                    .map(v => unmodifyTarget(v, targetModifier, sol.stepsTaken.length));
+                for (const s of solutionValues) {
+                    const currentMapVal = map.get(s);
+                    if (!currentMapVal || currentMapVal.difficultyEstimate > sol.difficultyEstimate) {
+                        map.set(s, { ...sol, unmodifiedSolutionValue: s });
+                    }
+                }
+            }
+            // Collect the post-evolution cards and iterate on those
             for (const sol of evolvedNextSteps) {
                 const solutionValues = [...sol.cards]
                     .filter(c => c.cardType != "socket")
@@ -74,7 +89,7 @@ function collectSolutions(
                 for (const s of solutionValues) {
                     const currentMapVal = map.get(s);
                     if (!currentMapVal || currentMapVal.difficultyEstimate > sol.difficultyEstimate) {
-                        map.set(s, {...sol, unmodifiedSolutionValue: s});
+                        map.set(s, { ...sol, unmodifiedSolutionValue: s });
                     }
                 }
                 collectSolutions(map, {
@@ -130,7 +145,7 @@ function getNextPossibleSteps(arg1: Card, arg2: Card, others: Card[], root: Pote
         if (ev.success) {
             return [ns, ev.cards];
         } else {
-            return [null,[]];
+            return [null, []];
         }
     }
     ).filter(x => x[0] != null) as [SolutionStep, Card[]][];
