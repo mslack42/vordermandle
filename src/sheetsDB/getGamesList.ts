@@ -32,7 +32,6 @@ export async function getGameByDate(
     year: number,
     month: number,
     day:number,
-    puzzleIndex:number
 ):Promise<CountdownGame>{
     const dateString = [year,month,day].join('/')
     const doc = await GetSheetDoc()
@@ -40,9 +39,7 @@ export async function getGameByDate(
     
     const rows =(await sheet.getRows())
     
-    const match = rows.map(r => r.toObject()).filter(r => r["Date"] == dateString && r["Index"] == puzzleIndex.toString())
-    console.dir(rows.map(r => r.toObject()).filter(r => r["Index"] == dateString))
-    console.log(dateString)
+    const match = rows.map(r => r.toObject()).filter(r => r["Date"] == dateString)
     if (match.length == 0) {
         throw Error()
     }

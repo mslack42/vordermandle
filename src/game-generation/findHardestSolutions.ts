@@ -5,6 +5,7 @@ import { EvaluationResult } from "./evaluate/EvaluationResult";
 import { SolutionStep } from "./evaluate/SolutionStep";
 import { PotentialSolution, PotentialSolutionMap } from "./PotentialSolution";
 import { difficultyAllowance } from "./difficultyAllowance";
+import { evolveCards } from "./evaluate/evolve";
 
 
 export function findHardestSolutions(cards: Card[], targetModifier: TargetModifier): PotentialSolution[] {
@@ -58,7 +59,13 @@ function collectSolutions(
                 others,
                 root
             );
-            for (const sol of nextSteps) {
+            const evolvedNextSteps: PotentialSolution[] = nextSteps.map(ns => {
+                return {
+                        ...ns,
+                        cards: evolveCards(ns.cards),                        
+                }
+            })
+            for (const sol of evolvedNextSteps) {
                 const solutionValues = [...sol.cards]
                     .filter(c => c.cardType != "socket")
                     .map(c => c.value)

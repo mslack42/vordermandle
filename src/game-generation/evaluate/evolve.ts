@@ -5,7 +5,7 @@ import { Target } from "../common/Target";
 
 export function evolveCards(cards: Card[]) {
     return cards.map(c => {
-        evolveCard(c)
+        return evolveCard(c)
     })
 }
 
