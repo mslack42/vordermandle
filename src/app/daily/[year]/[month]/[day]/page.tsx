@@ -1,6 +1,7 @@
 import { SwishInterface } from "@/components/SwishInterface";
 import { CountdownGame } from "@/game-generation/common/CountdownGame";
 import { getGameByDate } from "@/sheetsDB/getGamesList";
+import { unstable_cache } from "next/cache";
 import { redirect } from "next/navigation";
 
 type RouteParams = {
@@ -9,19 +10,28 @@ type RouteParams = {
   day: number;
 };
 
-export const revalidate = 60;
+const getGame = unstable_cache(
+  async (year, month: number, day: number) => {
+    return getGameByDate(year, month, day);
+  },
+  [],
+  {
+    revalidate: 300,
+  }
+);
 
 export default async function DailyGameAtIndex({
   params,
 }: {
   params: Promise<RouteParams>;
 }) {
-  const { year, month, day} = await params;
+  const { year, month, day } = await params;
+
   let game: CountdownGame;
   try {
-    game = await getGameByDate(year, month, day);
+    game = await getGame(year, month, day);
   } catch (e) {
-    console.dir(e)
+    console.dir(e);
     redirect("/");
   }
 
