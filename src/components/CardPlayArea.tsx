@@ -3,6 +3,10 @@ import {
   DragEndEvent,
   DndContext,
   DragOverlay,
+  useSensor,
+  TouchSensor,
+  MouseSensor,
+  useSensors,
 } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 import { useContext } from "react";
@@ -173,11 +177,16 @@ export function CardPlayArea() {
 
     setDraggingCard(null);
   };
+  const mouseSensor = useSensor(MouseSensor);
+  const touchSensor = useSensor(TouchSensor);
+
+  const sensors = useSensors(mouseSensor, touchSensor);
   return (
     <DndContext
-    id="cardplaycontextid"
+      id="cardplaycontextid"
       onDragStart={(evt) => handleDragStart(evt)}
       onDragEnd={(evt) => handleDragEnd(evt)}
+      sensors={sensors}
     >
       <PlayBox cards={play} />
       <HandBox cards={hand} />
