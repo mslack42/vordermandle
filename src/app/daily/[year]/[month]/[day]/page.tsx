@@ -2,7 +2,9 @@ import { SwishInterface } from "@/components/SwishInterface";
 import { CountdownGame } from "@/game/common/CountdownGame";
 import { getGameByDate } from "@/sheetsDB/getGamesList";
 import { unstable_cache } from "next/cache";
+import Link from "next/link";
 import { redirect } from "next/navigation";
+import { FeedbackLink } from "./FeedbackLink";
 
 type RouteParams = {
   year: number;
@@ -38,6 +40,8 @@ export default async function DailyGameAtIndex({
   return (
     <div>
       <SwishInterface game={game} />
+      <FeedbackLink domain={`Puzzle ${year}/${month}/${day}`}/>
     </div>
   );
 }
+
