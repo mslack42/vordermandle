@@ -1,5 +1,5 @@
 "use client";
-import { Card, NumberCard, AlternateCard, SocketCard } from "@/game-generation/common/Card";
+import { Card, NumberCard, AlternateCard, SocketCard } from "@/game/common/Card";
 import { CardSVG, SocketSVG } from "./CardSVG";
 
 type HandCardProps = {

@@ -1,5 +1,5 @@
-import { SocketFunction } from "@/game-generation/common/Card";
-import { CardModifier } from "@/game-generation/common/CardModifier";
+import { SocketFunction } from "@/game/common/Card";
+import { CardModifier } from "@/game/common/CardModifier";
 
 type CardSVGProps = {
   value: number;

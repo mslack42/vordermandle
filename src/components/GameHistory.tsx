@@ -1,5 +1,5 @@
-import { EvaluationResult } from "@/game-generation/evaluate/EvaluationResult";
-import { SolutionStep } from "@/game-generation/evaluate/SolutionStep";
+import { EvaluationResult } from "@/game/evaluate/EvaluationResult";
+import { SolutionStep } from "@/game/evaluate/SolutionStep";
 import { useContext } from "react";
 import { HandCard } from "./HandCard";
 import { PlayingInterfaceContext } from "./PlayingInterfaceContext";

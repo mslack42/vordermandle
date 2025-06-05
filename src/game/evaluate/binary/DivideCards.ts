@@ -1,8 +1,8 @@
-import { PlugCard } from "@/game-generation/common/Card";
+import { PlugCard } from "@/game/common/Card";
 import { EvaluationResult } from "../EvaluationResult";
 import { weaken } from "../weaken";
 
-export function SubtractCards(left: PlugCard, right: PlugCard): EvaluationResult {
+export function DivideCards(left: PlugCard, right: PlugCard): EvaluationResult {
     if (left.cardType == "alternate" && right.cardType == "alternate") {
         return {
             success: false,
@@ -12,10 +12,16 @@ export function SubtractCards(left: PlugCard, right: PlugCard): EvaluationResult
     if (left.value <= right.value) {
         return {
             success: false,
-            errorReason: "Negative numbers not allowed"
+            errorReason: "Fractions not allowed"
         };
     }
-    const newValue = left.value - right.value;
+    const newValue = Math.floor(left.value / right.value);
+    if (newValue * right.value != left.value) {
+        return {
+            success: false,
+            errorReason: "Integer division only please"
+        };
+    }
     if (left.cardType == "alternate") {
         return {
             success: true,
@@ -39,11 +45,10 @@ export function SubtractCards(left: PlugCard, right: PlugCard): EvaluationResult
         return {
             success: true,
             cards: [weaken({
-                modifier: mod,
                 value: newValue,
                 cardType: "number",
+                modifier: mod
             })]
         };
     }
 }
-

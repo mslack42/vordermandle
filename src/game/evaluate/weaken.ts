@@ -1,4 +1,4 @@
-import { Card } from "@/game-generation/common/Card";
+import { Card } from "@/game/common/Card";
 
 export function weaken(card: Card) {
     const newCard = { ...card };

@@ -1,25 +1,21 @@
-import { PlugCard } from "@/game-generation/common/Card";
+import { PlugCard } from "@/game/common/Card";
 import { EvaluationResult } from "../EvaluationResult";
+import { NumberUpperLimit } from "./NumberUpperLimit";
 import { weaken } from "../weaken";
 
-export function DivideCards(left: PlugCard, right: PlugCard): EvaluationResult {
+
+export function MultiplyCards(left: PlugCard, right: PlugCard): EvaluationResult {
     if (left.cardType == "alternate" && right.cardType == "alternate") {
         return {
             success: false,
             errorReason: "Alternate-Alternate is not resolvable"
         };
     }
-    if (left.value <= right.value) {
+    const newValue = left.value * right.value;
+    if (newValue > NumberUpperLimit) {
         return {
             success: false,
-            errorReason: "Fractions not allowed"
-        };
-    }
-    const newValue = Math.floor(left.value / right.value);
-    if (newValue * right.value != left.value) {
-        return {
-            success: false,
-            errorReason: "Integer division only please"
+            errorReason: "Numbers don't go that big"
         };
     }
     if (left.cardType == "alternate") {

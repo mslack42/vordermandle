@@ -1,4 +1,4 @@
-import { PlugCard } from "@/game-generation/common/Card";
+import { PlugCard } from "@/game/common/Card";
 import { EvaluationResult } from "../EvaluationResult";
 
 export function ReverseCard(inner: PlugCard): EvaluationResult {

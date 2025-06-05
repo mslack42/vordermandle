@@ -1,4 +1,4 @@
-import { TargetModifier } from "@/game-generation/common/TargetModifier";
+import { TargetModifier } from "@/game/common/TargetModifier";
 import * as React from "react";
 type TargetSVGProps = {
   size: number;

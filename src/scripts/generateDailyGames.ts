@@ -1,5 +1,5 @@
-import { Tier1Bucket, Tier2Bucket, Tier3Bucket } from "@/game-generation/flavours/Flavour";
-import { GameProfile, generateGame} from "@/game-generation/game-generation"
+import { Tier1Bucket, Tier2Bucket, Tier3Bucket } from "@/game/flavours/Flavour";
+import { GameProfile, generateGame} from "@/game/game-generation"
 import { GetSheetDoc } from "@/sheetsDB/GetSheetDoc"
 
 const doc = await GetSheetDoc()

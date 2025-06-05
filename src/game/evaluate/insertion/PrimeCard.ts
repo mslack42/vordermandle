@@ -1,4 +1,4 @@
-import { PlugCard } from "@/game-generation/common/Card";
+import { PlugCard } from "@/game/common/Card";
 import { EvaluationResult } from "../EvaluationResult";
 import { primes } from "./primes";
 import { weaken } from "../weaken";

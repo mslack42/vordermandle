@@ -3,8 +3,8 @@ import {
   GameProfile,
   generateGame,
   Nonsense,
-} from "@/game-generation/game-generation";
-import { CountdownGame } from "@/game-generation/common/CountdownGame";
+} from "@/game/game-generation";
+import { CountdownGame } from "@/game/common/CountdownGame";
 import { useEffect, useState } from "react";
 import { SwishInterface } from "../../components/SwishInterface";
 

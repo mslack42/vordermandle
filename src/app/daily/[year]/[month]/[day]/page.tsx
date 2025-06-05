@@ -1,5 +1,5 @@
 import { SwishInterface } from "@/components/SwishInterface";
-import { CountdownGame } from "@/game-generation/common/CountdownGame";
+import { CountdownGame } from "@/game/common/CountdownGame";
 import { getGameByDate } from "@/sheetsDB/getGamesList";
 import { unstable_cache } from "next/cache";
 import { redirect } from "next/navigation";

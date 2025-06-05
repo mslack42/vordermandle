@@ -1,4 +1,4 @@
-import { CountdownGame } from "@/game-generation/common/CountdownGame"
+import { CountdownGame } from "@/game/common/CountdownGame"
 import { GetSheetDoc } from "./GetSheetDoc"
 import { cache } from "react"
 

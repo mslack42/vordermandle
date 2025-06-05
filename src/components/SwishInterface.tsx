@@ -1,5 +1,5 @@
 "use client"
-import { CountdownGame } from "@/game-generation/common/CountdownGame";
+import { CountdownGame } from "@/game/common/CountdownGame";
 import { CardPlayArea } from "./CardPlayArea";
 import { PlayingInterfaceContextProvider } from "./PlayingInterfaceContext";
 import { TargetBox } from "./TargetBox";

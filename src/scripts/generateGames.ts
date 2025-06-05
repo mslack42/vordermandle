@@ -1,4 +1,4 @@
-import { GameProfile, generateGame, Nonsense } from "@/game-generation/game-generation"
+import { GameProfile, generateGame, Nonsense } from "@/game/game-generation"
 import { GetSheetDoc } from "@/sheetsDB/GetSheetDoc"
 import { v4 as uuidv4 } from "uuid";
 

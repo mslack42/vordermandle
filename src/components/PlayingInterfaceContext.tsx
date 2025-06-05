@@ -1,4 +1,4 @@
-import { CountdownGame } from "@/game-generation/common/CountdownGame";
+import { CountdownGame } from "@/game/common/CountdownGame";
 import {
   createContext,
   SetStateAction,
@@ -10,12 +10,12 @@ import { v4 as uuidv4 } from "uuid";
 import { Operator } from "./Operator";
 import { CardWithId } from "./CardWithId";
 import { DragCard } from "./DragCard";
-import { Target } from "@/game-generation/common/Target";
-import { SolutionStep } from "@/game-generation/evaluate/SolutionStep";
-import { EvaluationResult } from "@/game-generation/evaluate/EvaluationResult";
-import { PlugCard } from "@/game-generation/common/Card";
-import { EvaluateStep } from "@/game-generation/evaluate/evaluateStep";
-import { evolveCard, evolveTarget } from "@/game-generation/evaluate/evolve";
+import { Target } from "@/game/common/Target";
+import { SolutionStep } from "@/game/evaluate/SolutionStep";
+import { EvaluationResult } from "@/game/evaluate/EvaluationResult";
+import { PlugCard } from "@/game/common/Card";
+import { EvaluateStep } from "@/game/evaluate/evaluateStep";
+import { evolveCard, evolveTarget } from "@/game/evaluate/evolve";
 
 type GameStateSnapshot = [CardWithId[], {
     [key: string]: CardWithId;

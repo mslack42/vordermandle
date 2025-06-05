@@ -1,22 +1,21 @@
-import { PlugCard } from "@/game-generation/common/Card";
+import { PlugCard } from "@/game/common/Card";
 import { EvaluationResult } from "../EvaluationResult";
 import { NumberUpperLimit } from "./NumberUpperLimit";
 import { weaken } from "../weaken";
 
-
-export function MultiplyCards(left: PlugCard, right: PlugCard): EvaluationResult {
+export function AddCards(left: PlugCard, right: PlugCard): EvaluationResult {
     if (left.cardType == "alternate" && right.cardType == "alternate") {
         return {
             success: false,
             errorReason: "Alternate-Alternate is not resolvable"
         };
     }
-    const newValue = left.value * right.value;
+    const newValue = left.value + right.value;
     if (newValue > NumberUpperLimit) {
         return {
             success: false,
             errorReason: "Numbers don't go that big"
-        };
+        }
     }
     if (left.cardType == "alternate") {
         return {
@@ -38,6 +37,7 @@ export function MultiplyCards(left: PlugCard, right: PlugCard): EvaluationResult
         };
     } else {
         const mod = left.modifier.modifierType != "none" ? left.modifier : right.modifier
+
         return {
             success: true,
             cards: [weaken({
