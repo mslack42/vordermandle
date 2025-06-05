@@ -1,1 +1,1 @@
-export const difficultyAllowance = 0.5;
+export const difficultyAllowance = 0.8;
