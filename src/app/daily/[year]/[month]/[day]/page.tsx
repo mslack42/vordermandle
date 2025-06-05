@@ -2,7 +2,6 @@ import { SwishInterface } from "@/components/SwishInterface";
 import { CountdownGame } from "@/game/common/CountdownGame";
 import { getGameByDate } from "@/sheetsDB/getGamesList";
 import { unstable_cache } from "next/cache";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { FeedbackLink } from "./FeedbackLink";
 
