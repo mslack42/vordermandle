@@ -1,26 +1,40 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-type PuzzleData = {
+type DailyPuzzleData = {
   year: number,
   month: number,
   day: number,
   solved: boolean,
   cluesGiven: number
 }
-
-type PuzzleDataMap = {
-  [key:string]: PuzzleData
+type CampaignPuzzleData = {
+  solved: boolean
+}
+type CampaignPuzzleDataMap = {
+  [key:string]: CampaignPuzzleData
+}
+type CampaignPuzzleGroup = {
+  unlocked: boolean,
+  puzzles: CampaignPuzzleDataMap
+}
+type CampaignPuzzleGroupMap = {
+  [key:string]: CampaignPuzzleGroup
+}
+type DailyPuzzleDataMap = {
+  [key:string]: DailyPuzzleData
 }
 
 type PlayerDataState = {
   // TODO Delete count once placeholder usage is removed
     count: number
-    puzzleData: PuzzleDataMap
+    dailyPuzzleData: DailyPuzzleDataMap
+    campaignPuzzleData: CampaignPuzzleGroupMap
 }
 
 const initialState: PlayerDataState = {
   count: 0,
-  puzzleData:{}
+  dailyPuzzleData:{},
+  campaignPuzzleData: {}
 };
 
 const playerDataSlice = createSlice({

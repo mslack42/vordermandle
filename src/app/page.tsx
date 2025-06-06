@@ -1,28 +1,50 @@
 "use client";
-import {
-  useLocalStoreDispatch,
-  useLocalStoreSelector,
-} from "@/localstore/hooks";
-import LocalStoreProvider from "@/localstore/LocalStoreProvider";
-import { inc } from "@/localstore/playerDataSlice";
 
-// Demo home page just to confirm local storage factor
+import Link from "next/link";
+
 export default function Home() {
   return (
-    <LocalStoreProvider>
-      <Inner />
-    </LocalStoreProvider>
+    <div className="w-full h-full flex flex-col gap-8">
+      <div className="w-full flex flex-row justify-center p-8">
+        <div className="bg-theme-blue w-96 flex flex-col p-5 border-foreground border-6 select-none ">
+          <h1 className="w-full text-5xl text-center">Vordermandle</h1>
+          <h2 className="w-full text-xl text-center">
+            A Countdown-inspired Wordlelike
+          </h2>
+        </div>
+      </div>
+      <ul className="w-full px-3 flex flex-col gap-3 grow justify-center">
+        <li className="w-full flex flex-row justify-center">
+          <MenuButton link="/daily">Daily</MenuButton>
+        </li>
+        <li className="w-full flex flex-row justify-center">
+          <MenuButton>Campaign</MenuButton>
+        </li>
+        <li className="w-full flex flex-row justify-center">
+          <MenuButton>FAQ</MenuButton>
+        </li>
+      </ul>
+    </div>
   );
 }
 
-const Inner = () => {
-  const c = useLocalStoreSelector((s) => s.playerData.count);
-  const dispatch = useLocalStoreDispatch();
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start"></main>
-      <button onClick={() => dispatch(inc(1))}>{c}</button>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center"></footer>
-    </div>
-  );
+type MenuButtonProps = React.PropsWithChildren & {
+  link?: string;
+  onClick?: () => void;
+  disabled?: boolean;
 };
+function MenuButton(props: MenuButtonProps) {
+  let content = (
+    <button className="p-2 text-lg bg-theme-red rounded-xl border-foreground border-4 hover:bg-theme-red-darker w-44">
+      {props.children}
+    </button>
+  );
+  if (props.link) {
+    content = (
+      <Link href={props.link}>
+        {content}
+      </Link>
+    );
+  }
+  return content;
+}

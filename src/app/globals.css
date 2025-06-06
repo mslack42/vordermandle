@@ -1,21 +1,41 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --theme-red: #E15554;
+  --theme-yellow: #E1BC29;
+  --theme-blue: #4D9DE0;
+  --theme-green: #3BB273;
+  --theme-purple: #7768AE;
+  --theme-red-darker: #b64444;
+  --theme-yellow-darker: #9e841b;
+  --theme-blue-darker: #38719f;
+  --theme-green-darker: #28774d;
+  --theme-purple-darker: #4f4573;
+  --foreground-darker: #000000;
+  --background-darker: #ffffffdc;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-theme-red: var(--theme-red);
+  --color-theme-yellow: var(--theme-yellow);
+  --color-theme-blue: var(--theme-blue);
+  --color-theme-green: var(--theme-green);
+  --color-theme-purple: var(--theme-purple);
+  --color-theme-red-darker: var(--theme-red-darker);
+  --color-theme-yellow-darker: var(--theme-yellow-darker);
+  --color-theme-blue-darker: var(--theme-blue-darker);
+  --color-theme-green-darker: var(--theme-green-darker);
+  --color-theme-purple-darker: var(--theme-purple-darker);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #000000;
+    --foreground: #ffffff;
   }
 }
 
