@@ -2,7 +2,7 @@ import { Card, PlugCard } from "./common/Card";
 import { TargetModifier } from "./common/TargetModifier";
 import { EvaluateStep } from "./evaluate/evaluateStep";
 import { EvaluationResult } from "./evaluate/EvaluationResult";
-import { InsertionSolutionStep, SolutionStep } from "./evaluate/SolutionStep";
+import { SolutionStep } from "./evaluate/SolutionStep";
 import { PotentialSolution, PotentialSolutionMap } from "./PotentialSolution";
 import { difficultyAllowance } from "./difficultyAllowance";
 import { evolveCards } from "./evaluate/evolve";
