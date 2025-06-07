@@ -1,4 +1,4 @@
-import { useSortable, SortableContext, rectSortingStrategy } from "@dnd-kit/sortable";
+import { useSortable, SortableContext, rectSortingStrategy, horizontalListSortingStrategy, rectSwappingStrategy } from "@dnd-kit/sortable";
 import { useContext, useEffect } from "react";
 import { CardBox } from "./CardBox";
 import { EqualsButton } from "./EqualsButton";
@@ -46,7 +46,7 @@ export function PlayBox(props: PlayBoxProps) {
   return (
     <SortableContext
       items={props.cards.map((c) => c.id)}
-      strategy={rectSortingStrategy}
+      strategy={horizontalListSortingStrategy}
     >
       <div
         className="w-full h-40 flex flex-row justify-center gap-3 border-8 border-dashed border-theme-green items-center"

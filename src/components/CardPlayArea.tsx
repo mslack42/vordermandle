@@ -61,7 +61,10 @@ export function CardPlayArea() {
     const currentId = draggingCard.card.id;
     const targetId = event.over?.id;
     const targetHome = event.over?.data.current?.home;
-    if (targetId?.toString().startsWith("socket") && !!socketCards[targetId]) {
+    if (
+      targetId?.toString().startsWith("socket") &&
+      (!!socketCards[targetId] || draggingCard.card.card.cardType == "socket")
+    ) {
       setDraggingCard(null);
       return;
     }
@@ -199,7 +202,7 @@ export function CardPlayArea() {
         }}
       >
         {draggingCard != null && (
-          <div className="cursor-pointer select-none">
+          <div className="cursor-pointer select-none h-34 flex flex-col justify-center">
             <HandCard card={draggingCard.card.card}>
               {draggingCard.card.card.cardType == "socket" &&
                 !!sockettedCards["socket" + draggingCard.card.id] && (

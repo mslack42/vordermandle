@@ -11,15 +11,16 @@ type CardBoxProps = {
   grayed?: boolean;
 };
 export function CardBox(props: CardBoxProps) {
-  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
-    id: props.card.id,
-    data: {
-      home: props.home,
-    },
-    disabled: props.disabled,
-  });
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({
+      id: props.card.id,
+      data: {
+        home: props.home,
+      },
+      disabled: props.disabled,
+    });
   const style = {
-    transform: CSS.Transform.toString(transform),
+    transform: CSS.Translate.toString(transform),
     transition,
   };
   return (
@@ -28,7 +29,10 @@ export function CardBox(props: CardBoxProps) {
       style={style}
       {...listeners}
       {...attributes}
-      className={props.grayed ? "cursor-none opacity-50" : "cursor-pointer select-none"}
+      className={
+        "h-34 flex flex-col justify-center " +
+        (props.grayed ? "cursor-none opacity-50" : "cursor-pointer select-none")
+      }
     >
       <HandCard card={props.card.card}>
         {props.card.card.cardType != "socket" ? (

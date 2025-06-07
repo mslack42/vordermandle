@@ -1,4 +1,8 @@
-import { useSortable, SortableContext, rectSortingStrategy } from "@dnd-kit/sortable";
+import {
+  useSortable,
+  SortableContext,
+  rectSortingStrategy,
+} from "@dnd-kit/sortable";
 import { useContext } from "react";
 import { CardBox } from "./CardBox";
 import { PlayingInterfaceContext } from "./PlayingInterfaceContext";
@@ -25,7 +29,7 @@ export function HandBox(props: HandBoxProps) {
         {props.cards.map((c) => {
           if (c.id == draggingCard?.card.id) {
             return (
-              <CardBox card={c} home={"hand"} key={c.id} grayed disabled />
+              <CardBox card={c} home={"hand"} grayed disabled key={c.id} />
             );
           }
           return <CardBox card={c} key={c.id} home={"hand"} />;
