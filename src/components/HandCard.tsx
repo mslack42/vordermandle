@@ -1,6 +1,6 @@
 "use client";
 import { Card, NumberCard, AlternateCard, SocketCard } from "@/game/common/Card";
-import { CardSVG, SocketSVG } from "./CardSVG";
+import { CardDisplay, SocketCardDisplay } from "./CardDisplay";
 
 type HandCardProps = {
   card: Card;
@@ -21,7 +21,7 @@ type HandNumberCardProps = {
 function HandNumberCard(props: HandNumberCardProps) {
   const { card } = props;
   return (
-    <CardSVG value={card.value} size={80} modifier={card.modifier}/>
+    <CardDisplay value={card.value} modifier={card.modifier}/>
   );
 }
 type HandAlternateCardProps = {
@@ -30,7 +30,7 @@ type HandAlternateCardProps = {
 function HandAlternateCard(props: HandAlternateCardProps) {
   const { card } = props;
   return (
-    <CardSVG value={card.value} size={80} alternate={card.alternate}/>
+    <CardDisplay value={card.value} alternate={card.alternate}/>
   );
 }
 type HandSocketCardProps = {
@@ -39,6 +39,6 @@ type HandSocketCardProps = {
 function HandSocketCard(props: HandSocketCardProps & React.PropsWithChildren) {
   const { card } = props;
   return (
-    <SocketSVG size={120} socketFn={card.socketFunction}>{props.children}</SocketSVG>
+    <SocketCardDisplay socketFn={card.socketFunction}>{props.children}</SocketCardDisplay>
   );
 }

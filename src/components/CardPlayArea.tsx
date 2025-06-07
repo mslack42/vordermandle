@@ -188,8 +188,10 @@ export function CardPlayArea() {
       onDragEnd={(evt) => handleDragEnd(evt)}
       sensors={sensors}
     >
-      <PlayBox cards={play} />
-      <HandBox cards={hand} />
+      <div className="w-full flex flex-col gap-2">
+        <PlayBox cards={play} />
+        <HandBox cards={hand} />
+      </div>
       <DragOverlay
         dropAnimation={{
           duration: 200,

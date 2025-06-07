@@ -49,7 +49,7 @@ export function PlayBox(props: PlayBoxProps) {
       strategy={rectSortingStrategy}
     >
       <div
-        className="w-full h-32 bg-blue-300 flex flex-row justify-center gap-3"
+        className="w-full h-40 flex flex-row justify-center gap-3 border-8 border-dashed border-theme-green items-center"
         ref={setNodeRef}
       >
         {cardComponents}

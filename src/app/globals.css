@@ -11,6 +11,8 @@
   --theme-blue-darker: #38719f;
   --theme-green-darker: #28774d;
   --theme-purple-darker: #4f4573;
+  --foreground: #3b3b3b;
+  --background: #ffffff;
   --foreground-darker: #000000;
   --background-darker: #ffffffdc;
 }

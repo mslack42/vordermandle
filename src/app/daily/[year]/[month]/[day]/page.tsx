@@ -12,7 +12,7 @@ type RouteParams = {
 };
 
 const getGame = unstable_cache(
-  async (year, month: number, day: number) => {
+  async (year:number, month: number, day: number) => {
     return getGameByDate(year, month, day);
   },
   [],
@@ -28,11 +28,18 @@ export default async function DailyGameAtIndex({
 }) {
   const { year, month, day } = await params;
 
-  let game: CountdownGame;
+  const now = new Date(Date.now())
+  const gameDate = new Date(year,month-1,day)
+  const daysDiff = (now.getTime() - gameDate.getTime())/(1000*60*60*24)
+  
+  if (daysDiff > 100) {
+    redirect("/")
+  }
+    
+    let game: CountdownGame;
   try {
     game = await getGame(year, month, day);
-  } catch (e) {
-    console.dir(e);
+  } catch {
     redirect("/");
   }
 
