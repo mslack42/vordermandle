@@ -9,7 +9,6 @@ export function TargetBox() {
       <TargetDisplay
         value={target.value}
         modifier={target.modifier}
-        size={100}
       />
     </div>
   );
