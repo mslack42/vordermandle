@@ -53,7 +53,6 @@ export function CardPlayArea() {
     setDraggingCard({ card, home: event.active.data.current?.home });
   };
   const handleDragEnd = (event: DragEndEvent) => {
-    console.log(event)
     if (!draggingCard) return;
     let handCards = [...hand];
     let playCards = [...play];
