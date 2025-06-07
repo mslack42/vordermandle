@@ -20,7 +20,7 @@ export function SocketBox(props: SocketBoxProps) {
   });
   return (
     <div
-      className="w-full h-full"
+      className="w-full h-34"
       ref={setNodeRef}
       {...attributes}
       {...listeners}
@@ -32,6 +32,7 @@ export function SocketBox(props: SocketBoxProps) {
           home="socket"
           card={sockettedCard}
           disabled={draggingCard != null}
+          isSocketted
           grayed={draggingCard?.card.id == sockettedCard.id} />
       )}
     </div>

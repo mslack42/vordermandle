@@ -9,6 +9,7 @@ type CardBoxProps = {
   home: "hand" | "play" | "socket";
   disabled?: boolean;
   grayed?: boolean;
+  isSocketted?: boolean
 };
 export function CardBox(props: CardBoxProps) {
   const { attributes, listeners, setNodeRef, transform, transition } =
@@ -30,7 +31,7 @@ export function CardBox(props: CardBoxProps) {
       {...listeners}
       {...attributes}
       className={
-        "h-34 flex flex-col justify-center " +
+        (!props.isSocketted ? "h-34 flex flex-col justify-center " : "") +
         (props.grayed ? "cursor-none opacity-50" : "cursor-pointer select-none")
       }
     >

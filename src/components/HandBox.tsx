@@ -23,7 +23,7 @@ export function HandBox(props: HandBoxProps) {
       strategy={rectSortingStrategy}
     >
       <div
-        className="w-full h-40 flex flex-row justify-center gap-3 border-8 border-dashed border-theme-yellow items-center"
+        className="w-full flex flex-row justify-center gap-3 border-8 border-dashed border-theme-yellow items-center"
         ref={setNodeRef}
       >
         {props.cards.map((c) => {

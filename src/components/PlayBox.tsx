@@ -1,4 +1,4 @@
-import { useSortable, SortableContext, rectSortingStrategy, horizontalListSortingStrategy, rectSwappingStrategy } from "@dnd-kit/sortable";
+import { useSortable, SortableContext, horizontalListSortingStrategy } from "@dnd-kit/sortable";
 import { useContext, useEffect } from "react";
 import { CardBox } from "./CardBox";
 import { EqualsButton } from "./EqualsButton";
