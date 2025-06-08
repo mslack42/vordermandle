@@ -15,8 +15,8 @@ export const PlayerGameSaveDataContext =
   createContext<PlayerGameSaveDataContextState>({
     isComplete: false,
     cluesGiven: 0,
-    setGameSolved: () => {},
-    incrementCluesGiven: () => {},
+    setGameSolved: () => { },
+    setCluesGiven: () => {}
   });
 
 type PlayerGameSaveDataContextProviderProps = {
