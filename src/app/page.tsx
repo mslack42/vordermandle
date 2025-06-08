@@ -17,12 +17,12 @@ export default function Home() {
         <li className="w-full flex flex-row justify-center">
           <MenuButton link="/daily">Daily</MenuButton>
         </li>
-        <li className="w-full flex flex-row justify-center">
+        {/* <li className="w-full flex flex-row justify-center">
           <MenuButton>Campaign</MenuButton>
         </li>
         <li className="w-full flex flex-row justify-center">
           <MenuButton>FAQ</MenuButton>
-        </li>
+        </li> */}
       </ul>
     </div>
   );
