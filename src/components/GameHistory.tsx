@@ -40,7 +40,7 @@ type GameHistoryRowProps = {
 };
 function GameHistoryRow(props: GameHistoryRowProps) {
   const { step, stepResult, stepNumber } = props;
-  const { rewindToStep } = useContext(PlayingInterfaceContext);
+  const { rewindToStep, cluesGiven } = useContext(PlayingInterfaceContext);
   let lhsParts = [];
   if (step.stepType == "binary") {
     lhsParts = [
@@ -55,6 +55,7 @@ function GameHistoryRow(props: GameHistoryRowProps) {
       </HandCard>,
     ];
   }
+  const isAClue = cluesGiven >= stepNumber
   return (
     <div className="flex flex-row w-full justify-center items-center scale-75 gap-4">
       <div className="opacity-50 flex flex-row items-center gap-2">
@@ -66,12 +67,14 @@ function GameHistoryRow(props: GameHistoryRowProps) {
         {stepResult.success &&
           stepResult.cards.map((c, i) => <HandCard key={i} card={c} />)}
       </div>
-      <button
-        onClick={() => rewindToStep(stepNumber)}
-        className="rounded-xl bg-theme-red border-2 border-foreground h-9 w-9 cursor-pointer"
-      >
-        <FontAwesomeIcon icon={faTrash} />
-      </button>
+      {!isAClue && (
+        <button
+          onClick={() => rewindToStep(stepNumber)}
+          className="rounded-xl bg-theme-red border-2 border-foreground h-9 w-9 cursor-pointer"
+        >
+          <FontAwesomeIcon icon={faTrash} />
+        </button>
+      )}
     </div>
   );
 }

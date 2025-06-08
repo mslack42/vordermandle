@@ -52,6 +52,9 @@ type PlayingInterfaceContextState = {
   gameHistory: GameHistoryStep[];
   rewindToStep: (stepNumber: number) => void;
   complete: boolean;
+  offerClues: boolean;
+  cluesGiven: number;
+  onClueRequested: () => void;
 };
 export const PlayingInterfaceContext =
   createContext<PlayingInterfaceContextState>({
@@ -74,12 +77,18 @@ export const PlayingInterfaceContext =
     gameHistory: [],
     rewindToStep: () => {},
     complete: false,
+    offerClues: false,
+    cluesGiven: 0,
+    onClueRequested: () => {},
   });
 
 type PlayingInterfaceContextProviderProps = {
   game: CountdownGame;
   gameComplete?: boolean;
   onGameComplete?: () => void;
+  offerClues?: boolean;
+  cluesGiven?: number;
+  onClueRequested?: (c: number) => void;
 } & React.PropsWithChildren;
 export const PlayingInterfaceContextProvider = (
   props: PlayingInterfaceContextProviderProps
@@ -109,6 +118,8 @@ export const PlayingInterfaceContextProvider = (
     useState<EvaluationResult | null>(null);
   const [gameHistory, setGameHistory] = useState<GameHistoryStep[]>([]);
   const [complete, setComplete] = useState<boolean>(!!props.gameComplete);
+  const offerClues = !!props.offerClues;
+  const [cluesGiven, setCluesGiven] = useState<number>(props.cluesGiven ?? 0);
 
   const resetGame = () => {
     setPlay([]);
@@ -165,23 +176,29 @@ export const PlayingInterfaceContextProvider = (
     }
   }, [complete, props]);
 
-  const commitPendingResult = () => {
-    if (!pendingSolutionStep || !pendingSolutionStepResult?.success) {
+  const applyPendingResult = (
+    step: SolutionStep | null,
+    res: EvaluationResult | null,
+    handCards: CardWithId[],
+    playCards: CardWithId[],
+    socketCards: { [key: string]: CardWithId }
+  ) => {
+    if (!step || !res?.success) {
       return;
     }
     //Capture current step for game history
     const historyItem: GameHistoryStep = [
-      pendingSolutionStep!,
-      pendingSolutionStepResult,
-      [[...hand, ...play], sockettedCards, target],
+      step!,
+      res,
+      [[...handCards, ...playCards], socketCards, target],
     ];
     setGameHistory([...gameHistory, historyItem]);
     //Process next step
     let victory = false;
     setPlay([]);
     const newHand: CardWithId[] = [
-      ...hand,
-      ...pendingSolutionStepResult.cards.map((c) => {
+      ...handCards,
+      ...res.cards.map((c) => {
         return {
           card: c,
           id: uuidv4(),
@@ -200,14 +217,14 @@ export const PlayingInterfaceContextProvider = (
       };
     });
     const newSockettedCards: { [key: string]: CardWithId } = {};
-    Object.keys(sockettedCards).forEach((k) => {
+    Object.keys(socketCards).forEach((k) => {
       victory =
         victory ||
-        (sockettedCards[k].card.cardType != "socket" &&
-          sockettedCards[k].card.value == target.value);
+        (socketCards[k].card.cardType != "socket" &&
+          socketCards[k].card.value == target.value);
       newSockettedCards[k] = {
-        ...sockettedCards[k],
-        card: evolveCard(sockettedCards[k].card),
+        ...socketCards[k],
+        card: evolveCard(socketCards[k].card),
       };
     });
     const newTarget = evolveTarget(target);
@@ -227,6 +244,16 @@ export const PlayingInterfaceContextProvider = (
     setComplete(victory);
   };
 
+  const commitPendingResult = () => {
+    applyPendingResult(
+      pendingSolutionStep,
+      pendingSolutionStepResult,
+      hand,
+      play,
+      sockettedCards
+    );
+  };
+
   const rewindToStep = (stepNumber: number) => {
     if (stepNumber > gameHistory.length) {
       return;
@@ -239,6 +266,43 @@ export const PlayingInterfaceContextProvider = (
     setTarget(newStateSnapshot[2]);
     setGameHistory(newGameHistory);
   };
+
+  const onClueRequested = () => {
+    if (props.cluesGiven == gameHistory.length) {
+      const step = game.solution![props.cluesGiven];
+      let tempHand = [...hand, ...play, ...Object.values(sockettedCards)];
+      let matchedIds: string[] = [];
+      if (step.stepType == "binary") {
+        matchedIds = [
+          tempHand.filter(
+            (c) => JSON.stringify(c.card) == JSON.stringify(step.left)
+          )[0].id,
+          tempHand.filter(
+            (c) => JSON.stringify(c.card) == JSON.stringify(step.right)
+          )[0].id,
+        ];
+      } else {
+        matchedIds = [
+          tempHand.filter(
+            (c) => JSON.stringify(c.card) == JSON.stringify(step.inner)
+          )[0].id,
+          tempHand.filter(
+            (c) => JSON.stringify(c.card) == JSON.stringify(step.outer)
+          )[0].id,
+        ];
+      }
+      tempHand = tempHand.filter(c => !matchedIds.includes(c.id))
+      const res = EvaluateStep(step);
+      applyPendingResult(step, res, tempHand, [], {});
+      setCluesGiven(cluesGiven + 1);
+    }
+  };
+
+  useEffect(() => {
+    if (props.onClueRequested) {
+      props.onClueRequested(cluesGiven);
+    }
+  }, [cluesGiven, props]);
 
   const state: PlayingInterfaceContextState = {
     hand,
@@ -260,6 +324,9 @@ export const PlayingInterfaceContextProvider = (
     gameHistory,
     rewindToStep,
     complete,
+    offerClues,
+    cluesGiven,
+    onClueRequested,
   };
 
   return (

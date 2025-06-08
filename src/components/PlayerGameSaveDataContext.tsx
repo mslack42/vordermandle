@@ -9,7 +9,7 @@ type PlayerGameSaveDataContextState = {
   isComplete: boolean;
   cluesGiven: number;
   setGameSolved: () => void;
-  incrementCluesGiven: () => void;
+  setCluesGiven: (n:number) => void;
 };
 export const PlayerGameSaveDataContext =
   createContext<PlayerGameSaveDataContextState>({
@@ -35,7 +35,7 @@ export const PlayerGameSaveDataContextProvider = (
         solved: false,
       };
   const [solved, setSolved] = useState(false);
-  const [cluesGiven] = useState(0);
+  const [cluesGiven, setClues] = useState(0);
 
   const localDispatch = useLocalStoreDispatch();
   useEffect(() => {
@@ -50,19 +50,14 @@ export const PlayerGameSaveDataContextProvider = (
   const setGameSolved = () => {
     setSolved(true);
   };
+  const setCluesGiven = (n:number) => {
+    setClues(n)
+  }
   const state: PlayerGameSaveDataContextState = {
     isComplete: dailyData.solved,
     cluesGiven: dailyData.cluesGiven,
     setGameSolved,
-    incrementCluesGiven: () => {
-      localDispatch(
-        updateDailyGame({
-          gameId: props.gameId,
-          cluesGiven: dailyData.cluesGiven + 1,
-          solved: dailyData.solved,
-        })
-      );
-    },
+    setCluesGiven
   };
 
   return (

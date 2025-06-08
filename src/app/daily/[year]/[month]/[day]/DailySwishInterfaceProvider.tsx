@@ -18,13 +18,20 @@ export function DailySwishInterfaceProvider(props: Props) {
 }
 
 function Inner(props: Props) {
-  const { isComplete, setGameSolved } = useContext(PlayerGameSaveDataContext);
+  const { isComplete, setGameSolved, cluesGiven, setCluesGiven } = useContext(PlayerGameSaveDataContext);
+
+  const handleClueRequested = (n:number) => {
+    setCluesGiven(n)
+  }
 
   return (
     <PlayingInterfaceContextProvider
       game={props.game}
       onGameComplete={() => setGameSolved()}
       gameComplete={isComplete}
+      offerClues
+      cluesGiven={cluesGiven}
+      onClueRequested={handleClueRequested}
     >
       {props.children}
     </PlayingInterfaceContextProvider>
