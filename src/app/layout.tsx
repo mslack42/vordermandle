@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import LocalStoreProvider from "@/localstore/LocalStoreProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,13 +29,17 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="w-full h-full flex flex-col justify-center  text-foreground">
-          <div className="w-full h-full max-h-[800px]">
-            <div className="w-full h-full flex flex-row justify-center">
-              <div className="w-full max-w-[600px] max-h-[800px]">{children}</div>
+        <LocalStoreProvider>
+          <div className="w-full h-full flex flex-col justify-center  text-foreground">
+            <div className="w-full h-full max-h-[800px]">
+              <div className="w-full h-full flex flex-row justify-center">
+                <div className="w-full max-w-[600px] max-h-[800px]">
+                  {children}
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        </LocalStoreProvider>
       </body>
     </html>
   );

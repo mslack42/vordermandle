@@ -1,9 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { act } from "react";
 
 type DailyPuzzleData = {
-  year: number,
-  month: number,
-  day: number,
   solved: boolean,
   cluesGiven: number
 }
@@ -11,29 +9,26 @@ type CampaignPuzzleData = {
   solved: boolean
 }
 type CampaignPuzzleDataMap = {
-  [key:string]: CampaignPuzzleData
+  [key: string]: CampaignPuzzleData
 }
 type CampaignPuzzleGroup = {
   unlocked: boolean,
   puzzles: CampaignPuzzleDataMap
 }
 type CampaignPuzzleGroupMap = {
-  [key:string]: CampaignPuzzleGroup
+  [key: string]: CampaignPuzzleGroup
 }
 type DailyPuzzleDataMap = {
-  [key:string]: DailyPuzzleData
+  [key: string]: DailyPuzzleData
 }
 
 type PlayerDataState = {
-  // TODO Delete count once placeholder usage is removed
-    count: number
-    dailyPuzzleData: DailyPuzzleDataMap
-    campaignPuzzleData: CampaignPuzzleGroupMap
+  dailyPuzzleData: DailyPuzzleDataMap
+  campaignPuzzleData: CampaignPuzzleGroupMap
 }
 
 const initialState: PlayerDataState = {
-  count: 0,
-  dailyPuzzleData:{},
+  dailyPuzzleData: {},
   campaignPuzzleData: {}
 };
 
@@ -41,12 +36,21 @@ const playerDataSlice = createSlice({
   name: "playerData",
   initialState,
   reducers: {
-    inc: (state, action: PayloadAction<number>) => {
-      state.count = state.count + action.payload
-    },
+    updateDailyGame: (state, action: PayloadAction<{ gameId: string, solved: boolean, cluesGiven: number }>) => {
+      let gameData = state.dailyPuzzleData[action.payload.gameId]
+      if (gameData == null) {
+        gameData = {
+          cluesGiven: 0,
+          solved: false,
+        }
+      }
+      gameData = { ...gameData, solved: action.payload.solved, cluesGiven: action.payload.cluesGiven }
+      const newDailyData = {...state.dailyPuzzleData, [action.payload.gameId]: gameData}
+      state.dailyPuzzleData = newDailyData
+    }
   },
 });
 
-export const { inc } = playerDataSlice.actions;
+export const { updateDailyGame } = playerDataSlice.actions;
 
 export default playerDataSlice.reducer;

@@ -26,6 +26,7 @@ export function CardPlayArea() {
     setHand,
     setPlay,
     setSockettedCards,
+    complete
   } = useContext(PlayingInterfaceContext);
   const handleDragStart = (event: DragStartEvent) => {
     let cardMatches: CardWithId[] = [];
@@ -190,6 +191,7 @@ export function CardPlayArea() {
       onDragStart={(evt) => handleDragStart(evt)}
       onDragEnd={(evt) => handleDragEnd(evt)}
       sensors={sensors}
+
     >
       <div className="w-full flex flex-col gap-2">
         <PlayBox cards={play} />
@@ -201,7 +203,7 @@ export function CardPlayArea() {
           easing: "cubic-bezier(0.18, 0.67, 0.6, 1.22)",
         }}
       >
-        {draggingCard != null && (
+        {!complete && draggingCard != null && (
           <div className="cursor-grab select-none h-25 md:h-30 flex flex-col justify-center">
             <HandCard card={draggingCard.card.card}>
               {draggingCard.card.card.cardType == "socket" &&

@@ -17,10 +17,14 @@ import { PlugCard } from "@/game/common/Card";
 import { EvaluateStep } from "@/game/evaluate/evaluateStep";
 import { evolveCard, evolveTarget } from "@/game/evaluate/evolve";
 
-type GameStateSnapshot = [CardWithId[], {
+type GameStateSnapshot = [
+  CardWithId[],
+  {
     [key: string]: CardWithId;
-  }, Target]
-type GameHistoryStep = [SolutionStep, EvaluationResult, GameStateSnapshot]
+  },
+  Target
+];
+type GameHistoryStep = [SolutionStep, EvaluationResult, GameStateSnapshot];
 
 type PlayingInterfaceContextState = {
   hand: CardWithId[];
@@ -45,8 +49,9 @@ type PlayingInterfaceContextState = {
   pendingSolutionStep: SolutionStep | null;
   pendingSolutionStepResult: EvaluationResult | null;
   commitPendingResult: () => void;
-  gameHistory: GameHistoryStep[],
-  rewindToStep: (stepNumber:number) => void
+  gameHistory: GameHistoryStep[];
+  rewindToStep: (stepNumber: number) => void;
+  complete: boolean;
 };
 export const PlayingInterfaceContext =
   createContext<PlayingInterfaceContextState>({
@@ -67,11 +72,14 @@ export const PlayingInterfaceContext =
     pendingSolutionStepResult: null,
     commitPendingResult: () => {},
     gameHistory: [],
-    rewindToStep: () => {}
+    rewindToStep: () => {},
+    complete: false,
   });
 
 type PlayingInterfaceContextProviderProps = {
   game: CountdownGame;
+  gameComplete?: boolean;
+  onGameComplete?: () => void;
 } & React.PropsWithChildren;
 export const PlayingInterfaceContextProvider = (
   props: PlayingInterfaceContextProviderProps
@@ -99,7 +107,8 @@ export const PlayingInterfaceContextProvider = (
     useState<SolutionStep | null>(null);
   const [pendingSolutionStepResult, setPendingSolutionStepResult] =
     useState<EvaluationResult | null>(null);
-    const [gameHistory, setGameHistory] = useState<GameHistoryStep[]>([])
+  const [gameHistory, setGameHistory] = useState<GameHistoryStep[]>([]);
+  const [complete, setComplete] = useState<boolean>(!!props.gameComplete);
 
   const resetGame = () => {
     setPlay([]);
@@ -115,7 +124,7 @@ export const PlayingInterfaceContextProvider = (
     setSockettedCards({});
     setOperatorChoice(null);
     setTarget(game.target);
-    setGameHistory([])
+    setGameHistory([]);
   };
 
   useEffect(() => {
@@ -150,6 +159,12 @@ export const PlayingInterfaceContextProvider = (
     }
   }, [operatorChoice, play, sockettedCards]);
 
+  useEffect(() => {
+    if (complete && !!props.onGameComplete) {
+      props.onGameComplete();
+    }
+  }, [complete, props]);
+
   const commitPendingResult = () => {
     if (!pendingSolutionStep || !pendingSolutionStepResult?.success) {
       return;
@@ -158,10 +173,11 @@ export const PlayingInterfaceContextProvider = (
     const historyItem: GameHistoryStep = [
       pendingSolutionStep!,
       pendingSolutionStepResult,
-      [[...hand,...play],sockettedCards,target]
-    ]
-    setGameHistory([...gameHistory, historyItem])
+      [[...hand, ...play], sockettedCards, target],
+    ];
+    setGameHistory([...gameHistory, historyItem]);
     //Process next step
+    let victory = false;
     setPlay([]);
     const newHand: CardWithId[] = [
       ...hand,
@@ -171,36 +187,58 @@ export const PlayingInterfaceContextProvider = (
           id: uuidv4(),
         };
       }),
-    ].map((c) => {
+    ];
+    victory =
+      victory ||
+      newHand.some(
+        (c) => c.card.cardType != "socket" && c.card.value == target.value
+      );
+    const evolvedNewHand = newHand.map((c) => {
       return {
         card: evolveCard(c.card),
         id: c.id,
       };
     });
-    setHand(newHand);
     const newSockettedCards: { [key: string]: CardWithId } = {};
     Object.keys(sockettedCards).forEach((k) => {
+      victory =
+        victory ||
+        (sockettedCards[k].card.cardType != "socket" &&
+          sockettedCards[k].card.value == target.value);
       newSockettedCards[k] = {
         ...sockettedCards[k],
         card: evolveCard(sockettedCards[k].card),
       };
     });
+    const newTarget = evolveTarget(target);
+
+    victory =
+      victory ||
+      evolvedNewHand.some(
+        (c) => c.card.cardType != "socket" && c.card.value == newTarget.value
+      ) ||
+      Object.values(newSockettedCards).some(
+        (v) => v.card.cardType != "socket" && v.card.value == newTarget.value
+      );
+
+    setHand(evolvedNewHand);
     setSockettedCards(newSockettedCards);
-    setTarget(evolveTarget(target));
+    setTarget(newTarget);
+    setComplete(victory);
   };
 
-  const rewindToStep = (stepNumber:number) => {
+  const rewindToStep = (stepNumber: number) => {
     if (stepNumber > gameHistory.length) {
-      return
+      return;
     }
-    const newGameHistory = gameHistory.slice(0,stepNumber-1)
-    const newStateSnapshot = gameHistory[stepNumber-1][2]
-    setHand(newStateSnapshot[0])
-    setPlay([])
-    setSockettedCards(newStateSnapshot[1])
-    setTarget(newStateSnapshot[2])
-    setGameHistory(newGameHistory)
-  }
+    const newGameHistory = gameHistory.slice(0, stepNumber - 1);
+    const newStateSnapshot = gameHistory[stepNumber - 1][2];
+    setHand(newStateSnapshot[0]);
+    setPlay([]);
+    setSockettedCards(newStateSnapshot[1]);
+    setTarget(newStateSnapshot[2]);
+    setGameHistory(newGameHistory);
+  };
 
   const state: PlayingInterfaceContextState = {
     hand,
@@ -220,7 +258,8 @@ export const PlayingInterfaceContextProvider = (
     pendingSolutionStepResult,
     commitPendingResult,
     gameHistory,
-    rewindToStep
+    rewindToStep,
+    complete,
   };
 
   return (

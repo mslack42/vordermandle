@@ -9,7 +9,8 @@ type CardBoxProps = {
   home: "hand" | "play" | "socket";
   disabled?: boolean;
   grayed?: boolean;
-  isSocketted?: boolean
+  isSocketted?: boolean;
+  onClick?: () => void
 };
 export function CardBox(props: CardBoxProps) {
   const { attributes, listeners, setNodeRef, transform, transition } =
@@ -34,6 +35,7 @@ export function CardBox(props: CardBoxProps) {
         (!props.isSocketted ? "h-25 md:h-30 flex flex-col justify-center " : "") +
         (props.grayed ? "cursor-none opacity-50" : "cursor-grab select-none")
       }
+      onClick={props.onClick}
     >
       <HandCard card={props.card.card}>
         {props.card.card.cardType != "socket" ? (

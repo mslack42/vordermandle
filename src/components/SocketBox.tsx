@@ -8,12 +8,12 @@ type SocketBoxProps = {
   socketCard: CardWithId;
 };
 export function SocketBox(props: SocketBoxProps) {
-  const { sockettedCards, draggingCard } = useContext(PlayingInterfaceContext);
+  const { sockettedCards, draggingCard, complete } = useContext(PlayingInterfaceContext);
   const sockettedCard = sockettedCards["socket" + props.socketCard.id];
   const disableSocket = sockettedCard != null || draggingCard?.card.card.cardType == "socket";
   const { attributes, listeners, setNodeRef } = useSortable({
     id: "socket" + props.socketCard.id,
-    disabled: disableSocket,
+    disabled: disableSocket || complete,
     data: {
       home: "socket",
     },
@@ -31,7 +31,7 @@ export function SocketBox(props: SocketBoxProps) {
         <CardBox
           home="socket"
           card={sockettedCard}
-          disabled={draggingCard != null}
+          disabled={draggingCard != null || complete}
           isSocketted
           grayed={draggingCard?.card.id == sockettedCard.id} />
       )}
