@@ -25,25 +25,30 @@ type PlayerGameSaveDataContextProviderProps = {
 export const PlayerGameSaveDataContextProvider = (
   props: PlayerGameSaveDataContextProviderProps
 ) => {
-  const dailyData = useLocalStoreSelector(
-    (p) => p.playerData.dailyPuzzleData[props.gameId]
-  ) ?? {
-    cluesGiven: 0,
-    solved: false,
-  };
-  const [solved, setSolved] = useState(false)
-  const [cluesGiven] = useState(0)
+  const allDailyData = useLocalStoreSelector(
+    (p) => p.playerData.dailyPuzzleData
+  );
+  const dailyData = Object.keys(allDailyData).includes(props.gameId)
+    ? allDailyData[props.gameId]
+    : {
+        cluesGiven: 0,
+        solved: false,
+      };
+  const [solved, setSolved] = useState(false);
+  const [cluesGiven] = useState(0);
 
   const localDispatch = useLocalStoreDispatch();
   useEffect(() => {
-    localDispatch(updateDailyGame({
-      gameId: props.gameId,
-      cluesGiven,
-      solved
-    }))
-  }, [cluesGiven, localDispatch, props.gameId, solved])
+    localDispatch(
+      updateDailyGame({
+        gameId: props.gameId,
+        cluesGiven,
+        solved,
+      })
+    );
+  }, [cluesGiven, localDispatch, props.gameId, solved]);
   const setGameSolved = () => {
-    setSolved(true)
+    setSolved(true);
   };
   const state: PlayerGameSaveDataContextState = {
     isComplete: dailyData.solved,
