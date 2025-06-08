@@ -23,7 +23,13 @@ export function HandBox(props: HandBoxProps) {
       strategy={rectSortingStrategy}
     >
       <div
-        className="w-full flex flex-row justify-center gap-3 border-8 border-dashed border-theme-yellow items-center h-32 md:h-38"
+        className="w-full flex flex-row justify-center gap-1 md:gap-3 border-8 border-dashed border-theme-yellow items-center h-33 md:h-38 px-2 overflow-x-auto *:        [&::-webkit-scrollbar]:w-2
+        [&::-webkit-scrollbar-track]:rounded-full
+       [&::-webkit-scrollbar-track]:bg-gray-100
+       [&::-webkit-scrollbar-thumb]:rounded-full
+  [&::-webkit-scrollbar-thumb]:bg-gray-300
+  dark:[&::-webkit-scrollbar-track]:bg-neutral-700
+  dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 "
         ref={setNodeRef}
       >
         {props.cards.map((c) => {
