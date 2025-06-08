@@ -54,7 +54,7 @@ export function EqualsBezel(props: {
   return (
     <div
       className={
-        "h-18 w-18 text-lg rounded-xl border-2 border-foreground cursor-pointer " +
+        "h-13 w-13 md:h-18 md:w-18 md:text-lg rounded-xl border-2 border-foreground cursor-pointer " +
         (!!props.operatorChoice ? colours[props.operatorChoice] : colours["/"])
       }
     >
@@ -71,7 +71,7 @@ export function EqualsBezel(props: {
 
 function StepError(props: { errorReason: string }) {
   return (
-    <div className="bg-foreground text-background p-2 w-26 text-wrap text-center">
+    <div className="bg-foreground text-background p-2 w-26 text-wrap text-center text-sm md:text-base">
       <p>{props.errorReason}</p>
     </div>
   );

@@ -31,7 +31,7 @@ export function CardBox(props: CardBoxProps) {
       {...listeners}
       {...attributes}
       className={
-        (!props.isSocketted ? "h-34 flex flex-col justify-center " : "") +
+        (!props.isSocketted ? "h-25 md:h-30 flex flex-col justify-center " : "") +
         (props.grayed ? "cursor-none opacity-50" : "cursor-grab select-none")
       }
     >

@@ -26,7 +26,7 @@ export default async function ListOfDailyGames() {
       <div className="flex-none w-full min-w-full flex flex-row justify-between p-2 pb-4">
         <div className="flex-1/6">
           <Link href={"/"}>
-            <button className="p-2 bg-theme-red text-sm rounded-xl border-foreground border-4 hover:bg-theme-red-darker">
+            <button className="p-2 bg-theme-red text-sm rounded-xl border-foreground border-4 hover:bg-theme-red-darker cursor-pointer">
               Back
             </button>
           </Link>
@@ -72,7 +72,7 @@ function DailyPuzzleButton(props: DailyPuzzleButtonProps) {
   return (
     <Link href={puzzleUrl(props.date)}>
       <button
-        className={"w-80 p-2 rounded-xl border-foreground border-4 " + bg}
+        className={"w-80 p-2 rounded-xl border-foreground border-4 cursor-pointer " + bg}
       >
         <div className="w-full flex flex-row justify-between">
           <p>{props.date.toDateString()}</p>

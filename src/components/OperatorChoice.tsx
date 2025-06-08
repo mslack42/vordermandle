@@ -23,13 +23,13 @@ export function OperatorChoice(props: OperatorChoiceProps) {
   return (
     <>
       {props.operatorChoice == null ? (
-        <div className="h-20 w-20 flex flex-row text-lg flex-wrap justify-between">
+        <div className="h-15 w-15 md:h-20 md:w-20 flex flex-row text-lg flex-wrap justify-between">
           {operators.map((op) => {
             return (
               <button
                 key={op}
                 className={
-                  "h-9 w-9 text-lg cursor-pointer rounded-xl " + colours[op]
+                  "h-7 w-7 md:h-9 md:w-9 text-base md:text-lg cursor-pointer rounded-xl " + colours[op]
                 }
                 onClick={() => props.setOperatorChoice(op as Operator)}
               >
@@ -56,7 +56,7 @@ export function OperatorBezel(props: {
   return (
     <div
       className={
-        "h-18 w-18 flex flex-row text-xl rounded-xl " +
+        "h-13 w-13 md:h-18 md:w-18 flex flex-row text-xl rounded-xl " +
         colours[props.operatorChoice]
       }
     >

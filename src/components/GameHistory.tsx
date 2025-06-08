@@ -11,7 +11,16 @@ import { EqualsBezel } from "./EqualsButton";
 export function GameHistory() {
   const { gameHistory } = useContext(PlayingInterfaceContext);
   return (
-    <ol className="flex flex-col w-full ">
+    <ol
+      className="flex flex-col w-full h-full overflow-y-auto 
+        [&::-webkit-scrollbar]:w-2
+        [&::-webkit-scrollbar-track]:rounded-full
+      [&::-webkit-scrollbar-track]:bg-gray-100
+        [&::-webkit-scrollbar-thumb]:rounded-full
+      [&::-webkit-scrollbar-thumb]:bg-gray-300
+      dark:[&::-webkit-scrollbar-track]:bg-neutral-700
+      dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 "
+    >
       {gameHistory.map((gh, i) => (
         <li key={i}>
           <GameHistoryRow
@@ -57,7 +66,10 @@ function GameHistoryRow(props: GameHistoryRowProps) {
         {stepResult.success &&
           stepResult.cards.map((c, i) => <HandCard key={i} card={c} />)}
       </div>
-      <button onClick={() => rewindToStep(stepNumber)} className="rounded-xl bg-theme-red border-2 border-foreground h-9 w-9 cursor-pointer">
+      <button
+        onClick={() => rewindToStep(stepNumber)}
+        className="rounded-xl bg-theme-red border-2 border-foreground h-9 w-9 cursor-pointer"
+      >
         <FontAwesomeIcon icon={faTrash} />
       </button>
     </div>

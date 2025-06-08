@@ -44,9 +44,13 @@ export default async function DailyGameAtIndex({
   }
 
   return (
-    <div>
-      <ButtonBar gameDate={gameDate} />
-      <SwishInterface game={game} />
+    <div className="h-full w-full flex flex-col">
+      <div className="w-full flex-none h-min">
+        <ButtonBar gameDate={gameDate} />
+      </div>
+      <div className="w-full h-full grow">
+        <SwishInterface game={game} />
+      </div>
     </div>
   );
 }

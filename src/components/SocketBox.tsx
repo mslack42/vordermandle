@@ -20,7 +20,7 @@ export function SocketBox(props: SocketBoxProps) {
   });
   return (
     <div
-      className="w-full h-34"
+      className="w-full h-25 md:h-30"
       ref={setNodeRef}
       {...attributes}
       {...listeners}
