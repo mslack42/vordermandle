@@ -39,16 +39,35 @@ export function OperatorChoice(props: OperatorChoiceProps) {
           })}
         </div>
       ) : (
-        <div className={"h-18 w-18 flex flex-row text-xl rounded-xl " + colours[props.operatorChoice]}>
-          <button
-            className="h-full w-full cursor-pointer"
-            onClick={() => props.setOperatorChoice(null)}
-          >
-            <OperatorIcon op={props.operatorChoice}/>
-          </button>
-        </div>
+        <OperatorBezel
+          onClick={() => props.setOperatorChoice(null)}
+          operatorChoice={props.operatorChoice}
+        />
       )}
     </>
+  );
+}
+
+export function OperatorBezel(props: {
+  operatorChoice: Operator;
+  onClick?: () => void;
+  disabled?: boolean;
+}) {
+  return (
+    <div
+      className={
+        "h-18 w-18 flex flex-row text-xl rounded-xl " +
+        colours[props.operatorChoice]
+      }
+    >
+      <button
+        className="h-full w-full cursor-pointer"
+        disabled={props.disabled}
+        onClick={props.onClick}
+      >
+        <OperatorIcon op={props.operatorChoice} />
+      </button>
+    </div>
   );
 }
 

@@ -21,24 +21,11 @@ export function EqualsButton() {
 
   return (
     <>
-      <div
-        className={
-          "h-18 w-18 text-lg rounded-xl border-2 border-foreground cursor-pointer " +
-          (disabled
-            ? "bg-background "
-            : !!operatorChoice
-            ? colours[operatorChoice]
-            : colours["/"])
-        }
-      >
-        <button
-          className="h-full w-full "
-          disabled={disabled}
-          onClick={commitPendingResult}
-        >
-          <FontAwesomeIcon icon={faEquals} />
-        </button>
-      </div>
+      <EqualsBezel
+        onClick={commitPendingResult}
+        operatorChoice={operatorChoice}
+        disabled={disabled}
+      />
       {pendingSolutionStepResult?.success == false ? (
         <StepError errorReason={pendingSolutionStepResult.errorReason} />
       ) : (
@@ -56,6 +43,29 @@ export function EqualsButton() {
         <></>
       )}
     </>
+  );
+}
+
+export function EqualsBezel(props: {
+  disabled?: boolean;
+  operatorChoice?: Operator | null;
+  onClick?: () => void;
+}) {
+  return (
+    <div
+      className={
+        "h-18 w-18 text-lg rounded-xl border-2 border-foreground cursor-pointer " +
+        (!!props.operatorChoice ? colours[props.operatorChoice] : colours["/"])
+      }
+    >
+      <button
+        className="h-full w-full "
+        disabled={props.disabled}
+        onClick={props.onClick}
+      >
+        <FontAwesomeIcon icon={faEquals} />
+      </button>
+    </div>
   );
 }
 
