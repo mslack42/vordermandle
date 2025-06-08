@@ -28,7 +28,7 @@ export const PlayerGameSaveDataContextProvider = (
   const allDailyData = useLocalStoreSelector(
     (p) => p.playerData.dailyPuzzleData
   );
-  const dailyData = Object.keys(allDailyData).includes(props.gameId)
+  const dailyData = allDailyData && Object.keys(allDailyData).includes(props.gameId)
     ? allDailyData[props.gameId]
     : {
         cluesGiven: 0,
