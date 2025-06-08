@@ -8,7 +8,7 @@ export function RoundCard(inner: PlugCard): EvaluationResult {
     if (newValue > NumberUpperLimit) {
         return {
             success: false,
-            errorReason: "Too big"
+            errorReason: "That number is a bit too big"
         };
     }
     return {

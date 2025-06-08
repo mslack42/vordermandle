@@ -202,7 +202,7 @@ export function CardPlayArea() {
         }}
       >
         {draggingCard != null && (
-          <div className="cursor-pointer select-none h-34 flex flex-col justify-center">
+          <div className="cursor-grab select-none h-34 flex flex-col justify-center">
             <HandCard card={draggingCard.card.card}>
               {draggingCard.card.card.cardType == "socket" &&
                 !!sockettedCards["socket" + draggingCard.card.id] && (

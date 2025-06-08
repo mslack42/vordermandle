@@ -6,7 +6,7 @@ import { weaken } from "../weaken";
 export function SquareCard(inner: PlugCard): EvaluationResult {
     if (inner.value > Math.sqrt(NumberUpperLimit)) {
         return {
-            success: false, errorReason: "Numbers don't get that big"
+            success: false, errorReason: "That number is a bit too big"
         };
     }
     return {

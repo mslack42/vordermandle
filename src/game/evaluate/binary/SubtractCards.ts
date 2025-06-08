@@ -6,13 +6,13 @@ export function SubtractCards(left: PlugCard, right: PlugCard): EvaluationResult
     if (left.cardType == "alternate" && right.cardType == "alternate") {
         return {
             success: false,
-            errorReason: "Alternate-Alternate is not resolvable"
+            errorReason: "Alternate cards are mutually incompatible"
         };
     }
     if (left.value <= right.value) {
         return {
             success: false,
-            errorReason: "Negative numbers not allowed"
+            errorReason: "Negative numbers are not allowed"
         };
     }
     const newValue = left.value - right.value;

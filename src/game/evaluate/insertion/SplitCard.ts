@@ -6,7 +6,7 @@ export function SplitCard(inner: PlugCard): EvaluationResult {
     if (inner.value % 2 != 0) {
         return {
             success: false,
-            errorReason: "Can't split this into two equal halves"
+            errorReason: "That can't split into two equal halves"
         };
     }
     const newCard: PlugCard = {

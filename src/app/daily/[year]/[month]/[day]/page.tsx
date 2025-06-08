@@ -3,7 +3,7 @@ import { CountdownGame } from "@/game/common/CountdownGame";
 import { getGameByDate } from "@/sheetsDB/getGamesList";
 import { unstable_cache } from "next/cache";
 import { redirect } from "next/navigation";
-import { FeedbackLink } from "./FeedbackLink";
+import Link from "next/link";
 
 type RouteParams = {
   year: number;
@@ -47,7 +47,6 @@ export default async function DailyGameAtIndex({
     <div>
       <ButtonBar gameDate={gameDate} />
       <SwishInterface game={game} />
-      <FeedbackLink domain={`Puzzle ${year}/${month}/${day}`} />
     </div>
   );
 }
@@ -64,36 +63,66 @@ function ButtonBar(props: ButtonBarProps) {
   );
   const disablePrev = props.gameDate <= oldestGame;
   const disableNext = props.gameDate >= now;
+
+  const year = props.gameDate.getFullYear();
+  const month = props.gameDate.getMonth() + 1;
+  const date = props.gameDate.getDate();
+
+  const nextDate = new Date(year, month - 1, date + 1);
+  const prevDate = new Date(year, month - 1, date - 1);
+
   return (
-    <div className="w-full flex flex-row justify-between text-center text-sm">
+    <div className="w-full flex flex-row justify-between text-center text-sm select-none">
       <div className="flex-1/3 px-4 flex flex-row justify-evenly">
         {!disablePrev && (
-          <div className="flex flex-col justify-center">
-            <a className="bg-theme-red border-4 rounded-xl border-foreground p-1">
+          <div className="flex flex-col justify-center ">
+            <Link
+              href={`/daily/${prevDate.getFullYear()}/${
+                prevDate.getMonth() + 1
+              }/${prevDate.getDate()}`}
+              className="bg-theme-red border-4 rounded-xl border-foreground p-1 cursor-pointer"
+            >
               Prev
-            </a>
+            </Link>
           </div>
         )}
         {!disableNext && (
-          <div className="flex flex-col justify-center">
-            <a className="bg-theme-red border-4 rounded-xl border-foreground p-1">
+          <div className="flex flex-col justify-center ">
+            <Link
+              href={`/daily/${nextDate.getFullYear()}/${
+                nextDate.getMonth() + 1
+              }/${nextDate.getDate()}`}
+              className="bg-theme-red border-4 rounded-xl border-foreground p-1 cursor-pointer"
+            >
               Next
-            </a>
+            </Link>
           </div>
         )}
       </div>
-      <div className="flex-1/3 flex flex-row justify-center">
-        <a className="bg-theme-blue border-4 border-foreground p-1 text-lg">
+      <div className="flex-1/3 flex flex-row justify-center ">
+        <Link
+          href={"/"}
+          className="bg-theme-blue border-4 border-foreground p-1 text-lg cursor-pointer"
+        >
           Vordermandle
-        </a>
+        </Link>
       </div>
-      <div className="flex-1/3  flex flex-row justify-center">
+      <div className="flex-1/3  flex flex-row justify-center ">
         <div className="flex flex-col justify-center">
-          <a className="bg-theme-purple border-4 rounded-xl border-foreground p-1">
+          <a
+            className="bg-theme-purple border-4 rounded-xl border-foreground p-1 cursor-pointer"
+            href={FeedbackLink(`Puzzle ${year}/${month}/${date}`)}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Feedback
           </a>
         </div>
       </div>
     </div>
   );
+}
+
+function FeedbackLink(domain: string) {
+  return process.env.FEEDBACK_URL_ROOT + domain;
 }

@@ -7,7 +7,7 @@ export function PrimeCard(inner: PlugCard): EvaluationResult {
     if (inner.value > primes.length) {
         return {
             success: false,
-            errorReason: "Not enough primes"
+            errorReason: "That number is a bit too big"
         };
     }
     return {

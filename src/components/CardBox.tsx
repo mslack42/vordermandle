@@ -32,7 +32,7 @@ export function CardBox(props: CardBoxProps) {
       {...attributes}
       className={
         (!props.isSocketted ? "h-34 flex flex-col justify-center " : "") +
-        (props.grayed ? "cursor-none opacity-50" : "cursor-pointer select-none")
+        (props.grayed ? "cursor-none opacity-50" : "cursor-grab select-none")
       }
     >
       <HandCard card={props.card.card}>

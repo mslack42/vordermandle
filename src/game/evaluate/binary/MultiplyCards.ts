@@ -8,14 +8,14 @@ export function MultiplyCards(left: PlugCard, right: PlugCard): EvaluationResult
     if (left.cardType == "alternate" && right.cardType == "alternate") {
         return {
             success: false,
-            errorReason: "Alternate-Alternate is not resolvable"
+            errorReason: "Alternate cards are mutually incompatible"
         };
     }
     const newValue = left.value * right.value;
     if (newValue > NumberUpperLimit) {
         return {
             success: false,
-            errorReason: "Numbers don't go that big"
+            errorReason: "That number is a bit too big"
         };
     }
     if (left.cardType == "alternate") {

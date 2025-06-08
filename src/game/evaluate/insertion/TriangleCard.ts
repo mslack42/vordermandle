@@ -7,7 +7,7 @@ const maxTriangleInput = 0.5 * (-1 + Math.sqrt(1 + 8 * NumberUpperLimit));
 
 export function TriangleCard(inner: PlugCard): EvaluationResult {
     if (inner.value > maxTriangleInput) {
-        return { success: false, errorReason: "Numbers don't get that big" };
+        return { success: false, errorReason: "That number is a bit too big" };
     }
     return {
         success: true,

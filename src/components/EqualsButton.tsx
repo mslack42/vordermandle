@@ -1,11 +1,20 @@
 import { useContext } from "react";
 import { PlayingInterfaceContext } from "./PlayingInterfaceContext";
 import { HandCard } from "./HandCard";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEquals } from "@fortawesome/free-solid-svg-icons";
+import { Operator } from "./Operator";
+
+const colours: { [key in Operator]: string } = {
+  "+": "bg-theme-yellow hover:bg-theme-yellow-darker",
+  "-": "bg-theme-purple hover:bg-theme-purple-darker",
+  "*": "bg-theme-green hover:bg-theme-green-darker",
+  "/": "bg-theme-red hover:bg-theme-red-darker",
+};
 
 export function EqualsButton() {
-  const { pendingSolutionStepResult, commitPendingResult } = useContext(
-    PlayingInterfaceContext
-  );
+  const { pendingSolutionStepResult, commitPendingResult, operatorChoice } =
+    useContext(PlayingInterfaceContext);
 
   const disabled =
     !pendingSolutionStepResult || !pendingSolutionStepResult.success;
@@ -14,8 +23,12 @@ export function EqualsButton() {
     <>
       <div
         className={
-          "h-24 w-24 text-lg rounded-xl " +
-          (disabled ? "bg-gray-200 text-black" : "bg-green-400")
+          "h-18 w-18 text-lg rounded-xl border-2 border-foreground cursor-pointer " +
+          (disabled
+            ? "bg-background "
+            : !!operatorChoice
+            ? colours[operatorChoice]
+            : colours["/"])
         }
       >
         <button
@@ -23,11 +36,14 @@ export function EqualsButton() {
           disabled={disabled}
           onClick={commitPendingResult}
         >
-          {pendingSolutionStepResult?.success == false
-            ? pendingSolutionStepResult.errorReason
-            : "="}
+          <FontAwesomeIcon icon={faEquals} />
         </button>
       </div>
+      {pendingSolutionStepResult?.success == false ? (
+        <StepError errorReason={pendingSolutionStepResult.errorReason} />
+      ) : (
+        <></>
+      )}
       {pendingSolutionStepResult?.success ? (
         pendingSolutionStepResult.cards.map((c, i) => {
           return (
@@ -40,5 +56,13 @@ export function EqualsButton() {
         <></>
       )}
     </>
+  );
+}
+
+function StepError(props: { errorReason: string }) {
+  return (
+    <div className="bg-foreground text-background p-2 w-26 text-wrap text-center">
+      <p>{props.errorReason}</p>
+    </div>
   );
 }

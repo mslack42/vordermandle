@@ -6,20 +6,20 @@ export function DivideCards(left: PlugCard, right: PlugCard): EvaluationResult {
     if (left.cardType == "alternate" && right.cardType == "alternate") {
         return {
             success: false,
-            errorReason: "Alternate-Alternate is not resolvable"
+            errorReason: "Alternate cards are mutually incompatible"
         };
     }
     if (left.value <= right.value) {
         return {
             success: false,
-            errorReason: "Fractions not allowed"
+            errorReason: "Fractions are not allowed"
         };
     }
     const newValue = Math.floor(left.value / right.value);
     if (newValue * right.value != left.value) {
         return {
             success: false,
-            errorReason: "Integer division only please"
+            errorReason: "Only integer division allowed"
         };
     }
     if (left.cardType == "alternate") {
