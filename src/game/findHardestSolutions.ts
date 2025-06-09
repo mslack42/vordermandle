@@ -71,7 +71,8 @@ function collectSolutions(
                     .filter(c => c.cardType != "socket")
                     .map(c => c.value)
                     .filter(v => v >= 100 && v <= 999)
-                    .map(v => unmodifyTarget(v, targetModifier, sol.stepsTaken.length));
+                    // Minus 1 added here, to account for the unapplied target modification still to come
+                    .map(v => unmodifyTarget(v, targetModifier, sol.stepsTaken.length - 1));
                 for (const s of solutionValues) {
                     const currentMapVal = map.get(s);
                     if (!currentMapVal || currentMapVal.difficultyEstimate > sol.difficultyEstimate) {
