@@ -31,7 +31,7 @@ export default async function DailyGameAtIndex({
   const gameDate = new Date(year, month - 1, day);
   const daysDiff = (now.getTime() - gameDate.getTime()) / (1000 * 60 * 60 * 24);
 
-  if (daysDiff > 100) {
+  if (daysDiff > 100 || daysDiff < 0) {
     redirect("/");
   }
 

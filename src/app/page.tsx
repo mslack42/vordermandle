@@ -3,6 +3,9 @@
 import Link from "next/link";
 
 export default function Home() {
+  const now = new Date(Date.now())
+  const dailyLink = `/daily/${now.getFullYear()}/${now.getMonth() + 1}/${now.getDate()}`
+
   return (
     <div className="w-full h-full flex flex-col gap-8">
       <div className="w-full flex flex-row justify-center p-8">
@@ -15,7 +18,10 @@ export default function Home() {
       </div>
       <ul className="w-full px-3 flex flex-col gap-3 grow justify-center">
         <li className="w-full flex flex-row justify-center">
-          <MenuButton link="/daily">Daily</MenuButton>
+          <MenuButton link={dailyLink}>Daily</MenuButton>
+        </li>
+        <li className="w-full flex flex-row justify-center">
+          <MenuButton link="/daily">Archive</MenuButton>
         </li>
         {/* <li className="w-full flex flex-row justify-center">
           <MenuButton>Campaign</MenuButton>
@@ -40,11 +46,7 @@ function MenuButton(props: MenuButtonProps) {
     </button>
   );
   if (props.link) {
-    content = (
-      <Link href={props.link}>
-        {content}
-      </Link>
-    );
+    content = <Link href={props.link}>{content}</Link>;
   }
   return content;
 }

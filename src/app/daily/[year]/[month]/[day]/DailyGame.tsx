@@ -34,15 +34,15 @@ function ButtonBar(props: ButtonBarProps) {
     now.getMonth(),
     now.getDate() - 100
   );
-  const disablePrev = props.gameDate <= oldestGame;
-  const disableNext = props.gameDate >= now;
-
+  
   const year = props.gameDate.getFullYear();
   const month = props.gameDate.getMonth() + 1;
   const date = props.gameDate.getDate();
-
+  
   const nextDate = new Date(year, month - 1, date + 1);
   const prevDate = new Date(year, month - 1, date - 1);
+  const disablePrev = prevDate < oldestGame;
+  const disableNext = nextDate >= now;
 
   return (
     <div className="w-full flex flex-row justify-between text-center text-sm select-none py-1">
