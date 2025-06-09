@@ -9,6 +9,12 @@ export function PartsCard(inner: PlugCard): EvaluationResult {
         parts = [...parts, remains % 10];
         remains = Math.floor(remains / 10);
     }
+    if (parts.some(p => p == 0)) {
+        return {
+            success: false,
+            errorReason: "Cards with 0 are not allowed"
+        }
+    }
     return {
         success: true,
         cards: parts.map(p => {
