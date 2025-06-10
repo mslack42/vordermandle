@@ -40,7 +40,7 @@ type GameHistoryRowProps = {
 };
 function GameHistoryRow(props: GameHistoryRowProps) {
   const { step, stepResult, stepNumber } = props;
-  const { rewindToStep, cluesGiven } = useContext(PlayingInterfaceContext);
+  const { rewindToStep, cluesGiven, complete } = useContext(PlayingInterfaceContext);
   let lhsParts = [];
   if (step.stepType == "binary") {
     lhsParts = [
@@ -55,7 +55,7 @@ function GameHistoryRow(props: GameHistoryRowProps) {
       </HandCard>,
     ];
   }
-  const isAClue = cluesGiven >= stepNumber
+  const isAClue = cluesGiven >= stepNumber || complete
   return (
     <div className="flex flex-row w-full justify-center items-center scale-75 gap-4">
       <div className="opacity-50 flex flex-row items-center gap-2">
