@@ -34,6 +34,9 @@ export default async function ListOfDailyGames() {
         <h1 className="text-2xl p-2 px-8 bg-theme-blue border-foreground border-4">
           Daily Puzzles
         </h1>
+        <p>
+          {`Server Time : ${now.toUTCString()}`}
+        </p>
         <span className="flex-1/6"></span>
       </div>
 
