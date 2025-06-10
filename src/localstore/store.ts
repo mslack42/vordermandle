@@ -9,7 +9,7 @@ const reducer = {
     playerData: playerDataSlice
 }
 const persistConfig = {
-    key: 'vordermandle',
+    key: 'vordermandle2.0',
     storage
 }
 const persistedReducer = persistReducer(
