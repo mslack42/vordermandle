@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Home() {
   const now = new Date(Date.now())
-  const dailyLink = `/daily/${now.getFullYear()}/${now.getMonth() + 1}/${now.getDate()}`
+  const dailyLink = `/daily/${now.getUTCFullYear()}/${now.getUTCMonth() + 1}/${now.getUTCDate()}`
 
   return (
     <div className="w-full h-full flex flex-col gap-8">
