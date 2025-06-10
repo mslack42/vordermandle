@@ -13,9 +13,9 @@ import { DragCard } from "./DragCard";
 import { Target } from "@/game/common/Target";
 import { SolutionStep } from "@/game/evaluate/SolutionStep";
 import { EvaluationResult } from "@/game/evaluate/EvaluationResult";
-import { PlugCard } from "@/game/common/Card";
+import { Card, PlugCard } from "@/game/common/Card";
 import { EvaluateStep } from "@/game/evaluate/evaluateStep";
-import { evolveCard, evolveTarget } from "@/game/evaluate/evolve";
+import { evolveCard, evolveCards, evolveTarget } from "@/game/evaluate/evolve";
 
 type GameStateSnapshot = [
   CardWithId[],
@@ -94,14 +94,12 @@ export const PlayingInterfaceContextProvider = (
   props: PlayingInterfaceContextProviderProps
 ) => {
   const { game, children } = props;
-  const [hand, setHand] = useState<CardWithId[]>(
-    game.cards.map((c) => {
-      return {
-        card: c,
-        id: uuidv4(),
-      };
-    })
+  const { calcedHand, calcedSteps } = calcInitialCards(
+    game,
+    props.cluesGiven,
+    props.gameComplete
   );
+  const [hand, setHand] = useState<CardWithId[]>(calcedHand);
   const [play, setPlay] = useState<CardWithId[]>([]);
   const [draggingCard, setDraggingCard] = useState<{
     card: CardWithId;
@@ -116,7 +114,8 @@ export const PlayingInterfaceContextProvider = (
     useState<SolutionStep | null>(null);
   const [pendingSolutionStepResult, setPendingSolutionStepResult] =
     useState<EvaluationResult | null>(null);
-  const [gameHistory, setGameHistory] = useState<GameHistoryStep[]>([]);
+  const [gameHistory, setGameHistory] =
+    useState<GameHistoryStep[]>(calcedSteps);
   const [complete, setComplete] = useState<boolean>(!!props.gameComplete);
   const offerClues = !!props.offerClues;
   const [cluesGiven, setCluesGiven] = useState<number>(props.cluesGiven ?? 0);
@@ -291,7 +290,7 @@ export const PlayingInterfaceContextProvider = (
           )[0].id,
         ];
       }
-      tempHand = tempHand.filter(c => !matchedIds.includes(c.id))
+      tempHand = tempHand.filter((c) => !matchedIds.includes(c.id));
       const res = EvaluateStep(step);
       applyPendingResult(step, res, tempHand, [], {});
       setCluesGiven(cluesGiven + 1);
@@ -335,3 +334,68 @@ export const PlayingInterfaceContextProvider = (
     </PlayingInterfaceContext.Provider>
   );
 };
+function calcInitialCards(
+  game: CountdownGame,
+  cluesGiven: number | undefined,
+  gameComplete: boolean | undefined
+): { calcedHand: CardWithId[]; calcedSteps: GameHistoryStep[] } {
+  let workingHand: Card[] = game.cards;
+  const workingSteps: GameHistoryStep[] = [];
+  let workingTarget = game.target;
+  if (cluesGiven) {
+    const filteredSteps = game.solution!.slice(
+      0,
+      gameComplete ? undefined : cluesGiven
+    );
+    filteredSteps.forEach((step) => {
+      let indices = [];
+      switch (step.stepType) {
+        case "binary": {
+          indices = [
+            workingHand.findIndex(
+              (c) => JSON.stringify(c) == JSON.stringify(step.left)
+            ),
+            workingHand.findIndex(
+              (c) => JSON.stringify(c) == JSON.stringify(step.right)
+            ),
+          ];
+          break;
+        }
+        case "insertion": {
+          indices = [
+            workingHand.findIndex(
+              (c) => JSON.stringify(c) == JSON.stringify(step.inner)
+            ),
+            workingHand.findIndex(
+              (c) => JSON.stringify(c) == JSON.stringify(step.outer)
+            ),
+          ];
+          break;
+        }
+      }
+      workingHand = workingHand.filter((_, i) => !indices.includes(i));
+      const evaluated = EvaluateStep(step);
+      if (!evaluated.success) {
+        return;
+      }
+      workingHand = workingHand.concat(evaluated.cards);
+      workingHand = evolveCards(workingHand);
+      workingTarget = evolveTarget(workingTarget);
+      workingSteps.push([step, evaluated, [[], {}, workingTarget]]);
+    });
+  }
+  const outputHand = workingHand.map((c) => {
+    return {
+      card: c,
+      id: uuidv4(),
+    };
+  });
+  const outputSteps = workingSteps;
+  if (outputSteps.length > 0) {
+    outputSteps[outputSteps.length - 1][2] = [outputHand, {}, workingTarget];
+  }
+  return {
+    calcedHand: outputHand,
+    calcedSteps: outputSteps,
+  };
+}
