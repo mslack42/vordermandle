@@ -10,7 +10,7 @@ export default async function ListOfDailyGames() {
       iDate.getFullYear(),
       iDate.getMonth(),
       iDate.getDate() - 1,
-      12,0,0,0
+      0,0,0,0
     );
   }
 
