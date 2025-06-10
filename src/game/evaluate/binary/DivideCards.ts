@@ -9,7 +9,7 @@ export function DivideCards(left: PlugCard, right: PlugCard): EvaluationResult {
             errorReason: "Alternate cards are mutually incompatible"
         };
     }
-    if (left.value <= right.value) {
+    if (left.value < right.value) {
         return {
             success: false,
             errorReason: "Fractions are not allowed"
