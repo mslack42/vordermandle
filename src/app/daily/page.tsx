@@ -3,7 +3,7 @@ import Link from "next/link";
 export default async function ListOfDailyGames() {
   const now = new Date(Date.now());
   const dates: Date[] = [];
-  let iDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(),12,0,0,0);
+  let iDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(),0,0,0,0);
   while (iDate < now && dates.length < 100) {
     dates.push(iDate);
     iDate = new Date(
