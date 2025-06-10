@@ -1,16 +1,16 @@
 import Link from "next/link";
 
-const beginningOfTime = new Date(2025, 4, 1);
 export default async function ListOfDailyGames() {
   const now = new Date(Date.now());
   const dates: Date[] = [];
-  let iDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  while (iDate < now && iDate >= beginningOfTime && dates.length < 100) {
+  let iDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(),12,0,0,0);
+  while (iDate < now && dates.length < 100) {
     dates.push(iDate);
     iDate = new Date(
       iDate.getFullYear(),
       iDate.getMonth(),
-      iDate.getDate() - 1
+      iDate.getDate() - 1,
+      12,0,0,0
     );
   }
 
@@ -34,9 +34,6 @@ export default async function ListOfDailyGames() {
         <h1 className="text-2xl p-2 px-8 bg-theme-blue border-foreground border-4">
           Daily Puzzles
         </h1>
-        <p>
-          {`Server Time : ${now.toUTCString()}`}
-        </p>
         <span className="flex-1/6"></span>
       </div>
 
@@ -61,7 +58,7 @@ export default async function ListOfDailyGames() {
 }
 
 function puzzleUrl(d: Date) {
-  return `/daily/${d.getFullYear()}/${d.getMonth() + 1}/${d.getDate()}`;
+  return `/daily/${d.getUTCFullYear()}/${d.getUTCMonth() + 1}/${d.getUTCDate()}`;
 }
 
 type DailyPuzzleButtonProps = {
@@ -78,7 +75,7 @@ function DailyPuzzleButton(props: DailyPuzzleButtonProps) {
         className={"w-80 p-2 rounded-xl border-foreground border-4 cursor-pointer " + bg}
       >
         <div className="w-full flex flex-row justify-between">
-          <p>{props.date.toDateString()}</p>
+          <p>{props.date.toUTCString()}</p>
           <div>1</div>
         </div>
       </button>
