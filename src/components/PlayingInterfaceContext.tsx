@@ -272,14 +272,20 @@ export const PlayingInterfaceContextProvider = (
       let tempHand = [...hand, ...play, ...Object.values(sockettedCards)];
       let matchedIds: string[] = [];
       if (step.stepType == "binary") {
-        matchedIds = [
-          tempHand.filter(
+        if (JSON.stringify(step.left) == JSON.stringify(step.right)) {
+          matchedIds = tempHand.filter(
             (c) => JSON.stringify(c.card) == JSON.stringify(step.left)
-          )[0].id,
-          tempHand.filter(
-            (c) => JSON.stringify(c.card) == JSON.stringify(step.right)
-          )[0].id,
-        ];
+          ).map(c => c.id).slice(0,2)
+        } else {
+          matchedIds = [
+            tempHand.filter(
+              (c) => JSON.stringify(c.card) == JSON.stringify(step.left)
+            )[0].id,
+            tempHand.filter(
+              (c) => JSON.stringify(c.card) == JSON.stringify(step.right)
+            )[0].id,
+          ];
+        }
       } else {
         matchedIds = [
           tempHand.filter(
