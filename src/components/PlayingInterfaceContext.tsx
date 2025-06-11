@@ -94,7 +94,7 @@ export const PlayingInterfaceContextProvider = (
   props: PlayingInterfaceContextProviderProps
 ) => {
   const { game, children } = props;
-  const { calcedHand, calcedSteps } = calcInitialCards(
+  const { calcedHand, calcedSteps, calcedTarget } = calcInitialCards(
     game,
     props.cluesGiven,
     props.gameComplete
@@ -109,7 +109,7 @@ export const PlayingInterfaceContextProvider = (
     [key: string]: CardWithId;
   }>({});
   const [operatorChoice, setOperatorChoice] = useState<Operator | null>(null);
-  const [target, setTarget] = useState<Target>(game.target);
+  const [target, setTarget] = useState<Target>(calcedTarget);
   const [pendingSolutionStep, setPendingSolutionStep] =
     useState<SolutionStep | null>(null);
   const [pendingSolutionStepResult, setPendingSolutionStepResult] =
@@ -344,7 +344,7 @@ function calcInitialCards(
   game: CountdownGame,
   cluesGiven: number | undefined,
   gameComplete: boolean | undefined
-): { calcedHand: CardWithId[]; calcedSteps: GameHistoryStep[] } {
+): { calcedHand: CardWithId[]; calcedSteps: GameHistoryStep[], calcedTarget: Target } {
   let workingHand: Card[] = game.cards;
   const workingSteps: GameHistoryStep[] = [];
   let workingTarget = game.target;
@@ -403,5 +403,6 @@ function calcInitialCards(
   return {
     calcedHand: outputHand,
     calcedSteps: outputSteps,
+    calcedTarget: workingTarget
   };
 }
