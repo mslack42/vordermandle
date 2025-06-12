@@ -1,14 +1,15 @@
 import { DailySwishInterfaceProvider } from "@/app/daily/[year]/[month]/[day]/DailySwishInterfaceProvider";
 import { SwishInterface } from "@/components/SwishInterface";
 import { CountdownGame } from "@/game/common/CountdownGame";
+import { GameSet } from "@/sheetsDB/getGamesList";
 import Link from "next/link";
 
 export function DailyGame({
-  game,
+  gameSet,
   gameDate,
 }: {
   gameDate: Date;
-  game: CountdownGame;
+  gameSet: GameSet;
 }) {
   return (
     <div className="h-full w-full flex flex-col">
@@ -16,7 +17,7 @@ export function DailyGame({
         <ButtonBar gameDate={gameDate} />
       </div>
       <div className="w-full h-full grow">
-        <DailySwishInterfaceProvider game={game} gameId={`${gameDate.getFullYear()}/${gameDate.getMonth() + 1}/${gameDate.getDate()}`}>
+        <DailySwishInterfaceProvider gameSet={gameSet} gameDate={gameDate}>
           <SwishInterface/>
         </DailySwishInterfaceProvider>
       </div>

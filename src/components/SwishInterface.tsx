@@ -14,7 +14,7 @@ export function SwishInterface() {
         <div className="w-full flex-none">
           <GameHelperButtons />
         </div>
-        <div className="w-full grow overflow-y-auto p-1 h-60">
+        <div className="w-full grow overflow-y-auto p-1 h-55">
           <GameHistory />
         </div>
         <div className="w-full flex-none">

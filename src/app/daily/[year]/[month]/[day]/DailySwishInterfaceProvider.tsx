@@ -1,28 +1,110 @@
 "use client";
 import { CountdownGame } from "@/game/common/CountdownGame";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   PlayerGameSaveDataContext,
   PlayerGameSaveDataContextProvider,
 } from "../../../../../components/PlayerGameSaveDataContext";
 import { PlayingInterfaceContextProvider } from "../../../../../components/PlayingInterfaceContext";
+import { GameSet } from "@/sheetsDB/getGamesList";
 
-type Props = { game: CountdownGame; gameId: string } & React.PropsWithChildren;
+type Props = {
+  gameDate: Date;
+  gameSet: GameSet;
+} & React.PropsWithChildren;
 
 export function DailySwishInterfaceProvider(props: Props) {
+  const [difficulty, setDifficulty] = useState(1);
+
+  function getGameId(diff: number) {
+    return `${props.gameDate.getUTCFullYear()}/${props.gameDate.getUTCMonth()}/${props.gameDate.getUTCDate()}/${diff}`;
+  }
+  function getGame(diff: number) {
+    let game: CountdownGame;
+    switch (diff) {
+      case 1: {
+        game = props.gameSet[1];
+        break;
+      }
+      case 2: {
+        game = props.gameSet[2];
+        break;
+      }
+      default: {
+        game = props.gameSet[3];
+        break;
+      }
+    }
+    return game;
+  }
+
+  const chooseDifficulty = (diff: number) => {
+    console.log(diff);
+    setDifficulty(diff);
+  };
+
   return (
-    <PlayerGameSaveDataContextProvider gameId={props.gameId}>
-      <Inner {...props}>{props.children}</Inner>
-    </PlayerGameSaveDataContextProvider>
+    <div className="w-full h-full flex flex-col">
+      <div className="w-full flex-none h-min">
+        <div className="w-full flex flex-row justify-center pt-2">
+          <div>
+            <ol className="flex flex-row gap-2 border-2 border-foreground">
+              {["Easy", "Medium", "Hard"].map((s, i) => (
+                <li key={s} className="flex-1/3">
+                  <button
+                    className={
+                      "w-full px-2 text-center " +
+                      (difficulty == i + 1 ? "bg-theme-blue" : "")
+                    }
+                    onClick={() => chooseDifficulty(i + 1)}
+                  >
+                    {s}
+                  </button>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
+      </div>
+      <div className="w-full h-full grow">
+        {difficulty == 1 && (
+          <PlayerGameSaveDataContextProvider gameId={getGameId(1)}>
+            <Inner game={getGame(1)} gameId={getGameId(1)}>
+              {props.children}
+            </Inner>
+          </PlayerGameSaveDataContextProvider>
+        )}
+        {difficulty == 2 && (
+          <PlayerGameSaveDataContextProvider gameId={getGameId(2)}>
+            <Inner game={getGame(2)} gameId={getGameId(2)}>
+              {props.children}
+            </Inner>
+          </PlayerGameSaveDataContextProvider>
+        )}
+        {difficulty == 3 && (
+          <PlayerGameSaveDataContextProvider gameId={getGameId(3)}>
+            <Inner game={getGame(3)} gameId={getGameId(3)}>
+              {props.children}
+            </Inner>
+          </PlayerGameSaveDataContextProvider>
+        )}
+      </div>
+    </div>
   );
 }
 
-function Inner(props: Props) {
-  const { isComplete, setGameSolved, cluesGiven, setCluesGiven } = useContext(PlayerGameSaveDataContext);
+type InnerProps = React.PropsWithChildren & {
+  gameId: string;
+  game: CountdownGame;
+};
+function Inner(props: InnerProps) {
+  const { isComplete, setGameSolved, cluesGiven, setCluesGiven } = useContext(
+    PlayerGameSaveDataContext
+  );
 
-  const handleClueRequested = (n:number) => {
-    setCluesGiven(n)
-  }
+  const handleClueRequested = (n: number) => {
+    setCluesGiven(n);
+  };
 
   return (
     <PlayingInterfaceContextProvider

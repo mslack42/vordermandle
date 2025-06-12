@@ -1,5 +1,7 @@
-import { CountdownGame } from "@/game/common/CountdownGame";
-import { getGameByDate } from "@/sheetsDB/getGamesList";
+import {
+  GameSet,
+  getGameSetByDate,
+} from "@/sheetsDB/getGamesList";
 import { unstable_cache } from "next/cache";
 import { redirect } from "next/navigation";
 import { DailyGame } from "./DailyGame";
@@ -10,9 +12,9 @@ type RouteParams = {
   day: number;
 };
 
-const getGame = unstable_cache(
+const getGameSet = unstable_cache(
   async (year: number, month: number, day: number) => {
-    return getGameByDate(year, month, day);
+    return getGameSetByDate(year, month, day);
   },
   [],
   {
@@ -35,13 +37,12 @@ export default async function DailyGameAtIndex({
     redirect("/");
   }
 
-  let game: CountdownGame;
+  let gameSet: GameSet;
   try {
-    game = await getGame(year, month, day);
+    gameSet = await getGameSet(year, month, day);
   } catch {
     redirect("/");
   }
 
-  return <DailyGame game={game} gameDate={gameDate} />;
+  return <DailyGame gameSet={gameSet} gameDate={gameDate} />;
 }
-

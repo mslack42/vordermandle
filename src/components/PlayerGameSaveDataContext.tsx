@@ -9,14 +9,14 @@ type PlayerGameSaveDataContextState = {
   isComplete: boolean;
   cluesGiven: number;
   setGameSolved: () => void;
-  setCluesGiven: (n:number) => void;
+  setCluesGiven: (n: number) => void;
 };
 export const PlayerGameSaveDataContext =
   createContext<PlayerGameSaveDataContextState>({
     isComplete: false,
     cluesGiven: 0,
-    setGameSolved: () => { },
-    setCluesGiven: () => {}
+    setGameSolved: () => {},
+    setCluesGiven: () => {},
   });
 
 type PlayerGameSaveDataContextProviderProps = {
@@ -28,12 +28,13 @@ export const PlayerGameSaveDataContextProvider = (
   const allDailyData = useLocalStoreSelector(
     (p) => p.playerData.dailyPuzzleData
   );
-  const dailyData = allDailyData && Object.keys(allDailyData).includes(props.gameId)
-    ? allDailyData[props.gameId]
-    : {
-        cluesGiven: 0,
-        solved: false,
-      };
+  const dailyData =
+    allDailyData && Object.keys(allDailyData).includes(props.gameId)
+      ? allDailyData[props.gameId]
+      : {
+          cluesGiven: 0,
+          solved: false,
+        };
   const [solved, setSolved] = useState(false);
   const [cluesGiven, setClues] = useState(0);
 
@@ -50,14 +51,14 @@ export const PlayerGameSaveDataContextProvider = (
   const setGameSolved = () => {
     setSolved(true);
   };
-  const setCluesGiven = (n:number) => {
-    setClues(n)
-  }
+  const setCluesGiven = (n: number) => {
+    setClues(n);
+  };
   const state: PlayerGameSaveDataContextState = {
     isComplete: dailyData.solved,
     cluesGiven: dailyData.cluesGiven,
     setGameSolved,
-    setCluesGiven
+    setCluesGiven,
   };
 
   return (
