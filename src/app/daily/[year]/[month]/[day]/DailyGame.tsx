@@ -1,6 +1,5 @@
 import { DailySwishInterfaceProvider } from "@/app/daily/[year]/[month]/[day]/DailySwishInterfaceProvider";
 import { SwishInterface } from "@/components/SwishInterface";
-import { CountdownGame } from "@/game/common/CountdownGame";
 import { GameSet } from "@/sheetsDB/getGamesList";
 import Link from "next/link";
 

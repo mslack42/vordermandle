@@ -1,6 +1,6 @@
 "use client";
 import { CountdownGame } from "@/game/common/CountdownGame";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import {
   PlayerGameSaveDataContext,
   PlayerGameSaveDataContextProvider,
