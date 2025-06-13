@@ -417,7 +417,7 @@ export function generateGame(profile: GameProfile): CountdownGame {
     // Now to find a target
 
     let hardestSolutions = findHardestSolutions(cards, target.modifier!, difficultyAllowance)
-    if (target.modifier!.modifierType == "reverse") {
+    if (target.modifier?.modifierType == "reverse") {
         // Weed out some cases that make this much easier
         hardestSolutions = hardestSolutions.filter(s => 
             (s.unmodifiedSolutionValue! % 10 != 0) &&
