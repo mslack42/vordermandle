@@ -4,11 +4,9 @@ import { EvaluateStep } from "./evaluate/evaluateStep";
 import { EvaluationResult } from "./evaluate/EvaluationResult";
 import { SolutionStep } from "./evaluate/SolutionStep";
 import { PotentialSolution, PotentialSolutionMap } from "./PotentialSolution";
-import { difficultyAllowance } from "./difficultyAllowance";
 import { evolveCards } from "./evaluate/evolve";
 
-
-export function findHardestSolutions(cards: Card[], targetModifier: TargetModifier): PotentialSolution[] {
+export function findHardestSolutions(cards: Card[], targetModifier: TargetModifier, difficultyAllowance: number): PotentialSolution[] {
     const collectedSolutionMap = new Map<number, PotentialSolution>();
     // Collect the 'gimme' solutions where we start with the answer
     cards.forEach(c => {

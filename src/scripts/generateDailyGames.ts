@@ -35,7 +35,8 @@ for (let day = 1; day <= daysCount; day++) {
         bigsCount: pickFromWithProbability([0,1,2, 3,4],[5,30,30,10,5]),
         nonsenseCounts: pickFromWithProbability([0,1,2],[1,30,50]),
         useExpertBigs: pickFromWithProbability([true,false],[1,10]),
-        legalNonsense: pickFromWithProbability([Tier1Bucket, Tier2Bucket, Tier3Bucket],[20,50,30])
+        legalNonsense: pickFromWithProbability([Tier1Bucket, Tier2Bucket, Tier3Bucket],[20,50,30]),
+        difficultyAllowance: 1.2
     }
     console.log("Day " + day)
     const game = generateGame(gameProfile)

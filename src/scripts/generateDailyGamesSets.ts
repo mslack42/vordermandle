@@ -35,19 +35,22 @@ for (let day = 1; day <= daysCount; day++) {
         bigsCount: pickFromWithProbability([1,2, 3],[15,30,30]),
         nonsenseCounts: pickFromWithProbability([0,1],[1,50]),
         useExpertBigs: pickFromWithProbability([true,false],[4,10]),
-        legalNonsense: Tier1Bucket
+        legalNonsense: Tier1Bucket,
+        difficultyAllowance: 1.8
     }
         const medProfile: GameProfile = {
         bigsCount: pickFromWithProbability([0,1,2,3,4],[5,30,30,10,5]),
         nonsenseCounts: pickFromWithProbability([1,2],[50,20]),
         useExpertBigs: pickFromWithProbability([true,false],[1,10]),
-        legalNonsense: Tier2Bucket
+        legalNonsense: Tier2Bucket,
+        difficultyAllowance: 1.4
     }
         const hardProfile: GameProfile = {
         bigsCount: pickFromWithProbability([0,1,2, 3,4],[8,25,25,10,8]),
         nonsenseCounts: pickFromWithProbability([1,2,3],[10,40,1]),
         useExpertBigs: pickFromWithProbability([true,false],[1,10]),
-        legalNonsense: Tier3Bucket
+        legalNonsense: Tier3Bucket,
+        difficultyAllowance: 1.1
     }
     console.log("Day " + day)
     console.log("Easy")

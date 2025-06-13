@@ -1,6 +1,7 @@
 import { Card } from "./common/Card"
 import { CountdownGame } from "./common/CountdownGame"
 import { Target } from "./common/Target"
+import { difficultyAllowance } from "./difficultyAllowance"
 import { findHardestSolutions } from "./findHardestSolutions"
 
 const baseSmalls = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10]
@@ -36,7 +37,8 @@ export type GameProfile = {
     bigsCount: 0 | 1 | 2 | 3 | 4,
     useExpertBigs: boolean,
     nonsenseCounts: 0 | 1 | 2 | 3 | 4,
-    legalNonsense: Nonsense[]
+    legalNonsense: Nonsense[],
+    difficultyAllowance: number
 }
 
 type ShuffleWrap<T> = {
@@ -414,7 +416,18 @@ export function generateGame(profile: GameProfile): CountdownGame {
     // Definition generated from profile
     // Now to find a target
 
-    const hardestSolutions = findHardestSolutions(cards, target.modifier!)
+    let hardestSolutions = findHardestSolutions(cards, target.modifier!, difficultyAllowance)
+    if (target.modifier!.modifierType == "reverse") {
+        // Weed out some cases that make this much easier
+        hardestSolutions = hardestSolutions.filter(s => 
+            (s.unmodifiedSolutionValue! % 10 != 0) &&
+            (s.unmodifiedSolutionValue!.toString() != s.unmodifiedSolutionValue!.toString().split('').reverse().join(''))
+        )
+    }
+    if (hardestSolutions.length == 0) {
+        return generateGame(profile)
+    }
+
     const chosenSolution = hardestSolutions[Math.floor(Math.random() * 0.999 * hardestSolutions.length)]
 
     if (chosenSolution && chosenSolution.unmodifiedSolutionValue) {
