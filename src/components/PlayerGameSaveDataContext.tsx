@@ -23,10 +23,10 @@ type PlayerGameSaveDataContextProviderProps = {
   gameId: string;
 } & React.PropsWithChildren;
 export const PlayerGameSaveDataContextProvider = (
-  props: PlayerGameSaveDataContextProviderProps
+  props: PlayerGameSaveDataContextProviderProps,
 ) => {
   const allDailyData = useLocalStoreSelector(
-    (p) => p.playerData.dailyPuzzleData
+    (p) => p.playerData.dailyPuzzleData,
   );
   const dailyData =
     allDailyData && Object.keys(allDailyData).includes(props.gameId)
@@ -45,7 +45,7 @@ export const PlayerGameSaveDataContextProvider = (
         gameId: props.gameId,
         cluesGiven,
         solved,
-      })
+      }),
     );
   }, [cluesGiven, localDispatch, props.gameId, solved]);
   const setGameSolved = () => {

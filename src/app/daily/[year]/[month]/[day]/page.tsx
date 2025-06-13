@@ -1,7 +1,4 @@
-import {
-  GameSet,
-  getGameSetByDate,
-} from "@/sheetsDB/getGamesList";
+import { GameSet, getGameSetByDate } from "@/sheetsDB/getGamesList";
 import { unstable_cache } from "next/cache";
 import { redirect } from "next/navigation";
 import { DailyGame } from "./DailyGame";
@@ -19,7 +16,7 @@ const getGameSet = unstable_cache(
   [],
   {
     revalidate: 300,
-  }
+  },
 );
 
 export default async function DailyGameAtIndex({

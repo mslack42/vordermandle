@@ -3,14 +3,25 @@ import Link from "next/link";
 export default async function ListOfDailyGames() {
   const now = new Date(Date.now());
   const dates: Date[] = [];
-  let iDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(),0,0,0,0);
+  let iDate = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate(),
+    0,
+    0,
+    0,
+    0,
+  );
   while (iDate < now && dates.length < 100) {
     dates.push(iDate);
     iDate = new Date(
       iDate.getFullYear(),
       iDate.getMonth(),
       iDate.getDate() - 1,
-      0,0,0,0
+      0,
+      0,
+      0,
+      0,
     );
   }
 
@@ -72,7 +83,9 @@ function DailyPuzzleButton(props: DailyPuzzleButtonProps) {
   return (
     <Link href={puzzleUrl(props.date)}>
       <button
-        className={"w-80 p-2 rounded-xl border-foreground border-4 cursor-pointer " + bg}
+        className={
+          "w-80 p-2 rounded-xl border-foreground border-4 cursor-pointer " + bg
+        }
       >
         <div className="w-full flex flex-row justify-between">
           <p>{props.date.toUTCString()}</p>

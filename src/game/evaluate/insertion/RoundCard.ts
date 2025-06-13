@@ -4,15 +4,15 @@ import { EvaluationResult } from "../EvaluationResult";
 import { weaken } from "../weaken";
 
 export function RoundCard(inner: PlugCard): EvaluationResult {
-    const newValue = Math.round(inner.value / 10) * 10;
-    if (newValue > NumberUpperLimit) {
-        return {
-            success: false,
-            errorReason: "That number is a bit too big"
-        };
-    }
+  const newValue = Math.round(inner.value / 10) * 10;
+  if (newValue > NumberUpperLimit) {
     return {
-        success: true,
-        cards: [weaken({ ...inner, value: newValue })]
+      success: false,
+      errorReason: "That number is a bit too big",
     };
+  }
+  return {
+    success: true,
+    cards: [weaken({ ...inner, value: newValue })],
+  };
 }

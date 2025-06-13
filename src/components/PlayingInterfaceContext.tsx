@@ -22,7 +22,7 @@ type GameStateSnapshot = [
   {
     [key: string]: CardWithId;
   },
-  Target
+  Target,
 ];
 type GameHistoryStep = [SolutionStep, EvaluationResult, GameStateSnapshot];
 
@@ -91,13 +91,13 @@ type PlayingInterfaceContextProviderProps = {
   onClueRequested?: (c: number) => void;
 } & React.PropsWithChildren;
 export const PlayingInterfaceContextProvider = (
-  props: PlayingInterfaceContextProviderProps
+  props: PlayingInterfaceContextProviderProps,
 ) => {
   const { game, children } = props;
   const { calcedHand, calcedSteps, calcedTarget } = calcInitialCards(
     game,
     props.cluesGiven,
-    props.gameComplete
+    props.gameComplete,
   );
   const [hand, setHand] = useState<CardWithId[]>(calcedHand);
   const [play, setPlay] = useState<CardWithId[]>([]);
@@ -128,7 +128,7 @@ export const PlayingInterfaceContextProvider = (
           card: c,
           id: uuidv4(),
         };
-      })
+      }),
     );
     setDraggingCard(null);
     setSockettedCards({});
@@ -180,7 +180,7 @@ export const PlayingInterfaceContextProvider = (
     res: EvaluationResult | null,
     handCards: CardWithId[],
     playCards: CardWithId[],
-    socketCards: { [key: string]: CardWithId }
+    socketCards: { [key: string]: CardWithId },
   ) => {
     if (!step || !res?.success) {
       return;
@@ -207,7 +207,7 @@ export const PlayingInterfaceContextProvider = (
     victory =
       victory ||
       newHand.some(
-        (c) => c.card.cardType != "socket" && c.card.value == target.value
+        (c) => c.card.cardType != "socket" && c.card.value == target.value,
       );
     const evolvedNewHand = newHand.map((c) => {
       return {
@@ -231,10 +231,10 @@ export const PlayingInterfaceContextProvider = (
     victory =
       victory ||
       evolvedNewHand.some(
-        (c) => c.card.cardType != "socket" && c.card.value == newTarget.value
+        (c) => c.card.cardType != "socket" && c.card.value == newTarget.value,
       ) ||
       Object.values(newSockettedCards).some(
-        (v) => v.card.cardType != "socket" && v.card.value == newTarget.value
+        (v) => v.card.cardType != "socket" && v.card.value == newTarget.value,
       );
 
     setHand(evolvedNewHand);
@@ -249,7 +249,7 @@ export const PlayingInterfaceContextProvider = (
       pendingSolutionStepResult,
       hand,
       play,
-      sockettedCards
+      sockettedCards,
     );
   };
 
@@ -273,26 +273,27 @@ export const PlayingInterfaceContextProvider = (
       let matchedIds: string[] = [];
       if (step.stepType == "binary") {
         if (JSON.stringify(step.left) == JSON.stringify(step.right)) {
-          matchedIds = tempHand.filter(
-            (c) => JSON.stringify(c.card) == JSON.stringify(step.left)
-          ).map(c => c.id).slice(0,2)
+          matchedIds = tempHand
+            .filter((c) => JSON.stringify(c.card) == JSON.stringify(step.left))
+            .map((c) => c.id)
+            .slice(0, 2);
         } else {
           matchedIds = [
             tempHand.filter(
-              (c) => JSON.stringify(c.card) == JSON.stringify(step.left)
+              (c) => JSON.stringify(c.card) == JSON.stringify(step.left),
             )[0].id,
             tempHand.filter(
-              (c) => JSON.stringify(c.card) == JSON.stringify(step.right)
+              (c) => JSON.stringify(c.card) == JSON.stringify(step.right),
             )[0].id,
           ];
         }
       } else {
         matchedIds = [
           tempHand.filter(
-            (c) => JSON.stringify(c.card) == JSON.stringify(step.inner)
+            (c) => JSON.stringify(c.card) == JSON.stringify(step.inner),
           )[0].id,
           tempHand.filter(
-            (c) => JSON.stringify(c.card) == JSON.stringify(step.outer)
+            (c) => JSON.stringify(c.card) == JSON.stringify(step.outer),
           )[0].id,
         ];
       }
@@ -343,15 +344,19 @@ export const PlayingInterfaceContextProvider = (
 function calcInitialCards(
   game: CountdownGame,
   cluesGiven: number | undefined,
-  gameComplete: boolean | undefined
-): { calcedHand: CardWithId[]; calcedSteps: GameHistoryStep[], calcedTarget: Target } {
+  gameComplete: boolean | undefined,
+): {
+  calcedHand: CardWithId[];
+  calcedSteps: GameHistoryStep[];
+  calcedTarget: Target;
+} {
   let workingHand: Card[] = game.cards;
   const workingSteps: GameHistoryStep[] = [];
   let workingTarget = game.target;
   if (cluesGiven) {
     const filteredSteps = game.solution!.slice(
       0,
-      gameComplete ? undefined : cluesGiven
+      gameComplete ? undefined : cluesGiven,
     );
     filteredSteps.forEach((step) => {
       let indices = [];
@@ -359,10 +364,10 @@ function calcInitialCards(
         case "binary": {
           indices = [
             workingHand.findIndex(
-              (c) => JSON.stringify(c) == JSON.stringify(step.left)
+              (c) => JSON.stringify(c) == JSON.stringify(step.left),
             ),
             workingHand.findIndex(
-              (c) => JSON.stringify(c) == JSON.stringify(step.right)
+              (c) => JSON.stringify(c) == JSON.stringify(step.right),
             ),
           ];
           break;
@@ -370,10 +375,10 @@ function calcInitialCards(
         case "insertion": {
           indices = [
             workingHand.findIndex(
-              (c) => JSON.stringify(c) == JSON.stringify(step.inner)
+              (c) => JSON.stringify(c) == JSON.stringify(step.inner),
             ),
             workingHand.findIndex(
-              (c) => JSON.stringify(c) == JSON.stringify(step.outer)
+              (c) => JSON.stringify(c) == JSON.stringify(step.outer),
             ),
           ];
           break;
@@ -403,6 +408,6 @@ function calcInitialCards(
   return {
     calcedHand: outputHand,
     calcedSteps: outputSteps,
-    calcedTarget: workingTarget
+    calcedTarget: workingTarget,
   };
 }

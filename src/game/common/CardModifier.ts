@@ -1,20 +1,25 @@
 export type IncrementCardModifier = {
-    modifierType: "increment";
-    incrementBy: number;
+  modifierType: "increment";
+  incrementBy: number;
 };
 export type DoubleCardModifier = {
-    modifierType: "double";
-}
+  modifierType: "double";
+};
 export type ReverseCardModifier = {
-    modifierType: "reverse";
-    strength: number;
+  modifierType: "reverse";
+  strength: number;
 };
 export type RotateCardModifier = {
-    modifierType: "rotate";
-    strength: number;
+  modifierType: "rotate";
+  strength: number;
 };
 export type NoneCardModifier = {
-    modifierType: "none";
+  modifierType: "none";
 };
 
-export type CardModifier = NoneCardModifier | IncrementCardModifier | ReverseCardModifier | RotateCardModifier | DoubleCardModifier
+export type CardModifier =
+  | NoneCardModifier
+  | IncrementCardModifier
+  | ReverseCardModifier
+  | RotateCardModifier
+  | DoubleCardModifier;

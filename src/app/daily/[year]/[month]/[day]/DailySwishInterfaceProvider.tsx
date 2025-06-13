@@ -99,7 +99,7 @@ type InnerProps = React.PropsWithChildren & {
 };
 function Inner(props: InnerProps) {
   const { isComplete, setGameSolved, cluesGiven, setCluesGiven } = useContext(
-    PlayerGameSaveDataContext
+    PlayerGameSaveDataContext,
   );
 
   const handleClueRequested = (n: number) => {

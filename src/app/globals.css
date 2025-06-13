@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
 :root {
-  --theme-red: #E15554;
-  --theme-yellow: #E1BC29;
-  --theme-blue: #4D9DE0;
-  --theme-green: #3BB273;
-  --theme-purple: #7768AE;
+  --theme-red: #e15554;
+  --theme-yellow: #e1bc29;
+  --theme-blue: #4d9de0;
+  --theme-green: #3bb273;
+  --theme-purple: #7768ae;
   --theme-red-darker: #b64444;
   --theme-yellow-darker: #9e841b;
   --theme-blue-darker: #38719f;
@@ -41,9 +41,10 @@
   }
 }
 
-html, body {
-  width:100%; 
-  height:100%;
+html,
+body {
+  width: 100%;
+  height: 100%;
 }
 
 body {

@@ -9,15 +9,19 @@ type CardDisplayProps = {
 
 export const CardDisplay = (props: CardDisplayProps) => {
   const textSize =
-    props.value > 999 ? "text-xl md:text-3xl" : props.value > 99 ? "text-2xl md:text-4xl" : "text-3xl md:text-5xl";
+    props.value > 999
+      ? "text-xl md:text-3xl"
+      : props.value > 99
+        ? "text-2xl md:text-4xl"
+        : "text-3xl md:text-5xl";
   const altTextSize =
     props.alternate == null
       ? ""
       : props.alternate > 999
-      ? "text-[8px] md:text-xs"
-      : props.alternate > 99
-      ? "text-xs md:text-sm"
-      : "text-sm md:text-base";
+        ? "text-[8px] md:text-xs"
+        : props.alternate > 99
+          ? "text-xs md:text-sm"
+          : "text-sm md:text-base";
   return (
     <div className="relative w-13 h-13 md:w-18 md:h-18 bg-theme-blue border-4 border-foreground">
       <div className="h-full w-full flex flex-col justify-center">

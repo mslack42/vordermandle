@@ -1,15 +1,19 @@
 type IncrementTargetModifier = {
-    modifierType: "increment";
-    incrementBy: number;
+  modifierType: "increment";
+  incrementBy: number;
 };
 type ReverseTargetModifier = {
-    modifierType: "reverse";
+  modifierType: "reverse";
 };
 type RotateTargetModifier = {
-    modifierType: "rotate";
+  modifierType: "rotate";
 };
 type NoneTargetModifier = {
-    modifierType: "none";
+  modifierType: "none";
 };
 
-export type TargetModifier = NoneTargetModifier | IncrementTargetModifier | ReverseTargetModifier | RotateTargetModifier;
+export type TargetModifier =
+  | NoneTargetModifier
+  | IncrementTargetModifier
+  | ReverseTargetModifier
+  | RotateTargetModifier;

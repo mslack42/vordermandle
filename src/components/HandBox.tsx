@@ -13,10 +13,10 @@ type HandBoxProps = {
   draggedCard?: CardWithId;
 };
 export function HandBox(props: HandBoxProps) {
-  const {  complete } = useContext(PlayingInterfaceContext);
+  const { complete } = useContext(PlayingInterfaceContext);
   const { setNodeRef } = useSortable({
     id: "hand",
-    disabled: complete
+    disabled: complete,
   });
   const { draggingCard } = useContext(PlayingInterfaceContext);
   return (
@@ -40,7 +40,9 @@ export function HandBox(props: HandBoxProps) {
               <CardBox card={c} home={"hand"} grayed disabled key={c.id} />
             );
           }
-          return <CardBox card={c} key={c.id} home={"hand"} disabled={complete}/>;
+          return (
+            <CardBox card={c} key={c.id} home={"hand"} disabled={complete} />
+          );
         })}
       </div>
     </SortableContext>

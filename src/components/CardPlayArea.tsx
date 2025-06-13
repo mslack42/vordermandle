@@ -26,7 +26,7 @@ export function CardPlayArea() {
     setHand,
     setPlay,
     setSockettedCards,
-    complete
+    complete,
   } = useContext(PlayingInterfaceContext);
   const handleDragStart = (event: DragStartEvent) => {
     let cardMatches: CardWithId[] = [];
@@ -41,7 +41,7 @@ export function CardPlayArea() {
       }
       case "socket": {
         cardMatches = Object.values(sockettedCards).filter(
-          (c) => c.id == event.active.id
+          (c) => c.id == event.active.id,
         );
         break;
       }
@@ -112,7 +112,7 @@ export function CardPlayArea() {
             return;
           }
           const currentKey = Object.entries(socketCards).filter(
-            (p) => p[1].id == currentId
+            (p) => p[1].id == currentId,
           )[0][0];
           delete socketCards[currentKey];
           socketCards[targetId!.toString()] = draggingCard.card;
@@ -132,7 +132,7 @@ export function CardPlayArea() {
         }
         case "socket": {
           const currentKey = Object.entries(socketCards).filter(
-            (p) => p[1].id == currentId
+            (p) => p[1].id == currentId,
           )[0][0];
           delete socketCards[currentKey];
           break;
@@ -191,7 +191,6 @@ export function CardPlayArea() {
       onDragStart={(evt) => handleDragStart(evt)}
       onDragEnd={(evt) => handleDragEnd(evt)}
       sensors={sensors}
-
     >
       <div className="w-full flex flex-col gap-2">
         <PlayBox cards={play} />

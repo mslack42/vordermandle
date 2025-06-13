@@ -1,5 +1,10 @@
 "use client";
-import { Card, NumberCard, AlternateCard, SocketCard } from "@/game/common/Card";
+import {
+  Card,
+  NumberCard,
+  AlternateCard,
+  SocketCard,
+} from "@/game/common/Card";
 import { CardDisplay, SocketCardDisplay } from "./CardDisplay";
 
 type HandCardProps = {
@@ -11,7 +16,11 @@ export function HandCard(props: HandCardProps & React.PropsWithChildren) {
     <>
       {card.cardType == "number" ? <HandNumberCard card={card} /> : <></>}
       {card.cardType == "alternate" ? <HandAlternateCard card={card} /> : <></>}
-      {card.cardType == "socket" ? <HandSocketCard card={card} >{props.children}</HandSocketCard> : <></>}
+      {card.cardType == "socket" ? (
+        <HandSocketCard card={card}>{props.children}</HandSocketCard>
+      ) : (
+        <></>
+      )}
     </>
   );
 }
@@ -20,18 +29,14 @@ type HandNumberCardProps = {
 };
 function HandNumberCard(props: HandNumberCardProps) {
   const { card } = props;
-  return (
-    <CardDisplay value={card.value} modifier={card.modifier}/>
-  );
+  return <CardDisplay value={card.value} modifier={card.modifier} />;
 }
 type HandAlternateCardProps = {
   card: AlternateCard;
 };
 function HandAlternateCard(props: HandAlternateCardProps) {
   const { card } = props;
-  return (
-    <CardDisplay value={card.value} alternate={card.alternate}/>
-  );
+  return <CardDisplay value={card.value} alternate={card.alternate} />;
 }
 type HandSocketCardProps = {
   card: SocketCard;
@@ -39,6 +44,8 @@ type HandSocketCardProps = {
 function HandSocketCard(props: HandSocketCardProps & React.PropsWithChildren) {
   const { card } = props;
   return (
-    <SocketCardDisplay socketFn={card.socketFunction}>{props.children}</SocketCardDisplay>
+    <SocketCardDisplay socketFn={card.socketFunction}>
+      {props.children}
+    </SocketCardDisplay>
   );
 }

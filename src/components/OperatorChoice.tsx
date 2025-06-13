@@ -29,7 +29,8 @@ export function OperatorChoice(props: OperatorChoiceProps) {
               <button
                 key={op}
                 className={
-                  "h-7 w-7 md:h-9 md:w-9 text-base md:text-lg cursor-pointer rounded-xl " + colours[op]
+                  "h-7 w-7 md:h-9 md:w-9 text-base md:text-lg cursor-pointer rounded-xl " +
+                  colours[op]
                 }
                 onClick={() => props.setOperatorChoice(op as Operator)}
               >

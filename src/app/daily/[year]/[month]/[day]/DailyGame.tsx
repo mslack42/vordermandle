@@ -17,7 +17,7 @@ export function DailyGame({
       </div>
       <div className="w-full h-full grow">
         <DailySwishInterfaceProvider gameSet={gameSet} gameDate={gameDate}>
-          <SwishInterface/>
+          <SwishInterface />
         </DailySwishInterfaceProvider>
       </div>
     </div>
@@ -32,13 +32,13 @@ function ButtonBar(props: ButtonBarProps) {
   const oldestGame = new Date(
     now.getFullYear(),
     now.getMonth(),
-    now.getDate() - 100
+    now.getDate() - 100,
   );
-  
+
   const year = props.gameDate.getFullYear();
   const month = props.gameDate.getMonth() + 1;
   const date = props.gameDate.getDate();
-  
+
   const nextDate = new Date(year, month - 1, date + 1);
   const prevDate = new Date(year, month - 1, date - 1);
   const disablePrev = prevDate < oldestGame;
