@@ -353,7 +353,7 @@ function calcInitialCards(
   let workingHand: Card[] = game.cards;
   const workingSteps: GameHistoryStep[] = [];
   let workingTarget = game.target;
-  if (cluesGiven) {
+  if (cluesGiven || gameComplete) {
     const filteredSteps = game.solution!.slice(
       0,
       gameComplete ? undefined : cluesGiven,
