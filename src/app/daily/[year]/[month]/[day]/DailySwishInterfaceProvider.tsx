@@ -67,30 +67,35 @@ export function DailySwishInterfaceProvider(props: Props) {
         </div>
       </div>
       <div className="w-full h-full grow">
-        {difficulty == 1 && (
+        <VisibleIf condition={difficulty==1}>
           <PlayerGameSaveDataContextProvider gameId={getGameId(1)}>
             <Inner game={getGame(1)} gameId={getGameId(1)}>
               {props.children}
             </Inner>
           </PlayerGameSaveDataContextProvider>
-        )}
-        {difficulty == 2 && (
+        </VisibleIf>
+        <VisibleIf condition={difficulty==2}>
           <PlayerGameSaveDataContextProvider gameId={getGameId(2)}>
             <Inner game={getGame(2)} gameId={getGameId(2)}>
               {props.children}
             </Inner>
           </PlayerGameSaveDataContextProvider>
-        )}
-        {difficulty == 3 && (
+        </VisibleIf>
+        <VisibleIf condition={difficulty==3}>
           <PlayerGameSaveDataContextProvider gameId={getGameId(3)}>
             <Inner game={getGame(3)} gameId={getGameId(3)}>
               {props.children}
             </Inner>
           </PlayerGameSaveDataContextProvider>
-        )}
+        </VisibleIf>
       </div>
     </div>
   );
+}
+
+function VisibleIf(props: React.PropsWithChildren & {condition: boolean}) 
+{
+  return <div className={props.condition ? "" : "hidden"}>{props.children}</div>
 }
 
 type InnerProps = React.PropsWithChildren & {
