@@ -2,6 +2,7 @@ import { DailySwishInterfaceProvider } from "@/app/daily/[year]/[month]/[day]/Da
 import { SwishInterface } from "@/components/SwishInterface";
 import { GameSet } from "@/sheetsDB/getGamesList";
 import Link from "next/link";
+import { UserScore } from "./UserScore";
 
 export function DailyGame({
   gameSet,
@@ -80,7 +81,10 @@ function ButtonBar(props: ButtonBarProps) {
           Vordermandle
         </Link>
       </div>
-      <div className="flex-1/3  flex flex-row justify-center ">
+      <div className="flex-1/3  flex flex-row justify-center gap-2">
+        <div className="flex flex-col justify-center">
+          <UserScore today={new Date(Date.now())} />
+        </div>
         <div className="flex flex-col justify-center">
           <a
             className="bg-theme-purple border-4 rounded-xl border-foreground p-1 cursor-pointer"

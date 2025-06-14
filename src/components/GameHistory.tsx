@@ -59,7 +59,7 @@ function GameHistoryRow(props: GameHistoryRowProps) {
   }
   const isAClue = cluesGiven >= stepNumber || complete;
   return (
-    <div className="flex flex-row w-full justify-center items-center scale-75 gap-4">
+    <div className="flex flex-row w-full justify-center items-center scale-70 gap-4">
       <div className="opacity-50 flex flex-row items-center gap-2">
         {lhsParts.map((p) => p)}
         <EqualsBezel

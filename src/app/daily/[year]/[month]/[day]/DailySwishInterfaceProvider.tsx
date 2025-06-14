@@ -7,6 +7,9 @@ import {
 } from "../../../../../components/PlayerGameSaveDataContext";
 import { PlayingInterfaceContextProvider } from "../../../../../components/PlayingInterfaceContext";
 import { GameSet } from "@/sheetsDB/getGamesList";
+import { useLocalStoreSelector } from "@/localstore/hooks";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
 
 type Props = {
   gameDate: Date;
@@ -15,6 +18,7 @@ type Props = {
 
 export function DailySwishInterfaceProvider(props: Props) {
   const [difficulty, setDifficulty] = useState(1);
+  const dailyData = useLocalStoreSelector((p) => p.playerData.dailyPuzzleData);
 
   function getGameId(diff: number) {
     return `${props.gameDate.getUTCFullYear()}/${props.gameDate.getUTCMonth()}/${props.gameDate.getUTCDate()}/${diff}`;
@@ -43,6 +47,18 @@ export function DailySwishInterfaceProvider(props: Props) {
     setDifficulty(diff);
   };
 
+  const gameDataArr = [
+    dailyData[getGameId(1)],
+    dailyData[getGameId(2)],
+    dailyData[getGameId(3)],
+  ];
+  const stars = [
+    gameDataArr[0] == null ? 0 : Math.max(0, 2 - gameDataArr[0].cluesGiven),
+    gameDataArr[1] == null ? 0 : Math.max(0, 3 - 2 * gameDataArr[1].cluesGiven),
+    gameDataArr[2] == null ? 0 : Math.max(0, 5 - 2 * gameDataArr[2].cluesGiven),
+  ];
+  const starsAwarded = gameDataArr.map((d) => d != null && d.solved);
+
   return (
     <div className="w-full h-full flex flex-col">
       <div className="w-full flex-none h-min">
@@ -58,7 +74,20 @@ export function DailySwishInterfaceProvider(props: Props) {
                     }
                     onClick={() => chooseDifficulty(i + 1)}
                   >
-                    {s}
+                    <p className="px-4">{s}</p>
+                    <div className="text-xs h-5">
+                      {Array(stars[i])
+                        .fill(0)
+                        .map((_, j) => (
+                          <FontAwesomeIcon
+                            key={j}
+                            icon={faStar}
+                            className={
+                              starsAwarded[i] ? "text-theme-yellow" : ""
+                            }
+                          />
+                        ))}
+                    </div>
                   </button>
                 </li>
               ))}
@@ -67,21 +96,21 @@ export function DailySwishInterfaceProvider(props: Props) {
         </div>
       </div>
       <div className="w-full h-full grow">
-        <VisibleIf condition={difficulty==1}>
+        <VisibleIf condition={difficulty == 1}>
           <PlayerGameSaveDataContextProvider gameId={getGameId(1)}>
             <Inner game={getGame(1)} gameId={getGameId(1)}>
               {props.children}
             </Inner>
           </PlayerGameSaveDataContextProvider>
         </VisibleIf>
-        <VisibleIf condition={difficulty==2}>
+        <VisibleIf condition={difficulty == 2}>
           <PlayerGameSaveDataContextProvider gameId={getGameId(2)}>
             <Inner game={getGame(2)} gameId={getGameId(2)}>
               {props.children}
             </Inner>
           </PlayerGameSaveDataContextProvider>
         </VisibleIf>
-        <VisibleIf condition={difficulty==3}>
+        <VisibleIf condition={difficulty == 3}>
           <PlayerGameSaveDataContextProvider gameId={getGameId(3)}>
             <Inner game={getGame(3)} gameId={getGameId(3)}>
               {props.children}
@@ -93,9 +122,10 @@ export function DailySwishInterfaceProvider(props: Props) {
   );
 }
 
-function VisibleIf(props: React.PropsWithChildren & {condition: boolean}) 
-{
-  return <div className={props.condition ? "" : "hidden"}>{props.children}</div>
+function VisibleIf(props: React.PropsWithChildren & { condition: boolean }) {
+  return (
+    <div className={props.condition ? "" : "hidden"}>{props.children}</div>
+  );
 }
 
 type InnerProps = React.PropsWithChildren & {
