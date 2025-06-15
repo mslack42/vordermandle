@@ -68,6 +68,3 @@ export default async function ListOfDailyGames() {
     </div>
   );
 }
-
-
-

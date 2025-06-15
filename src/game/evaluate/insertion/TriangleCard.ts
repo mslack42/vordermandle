@@ -11,6 +11,11 @@ export function TriangleCard(inner: PlugCard): EvaluationResult {
   }
   return {
     success: true,
-    cards: [weaken({ ...inner, value: Math.floor(inner.value * (inner.value + 1) / 2) })],
+    cards: [
+      weaken({
+        ...inner,
+        value: Math.floor((inner.value * (inner.value + 1)) / 2),
+      }),
+    ],
   };
 }

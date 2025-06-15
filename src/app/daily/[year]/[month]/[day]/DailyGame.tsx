@@ -33,7 +33,7 @@ function ButtonBar(props: ButtonBarProps) {
   const oldestGame = new Date(
     now.getFullYear(),
     now.getMonth(),
-    now.getDate() - 100
+    now.getDate() - 100,
   );
 
   const year = props.gameDate.getFullYear();

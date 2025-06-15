@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useLocalStoreSelector } from "@/localstore/hooks";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -19,9 +19,15 @@ export function DailyPuzzleButton(props: DailyPuzzleButtonProps) {
     dailyData[getGameId(3)],
   ];
   const stars = [
-    gameDataArr[0] == null || !gameDataArr[0].solved ? 0 : Math.max(0, 2 - gameDataArr[0].cluesGiven),
-    gameDataArr[1] == null || !gameDataArr[1].solved ? 0 : Math.max(0, 3 - gameDataArr[1].cluesGiven),
-    gameDataArr[2] == null || !gameDataArr[2].solved ? 0 : Math.max(0, 5 - 2 * gameDataArr[2].cluesGiven),
+    gameDataArr[0] == null || !gameDataArr[0].solved
+      ? 0
+      : Math.max(0, 2 - gameDataArr[0].cluesGiven),
+    gameDataArr[1] == null || !gameDataArr[1].solved
+      ? 0
+      : Math.max(0, 3 - gameDataArr[1].cluesGiven),
+    gameDataArr[2] == null || !gameDataArr[2].solved
+      ? 0
+      : Math.max(0, 5 - 2 * gameDataArr[2].cluesGiven),
   ].reduce((a, b) => a + b);
 
   const bg = props.isActive
@@ -35,7 +41,14 @@ export function DailyPuzzleButton(props: DailyPuzzleButtonProps) {
         }
       >
         <div className="w-full flex flex-row justify-between">
-          <p>{props.date.toLocaleDateString("en-gb",{ weekday:"long", year:"numeric", month:"short", day:"numeric"})}</p>
+          <p>
+            {props.date.toLocaleDateString("en-gb", {
+              weekday: "long",
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+            })}
+          </p>
           <div className="flex flex-row items-center gap-1">
             {stars > 0 && (
               <>
