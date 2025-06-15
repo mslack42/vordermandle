@@ -54,7 +54,7 @@ export function DailySwishInterfaceProvider(props: Props) {
   ];
   const stars = [
     gameDataArr[0] == null ? 0 : Math.max(0, 2 - gameDataArr[0].cluesGiven),
-    gameDataArr[1] == null ? 0 : Math.max(0, 3 - 2 * gameDataArr[1].cluesGiven),
+    gameDataArr[1] == null ? 0 : Math.max(0, 3 - gameDataArr[1].cluesGiven),
     gameDataArr[2] == null ? 0 : Math.max(0, 5 - 2 * gameDataArr[2].cluesGiven),
   ];
   const starsAwarded = gameDataArr.map((d) => d != null && d.solved);

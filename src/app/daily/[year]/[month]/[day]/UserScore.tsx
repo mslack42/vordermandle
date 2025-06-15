@@ -48,7 +48,7 @@ function evaluateScore(
           if (diff == 1) {
             return Math.max(0, 2 - gameData.cluesGiven);
           } else if (diff == 2) {
-            return Math.max(0, 3 - 2 * gameData.cluesGiven);
+            return Math.max(0, 3 - gameData.cluesGiven);
           } else if (diff == 3) {
             return Math.max(0, 5 - 2 * gameData.cluesGiven);
           }
