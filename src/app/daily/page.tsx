@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { DailyPuzzleButton } from "./DailyPuzzleButton";
 
 export default async function ListOfDailyGames() {
   const now = new Date(Date.now());
@@ -68,30 +69,5 @@ export default async function ListOfDailyGames() {
   );
 }
 
-function puzzleUrl(d: Date) {
-  return `/daily/${d.getUTCFullYear()}/${d.getUTCMonth() + 1}/${d.getUTCDate()}`;
-}
 
-type DailyPuzzleButtonProps = {
-  date: Date;
-  isActive?: boolean;
-};
-function DailyPuzzleButton(props: DailyPuzzleButtonProps) {
-  const bg = props.isActive
-    ? " bg-theme-green hover:bg-theme-green-darker"
-    : " bg-theme-red hover:bg-theme-red-darker";
-  return (
-    <Link href={puzzleUrl(props.date)}>
-      <button
-        className={
-          "w-80 p-2 rounded-xl border-foreground border-4 cursor-pointer " + bg
-        }
-      >
-        <div className="w-full flex flex-row justify-between">
-          <p>{props.date.toUTCString()}</p>
-          <div>1</div>
-        </div>
-      </button>
-    </Link>
-  );
-}
+

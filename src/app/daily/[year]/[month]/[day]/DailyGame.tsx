@@ -33,7 +33,7 @@ function ButtonBar(props: ButtonBarProps) {
   const oldestGame = new Date(
     now.getFullYear(),
     now.getMonth(),
-    now.getDate() - 100,
+    now.getDate() - 100
   );
 
   const year = props.gameDate.getFullYear();
@@ -46,7 +46,7 @@ function ButtonBar(props: ButtonBarProps) {
   const disableNext = nextDate >= now;
 
   return (
-    <div className="w-full flex flex-row justify-between text-center text-sm select-none py-1">
+    <div className="w-full flex flex-row justify-between text-center text-xs md:text-sm select-none py-1">
       <div className="flex-1/3 px-4 flex flex-row justify-evenly">
         {!disablePrev && (
           <div className="flex flex-col justify-center ">
@@ -76,7 +76,7 @@ function ButtonBar(props: ButtonBarProps) {
       <div className="flex-1/3 flex flex-row justify-center ">
         <Link
           href={"/"}
-          className="bg-theme-blue border-4 border-foreground p-1 text-lg cursor-pointer"
+          className="bg-theme-blue border-4 border-foreground p-1 text-sm md:text-lg cursor-pointer"
         >
           Vordermandle
         </Link>

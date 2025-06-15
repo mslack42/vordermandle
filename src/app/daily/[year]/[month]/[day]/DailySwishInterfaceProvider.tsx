@@ -61,7 +61,7 @@ export function DailySwishInterfaceProvider(props: Props) {
 
   return (
     <div className="w-full h-full flex flex-col">
-      <div className="w-full flex-none h-min">
+      <div className="w-full flex-none h-min text-sm md:text-lg">
         <div className="w-full flex flex-row justify-center pt-2">
           <div>
             <ol className="flex flex-row gap-2 border-2 border-foreground">
@@ -75,7 +75,7 @@ export function DailySwishInterfaceProvider(props: Props) {
                     onClick={() => chooseDifficulty(i + 1)}
                   >
                     <p className="px-4">{s}</p>
-                    <div className="text-xs h-5">
+                    <div className="text-[8px] md:text-xs h-5">
                       {Array(stars[i])
                         .fill(0)
                         .map((_, j) => (

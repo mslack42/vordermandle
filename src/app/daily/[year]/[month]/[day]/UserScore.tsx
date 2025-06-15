@@ -15,9 +15,9 @@ export function UserScore(props: UserScoreProps) {
   }, [dailyData, props.today]);
   return (
     <div className="flex flex-row">
-      <p className="text-foreground text-xl">{score}</p>
+      <p className="text-foreground text-sm md:text-xl">{score}</p>
       <div className="flex flex-col justify-center">
-        <FontAwesomeIcon icon={faStar} className="text-theme-yellow text-xl" />
+        <FontAwesomeIcon icon={faStar} className="text-theme-yellow text-sm md:text-xl" />
       </div>
     </div>
   );
