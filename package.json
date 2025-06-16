@@ -9,7 +9,8 @@
     "lint": "next lint",
     "format": "prettier --write .",
     "generateMonth": "npx tsx --env-file .env ./src/scripts/generateDailyGames.ts",
-    "generateMonthSet": "npx tsx --env-file .env ./src/scripts/generateDailyGamesSets.ts"
+    "generateMonthSet": "npx tsx --env-file .env ./src/scripts/generateDailyGamesSets.ts",
+    "generateCampaign": "npx tsx --env-file .env ./src/scripts/generateCampaignGamesSets.ts"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
