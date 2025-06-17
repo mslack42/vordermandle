@@ -30,6 +30,8 @@ export function DailyPuzzleButton(props: DailyPuzzleButtonProps) {
       : Math.max(0, 5 - 2 * gameDataArr[2].cluesGiven),
   ].reduce((a, b) => a + b);
 
+  const dateHasPotential = gameDataArr.some(g=> g == null || (!g.solved))
+
   const bg = props.isActive
     ? " bg-theme-green hover:bg-theme-green-darker"
     : " bg-theme-red hover:bg-theme-red-darker";
@@ -48,6 +50,7 @@ export function DailyPuzzleButton(props: DailyPuzzleButtonProps) {
               month: "short",
               day: "numeric",
             })}
+            {dateHasPotential ? "*" : ""}
           </p>
           <div className="flex flex-row items-center gap-1">
             {stars > 0 && (
