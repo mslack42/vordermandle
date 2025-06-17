@@ -2,14 +2,17 @@ import {
   useLocalStoreDispatch,
   useLocalStoreSelector,
 } from "@/localstore/hooks";
-import { updateDailyGame } from "@/localstore/playerDataSlice";
+import {
+  updateCampaignGame,
+  updateDailyGame,
+} from "@/localstore/playerDataSlice";
 import { createContext, useEffect, useState } from "react";
 
 type PlayerGameSaveDataContextState = {
   isComplete: boolean;
-  cluesGiven: number;
+  cluesGiven?: number;
   setGameSolved: () => void;
-  setCluesGiven: (n: number) => void;
+  setCluesGiven?: (n: number) => void;
 };
 export const PlayerGameSaveDataContext =
   createContext<PlayerGameSaveDataContextState>({
@@ -19,11 +22,11 @@ export const PlayerGameSaveDataContext =
     setCluesGiven: () => {},
   });
 
-type PlayerGameSaveDataContextProviderProps = {
+type DailyGameSaveDataContextProviderProps = {
   gameId: string;
 } & React.PropsWithChildren;
-export const PlayerGameSaveDataContextProvider = (
-  props: PlayerGameSaveDataContextProviderProps,
+export const DailyGameSaveDataContextProvider = (
+  props: DailyGameSaveDataContextProviderProps,
 ) => {
   const allDailyData = useLocalStoreSelector(
     (p) => p.playerData.dailyPuzzleData,
@@ -59,6 +62,48 @@ export const PlayerGameSaveDataContextProvider = (
     cluesGiven: dailyData.cluesGiven,
     setGameSolved,
     setCluesGiven,
+  };
+
+  return (
+    <PlayerGameSaveDataContext.Provider value={state}>
+      {props.children}
+    </PlayerGameSaveDataContext.Provider>
+  );
+};
+
+type CampaignGameSaveDataContextProviderProps = {
+  gameId: string;
+} & React.PropsWithChildren;
+export const CampaignGameSaveDataContextProvider = (
+  props: CampaignGameSaveDataContextProviderProps,
+) => {
+  const allCampaignData = useLocalStoreSelector(
+    (p) => p.playerData.campaignPuzzleData,
+  );
+  const data =
+    allCampaignData && Object.keys(allCampaignData).includes(props.gameId)
+      ? allCampaignData[props.gameId]
+      : {
+          cluesGiven: 0,
+          solved: false,
+        };
+  const [solved, setSolved] = useState(false);
+
+  const localDispatch = useLocalStoreDispatch();
+  useEffect(() => {
+    localDispatch(
+      updateCampaignGame({
+        gameId: props.gameId,
+        solved,
+      }),
+    );
+  }, [localDispatch, props.gameId, solved]);
+  const setGameSolved = () => {
+    setSolved(true);
+  };
+  const state: PlayerGameSaveDataContextState = {
+    isComplete: data.solved,
+    setGameSolved,
   };
 
   return (

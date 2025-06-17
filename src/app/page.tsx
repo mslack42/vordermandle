@@ -23,10 +23,10 @@ export default function Home() {
         <li className="w-full flex flex-row justify-center">
           <MenuButton link="/daily">Archive</MenuButton>
         </li>
-        {/* <li className="w-full flex flex-row justify-center">
-          <MenuButton>Campaign</MenuButton>
-        </li>
         <li className="w-full flex flex-row justify-center">
+          <MenuButton link='/campaign'>Campaign</MenuButton>
+        </li>
+        {/* <li className="w-full flex flex-row justify-center">
           <MenuButton>FAQ</MenuButton>
         </li> */}
       </ul>

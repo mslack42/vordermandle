@@ -1,18 +1,18 @@
 import { GameProfile, Nonsense } from "../game-generation";
 
-type CampaignSet = {
+export type CampaignSet = {
   id: string;
   name: string;
   games: CampaignGame[];
   unlocksAt: number;
 };
 
-type CampaignGame = {
+export type CampaignGame = {
   id: string;
   profile: GameProfile;
 };
 
-type Campaign = {
+export type Campaign = {
   sets: CampaignSet[];
 };
 

@@ -3,7 +3,7 @@ import { CountdownGame } from "@/game/common/CountdownGame";
 import { useContext, useState } from "react";
 import {
   PlayerGameSaveDataContext,
-  PlayerGameSaveDataContextProvider,
+  DailyGameSaveDataContextProvider,
 } from "../../../../../components/PlayerGameSaveDataContext";
 import { PlayingInterfaceContextProvider } from "../../../../../components/PlayingInterfaceContext";
 import { GameSet } from "@/sheetsDB/getGamesList";
@@ -97,25 +97,25 @@ export function DailySwishInterfaceProvider(props: Props) {
       </div>
       <div className="w-full h-full grow">
         <VisibleIf condition={difficulty == 1}>
-          <PlayerGameSaveDataContextProvider gameId={getGameId(1)}>
+          <DailyGameSaveDataContextProvider gameId={getGameId(1)}>
             <Inner game={getGame(1)} gameId={getGameId(1)}>
               {props.children}
             </Inner>
-          </PlayerGameSaveDataContextProvider>
+          </DailyGameSaveDataContextProvider>
         </VisibleIf>
         <VisibleIf condition={difficulty == 2}>
-          <PlayerGameSaveDataContextProvider gameId={getGameId(2)}>
+          <DailyGameSaveDataContextProvider gameId={getGameId(2)}>
             <Inner game={getGame(2)} gameId={getGameId(2)}>
               {props.children}
             </Inner>
-          </PlayerGameSaveDataContextProvider>
+          </DailyGameSaveDataContextProvider>
         </VisibleIf>
         <VisibleIf condition={difficulty == 3}>
-          <PlayerGameSaveDataContextProvider gameId={getGameId(3)}>
+          <DailyGameSaveDataContextProvider gameId={getGameId(3)}>
             <Inner game={getGame(3)} gameId={getGameId(3)}>
               {props.children}
             </Inner>
-          </PlayerGameSaveDataContextProvider>
+          </DailyGameSaveDataContextProvider>
         </VisibleIf>
       </div>
     </div>

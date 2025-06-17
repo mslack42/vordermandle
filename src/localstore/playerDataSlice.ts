@@ -10,20 +10,13 @@ type CampaignPuzzleData = {
 type CampaignPuzzleDataMap = {
   [key: string]: CampaignPuzzleData;
 };
-type CampaignPuzzleGroup = {
-  unlocked: boolean;
-  puzzles: CampaignPuzzleDataMap;
-};
-type CampaignPuzzleGroupMap = {
-  [key: string]: CampaignPuzzleGroup;
-};
 type DailyPuzzleDataMap = {
   [key: string]: DailyPuzzleData;
 };
 
 type PlayerDataState = {
   dailyPuzzleData: DailyPuzzleDataMap;
-  campaignPuzzleData: CampaignPuzzleGroupMap;
+  campaignPuzzleData: CampaignPuzzleDataMap;
 };
 
 const initialState: PlayerDataState = {
@@ -61,9 +54,32 @@ const playerDataSlice = createSlice({
       };
       state.dailyPuzzleData = newDailyData;
     },
+    updateCampaignGame: (
+      state,
+      action: PayloadAction<{
+        gameId: string;
+        solved: boolean;
+      }>,
+    ) => {
+      let gameData = state.campaignPuzzleData[action.payload.gameId];
+      if (gameData == null) {
+        gameData = {
+          solved: false,
+        };
+      }
+      gameData = {
+        ...gameData,
+        solved: action.payload.solved,
+      };
+      const newCampaignData = {
+        ...state.campaignPuzzleData,
+        [action.payload.gameId]: gameData,
+      };
+      state.campaignPuzzleData = newCampaignData;
+    },
   },
 });
 
-export const { updateDailyGame } = playerDataSlice.actions;
+export const { updateDailyGame, updateCampaignGame } = playerDataSlice.actions;
 
 export default playerDataSlice.reducer;
