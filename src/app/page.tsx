@@ -24,7 +24,7 @@ export default function Home() {
           <MenuButton link="/daily">Archive</MenuButton>
         </li>
         <li className="w-full flex flex-row justify-center">
-          <MenuButton link='/campaign'>Campaign</MenuButton>
+          <MenuButton link="/campaign">Campaign</MenuButton>
         </li>
         {/* <li className="w-full flex flex-row justify-center">
           <MenuButton>FAQ</MenuButton>

@@ -30,7 +30,7 @@ export function DailyPuzzleButton(props: DailyPuzzleButtonProps) {
       : Math.max(0, 5 - 2 * gameDataArr[2].cluesGiven),
   ].reduce((a, b) => a + b);
 
-  const dateHasPotential = gameDataArr.some(g=> g == null || (!g.solved))
+  const dateHasPotential = gameDataArr.some((g) => g == null || !g.solved);
 
   const bg = props.isActive
     ? " bg-theme-green hover:bg-theme-green-darker"

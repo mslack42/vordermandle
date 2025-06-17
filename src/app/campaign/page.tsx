@@ -110,7 +110,9 @@ function CampaignGame(props: {
       <Link
         className={
           "w-10 md:w-18 h-10 md:h-18 flex flex-col justify-center font-bold rounded-sm border-2 border-foreground" +
-          (solved ? " bg-theme-green hover:bg-theme-green-darker" : " bg-theme-red hover:bg-theme-red-darker")
+          (solved
+            ? " bg-theme-green hover:bg-theme-green-darker"
+            : " bg-theme-red hover:bg-theme-red-darker")
         }
         href={`/campaign/${puzzleId}`}
       >

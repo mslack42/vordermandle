@@ -138,7 +138,9 @@ function Inner(props: InnerProps) {
   );
 
   const handleClueRequested = (n: number) => {
-    setCluesGiven(n);
+    if (setCluesGiven) {
+      setCluesGiven(n);
+    }
   };
 
   return (
