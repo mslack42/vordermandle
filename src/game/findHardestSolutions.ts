@@ -36,7 +36,8 @@ export function findHardestSolutions(
     targetModifier,
   );
 
-  const solutionsList = Array.from(collectedSolutionMap.values());
+  // Added a filter here and removed it from collectSolutions, so that there aren't (gimme) shortcuts via 4-digit numbers
+  const solutionsList = Array.from(collectedSolutionMap.values().filter(s => s.unmodifiedSolutionValue! <=999 && s.unmodifiedSolutionValue! >= 100));
   const hardestDifficulty = Math.max(
     ...solutionsList.map((s) => s.difficultyEstimate),
   );
@@ -80,11 +81,12 @@ function collectSolutions(
         const solutionValues = [...sol.cards]
           .filter((c) => c.cardType != "socket")
           .map((c) => c.value)
-          .filter((v) => v >= 100 && v <= 999)
+          // .filter((v) => v >= 100 && v <= 999)
+          .filter((v) => v <= 3000)
           // Minus 1 added here, to account for the unapplied target modification still to come
           .map((v) =>
             unmodifyTarget(v, targetModifier, sol.stepsTaken.length - 1),
-          );
+          )
         for (const s of solutionValues) {
           const currentMapVal = map.get(s);
           if (
@@ -100,7 +102,8 @@ function collectSolutions(
         const solutionValues = [...sol.cards]
           .filter((c) => c.cardType != "socket")
           .map((c) => c.value)
-          .filter((v) => v >= 100 && v <= 999)
+          // .filter((v) => v >= 100 && v <= 999)
+          .filter((v) => v <= 3000)
           .map((v) => unmodifyTarget(v, targetModifier, sol.stepsTaken.length));
         for (const s of solutionValues) {
           const currentMapVal = map.get(s);
