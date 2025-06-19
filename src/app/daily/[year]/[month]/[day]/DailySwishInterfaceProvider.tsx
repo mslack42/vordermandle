@@ -43,7 +43,6 @@ export function DailySwishInterfaceProvider(props: Props) {
   }
 
   const chooseDifficulty = (diff: number) => {
-    console.log(diff);
     setDifficulty(diff);
   };
 
@@ -53,9 +52,9 @@ export function DailySwishInterfaceProvider(props: Props) {
     dailyData[getGameId(3)],
   ];
   const stars = [
-    gameDataArr[0] == null ? 0 : Math.max(0, 2 - gameDataArr[0].cluesGiven),
+    gameDataArr[0] == null ? 0 : Math.max(0, 3 - gameDataArr[0].cluesGiven),
     gameDataArr[1] == null ? 0 : Math.max(0, 3 - gameDataArr[1].cluesGiven),
-    gameDataArr[2] == null ? 0 : Math.max(0, 5 - 2 * gameDataArr[2].cluesGiven),
+    gameDataArr[2] == null ? 0 : Math.max(0, 4 - gameDataArr[2].cluesGiven),
   ];
   const starsAwarded = gameDataArr.map((d) => d != null && d.solved);
 
@@ -65,7 +64,7 @@ export function DailySwishInterfaceProvider(props: Props) {
         <div className="w-full flex flex-row justify-center pt-2">
           <div>
             <ol className="flex flex-row gap-2 border-2 border-foreground">
-              {["Easy", "Medium", "Hard"].map((s, i) => (
+              {["α", "β", "γ"].map((s, i) => (
                 <li key={s} className="flex-1/3">
                   <button
                     className={
@@ -74,7 +73,7 @@ export function DailySwishInterfaceProvider(props: Props) {
                     }
                     onClick={() => chooseDifficulty(i + 1)}
                   >
-                    <p className="px-4">{s}</p>
+                    <p className="px-8">{s}</p>
                     <div className="text-[8px] md:text-xs h-5">
                       {Array(stars[i])
                         .fill(0)

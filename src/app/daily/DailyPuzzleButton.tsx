@@ -21,13 +21,13 @@ export function DailyPuzzleButton(props: DailyPuzzleButtonProps) {
   const stars = [
     gameDataArr[0] == null || !gameDataArr[0].solved
       ? 0
-      : Math.max(0, 2 - gameDataArr[0].cluesGiven),
+      : Math.max(0, 3 - gameDataArr[0].cluesGiven),
     gameDataArr[1] == null || !gameDataArr[1].solved
       ? 0
       : Math.max(0, 3 - gameDataArr[1].cluesGiven),
     gameDataArr[2] == null || !gameDataArr[2].solved
       ? 0
-      : Math.max(0, 5 - 2 * gameDataArr[2].cluesGiven),
+      : Math.max(0, 4 - gameDataArr[2].cluesGiven),
   ].reduce((a, b) => a + b);
 
   const dateHasPotential = gameDataArr.some((g) => g == null || !g.solved);
