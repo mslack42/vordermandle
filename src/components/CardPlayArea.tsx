@@ -7,6 +7,7 @@ import {
   TouchSensor,
   MouseSensor,
   useSensors,
+  pointerWithin,
 } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 import { useContext } from "react";
@@ -191,6 +192,7 @@ export function CardPlayArea() {
       onDragStart={(evt) => handleDragStart(evt)}
       onDragEnd={(evt) => handleDragEnd(evt)}
       sensors={sensors}
+      collisionDetection={pointerWithin}
     >
       <div className="w-full flex flex-col gap-2">
         <PlayBox cards={play} />

@@ -27,7 +27,7 @@ export function PlayBox(props: PlayBoxProps) {
   });
   let cardComponents = props.cards.map((c) => {
     if (c.id == draggingCard?.card.id) {
-      return <CardBox card={c} home={"hand"} key={c.id} grayed disabled />;
+      return <CardBox card={c} home={"play"} key={c.id} grayed disabled />;
     }
     return <CardBox card={c} key={c.id} home={"play"} disabled={complete} />;
   });

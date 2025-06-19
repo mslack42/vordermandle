@@ -1,5 +1,4 @@
 import { useSortable } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
 import { HandCard } from "./HandCard";
 import { SocketBox } from "./SocketBox";
 import { CardWithId } from "./CardWithId";
@@ -13,7 +12,7 @@ type CardBoxProps = {
   onClick?: () => void;
 };
 export function CardBox(props: CardBoxProps) {
-  const { attributes, listeners, setNodeRef, transform, transition } =
+  const { attributes, listeners, setNodeRef} =
     useSortable({
       id: props.card.id,
       data: {
@@ -21,14 +20,9 @@ export function CardBox(props: CardBoxProps) {
       },
       disabled: props.disabled,
     });
-  const style = {
-    transform: CSS.Translate.toString(transform),
-    transition,
-  };
   return (
     <div
       ref={setNodeRef}
-      style={style}
       {...listeners}
       {...attributes}
       className={
