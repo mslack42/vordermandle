@@ -29,9 +29,14 @@ export function CardBox(props: CardBoxProps) {
         (!props.isSocketted
           ? "h-25 md:h-30 flex flex-col justify-center "
           : "") +
-        (props.grayed ? "cursor-none opacity-50" : "cursor-grab select-none")
+        (props.grayed ? "cursor-none opacity-50" : " select-none")
       }
-      onClick={props.onClick}
+      onClick={(e) => {
+        e.stopPropagation()
+        if (props.onClick){          
+          props.onClick()
+        }
+      }}
     >
       <HandCard card={props.card.card}>
         {props.card.card.cardType != "socket" ? (

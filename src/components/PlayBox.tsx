@@ -9,6 +9,7 @@ import { EqualsButton } from "./EqualsButton";
 import { OperatorChoice } from "./OperatorChoice";
 import { PlayingInterfaceContext } from "./PlayingInterfaceContext";
 import { CardWithId } from "./CardWithId";
+import { CardClickContext } from "./CardClickContextProvider";
 
 type PlayBoxProps = {
   cards: CardWithId[];
@@ -25,11 +26,12 @@ export function PlayBox(props: PlayBoxProps) {
     id: "play",
     disabled: complete,
   });
+        const {handleCardClick} = useContext(CardClickContext)
   let cardComponents = props.cards.map((c) => {
     if (c.id == draggingCard?.card.id) {
       return <CardBox card={c} home={"play"} key={c.id} grayed disabled />;
     }
-    return <CardBox card={c} key={c.id} home={"play"} disabled={complete} />;
+    return <CardBox card={c} key={c.id} home={"play"} disabled={complete} onClick={() => handleCardClick({card: c, cardHome: "play"})}/>;
   });
   if (
     props.cards.length == 2 &&
@@ -59,6 +61,7 @@ export function PlayBox(props: PlayBoxProps) {
       setOperatorChoice(null);
     }
   }, [cardComponents.length, operatorChoice, setOperatorChoice]);
+
   return (
     <SortableContext
       items={props.cards.map((c) => c.id)}

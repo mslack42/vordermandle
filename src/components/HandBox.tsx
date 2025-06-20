@@ -7,6 +7,7 @@ import { useContext } from "react";
 import { CardBox } from "./CardBox";
 import { PlayingInterfaceContext } from "./PlayingInterfaceContext";
 import { CardWithId } from "./CardWithId";
+import { CardClickContext } from "./CardClickContextProvider";
 
 type HandBoxProps = {
   cards: CardWithId[];
@@ -17,9 +18,11 @@ export function HandBox(props: HandBoxProps) {
   const { setNodeRef } = useSortable({
     id: "hand",
     disabled: complete,
+    animateLayoutChanges: () => {return true}
   });
   const { draggingCard } = useContext(PlayingInterfaceContext);
-  return (
+      const {handleCardClick} = useContext(CardClickContext)
+      return (
     <SortableContext
       items={props.cards.map((c) => c.id)}
       strategy={rectSortingStrategy}
@@ -41,7 +44,10 @@ export function HandBox(props: HandBoxProps) {
             );
           }
           return (
-            <CardBox card={c} key={c.id} home={"hand"} disabled={complete} />
+            <CardBox card={c} key={c.id} home={"hand"} disabled={complete} onClick={() => handleCardClick({
+              card: c,
+              cardHome: "hand"
+            })} />
           );
         })}
       </div>

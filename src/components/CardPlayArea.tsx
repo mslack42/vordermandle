@@ -8,14 +8,20 @@ import {
   MouseSensor,
   useSensors,
   pointerWithin,
+  UniqueIdentifier,
 } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { HandBox } from "./HandBox";
 import { HandCard } from "./HandCard";
 import { PlayBox } from "./PlayBox";
 import { PlayingInterfaceContext } from "./PlayingInterfaceContext";
 import { CardWithId } from "./CardWithId";
+import {
+  CardClickContextProvider,
+  CardClickPayload,
+} from "./CardClickContextProvider";
+import { CardHome } from "./DragCard";
 
 export function CardPlayArea() {
   const {
@@ -42,7 +48,7 @@ export function CardPlayArea() {
       }
       case "socket": {
         cardMatches = Object.values(sockettedCards).filter(
-          (c) => c.id == event.active.id,
+          (c) => c.id == event.active.id
         );
         break;
       }
@@ -54,18 +60,21 @@ export function CardPlayArea() {
     const card = cardMatches[0];
     setDraggingCard({ card, home: event.active.data.current?.home });
   };
-  const handleDragEnd = (event: DragEndEvent) => {
-    if (!draggingCard) return;
+  const dropFunction = (
+    droppingCard?: CardWithId,
+    droppingCardHome?: CardHome,
+    targetId?: UniqueIdentifier,
+    targetHome?: CardHome
+  ) => {
+    if (!droppingCard) return;
     let handCards = [...hand];
     let playCards = [...play];
     const socketCards = { ...sockettedCards };
-    const currentHome = draggingCard.home;
-    const currentId = draggingCard.card.id;
-    const targetId = event.over?.id;
-    const targetHome = event.over?.data.current?.home;
+    const currentHome = droppingCardHome;
+    const currentId = droppingCard.id;
     if (
       targetId?.toString().startsWith("socket") &&
-      (!!socketCards[targetId] || draggingCard.card.card.cardType == "socket")
+      (!!socketCards[targetId] || droppingCard.card.cardType == "socket")
     ) {
       setDraggingCard(null);
       return;
@@ -75,7 +84,7 @@ export function CardPlayArea() {
       currentHome != "play" &&
       (playCards.filter((c) => c.card.cardType == "socket").length > 0 ||
         playCards.filter((c) => c.card.cardType != "socket").length > 1 ||
-        (draggingCard.card.card.cardType == "socket" && playCards.length > 0))
+        (droppingCard.card.cardType == "socket" && playCards.length > 0))
     ) {
       setDraggingCard(null);
       return;
@@ -113,10 +122,10 @@ export function CardPlayArea() {
             return;
           }
           const currentKey = Object.entries(socketCards).filter(
-            (p) => p[1].id == currentId,
+            (p) => p[1].id == currentId
           )[0][0];
           delete socketCards[currentKey];
-          socketCards[targetId!.toString()] = draggingCard.card;
+          socketCards[targetId!.toString()] = droppingCard;
           setSockettedCards(socketCards);
           break;
         }
@@ -124,16 +133,16 @@ export function CardPlayArea() {
     } else {
       switch (currentHome) {
         case "hand": {
-          handCards = handCards.filter((c) => c.id != event.active.id);
+          handCards = handCards.filter((c) => c.id != currentId);
           break;
         }
         case "play": {
-          playCards = playCards.filter((c) => c.id != event.active.id);
+          playCards = playCards.filter((c) => c.id != currentId);
           break;
         }
         case "socket": {
           const currentKey = Object.entries(socketCards).filter(
-            (p) => p[1].id == currentId,
+            (p) => p[1].id == currentId
           )[0][0];
           delete socketCards[currentKey];
           break;
@@ -141,11 +150,11 @@ export function CardPlayArea() {
       }
       switch (targetId) {
         case "hand": {
-          handCards = [...handCards, draggingCard!.card];
+          handCards = [...handCards, droppingCard];
           break;
         }
         case "play": {
-          playCards = [...playCards, draggingCard!.card];
+          playCards = [...playCards, droppingCard];
           break;
         }
         default: {
@@ -154,14 +163,14 @@ export function CardPlayArea() {
               const newIndex = handCards
                 .map((c) => c.id)
                 .indexOf(targetId!.toString());
-              handCards.splice(newIndex, 0, draggingCard!.card);
+              handCards.splice(newIndex, 0, droppingCard);
               break;
             }
             case "play": {
               const newIndex = playCards
                 .map((c) => c.id)
                 .indexOf(targetId!.toString());
-              playCards.splice(newIndex, 0, draggingCard!.card);
+              playCards.splice(newIndex, 0, droppingCard);
               break;
             }
             default: {
@@ -170,7 +179,7 @@ export function CardPlayArea() {
                 setDraggingCard(null);
                 return;
               }
-              socketCards[targetId!.toString()] = draggingCard!.card;
+              socketCards[targetId!.toString()] = droppingCard;
             }
           }
         }
@@ -182,8 +191,45 @@ export function CardPlayArea() {
 
     setDraggingCard(null);
   };
-  const mouseSensor = useSensor(MouseSensor);
-  const touchSensor = useSensor(TouchSensor);
+  const handleDragEnd = (event: DragEndEvent) => {
+    dropFunction(
+      draggingCard?.card,
+      draggingCard?.home,
+      event.over?.id,
+      event.over?.data.current?.home
+    );
+  };
+  const mouseSensor = useSensor(MouseSensor, {
+    activationConstraint: { delay: 100, tolerance: 200 },
+  });
+  const touchSensor = useSensor(TouchSensor, {
+    activationConstraint: { delay: 100, tolerance: 200 },
+  });
+
+  const handleCardClick = (payload: CardClickPayload) => {
+    const { card, cardHome } = payload;
+    setDraggingCard({ card, home: cardHome });
+    setTimeout(() => {
+      switch (cardHome) {
+        case "play": {
+          dropFunction(card, cardHome, "hand", "hand");
+          break;
+        }
+        case "socket": {
+          dropFunction(card, cardHome, "hand", "hand");
+          break;
+        }
+        case "hand": {
+          if (play.length == 1 && play[0].card.cardType == "socket") {
+            dropFunction(card, cardHome, "socket" + play[0].id, "socket");
+          } else {
+            dropFunction(card, cardHome, "play", "play");
+          }
+          break;
+        }
+      }
+    }, 100);
+  };
 
   const sensors = useSensors(mouseSensor, touchSensor);
   return (
@@ -194,29 +240,33 @@ export function CardPlayArea() {
       sensors={sensors}
       collisionDetection={pointerWithin}
     >
-      <div className="w-full flex flex-col gap-2">
-        <PlayBox cards={play} />
-        <HandBox cards={hand} />
-      </div>
-      <DragOverlay
-        dropAnimation={{
-          duration: 200,
-          easing: "cubic-bezier(0.18, 0.67, 0.6, 1.22)",
-        }}
-      >
-        {!complete && draggingCard != null && (
-          <div className="cursor-grab select-none h-25 md:h-30 flex flex-col justify-center">
-            <HandCard card={draggingCard.card.card}>
-              {draggingCard.card.card.cardType == "socket" &&
-                !!sockettedCards["socket" + draggingCard.card.id] && (
-                  <HandCard
-                    card={sockettedCards["socket" + draggingCard.card.id].card}
-                  ></HandCard>
-                )}
-            </HandCard>
-          </div>
-        )}
-      </DragOverlay>
+      <CardClickContextProvider handler={handleCardClick}>
+        <div className="w-full flex flex-col gap-2">
+          <PlayBox cards={play} />
+          <HandBox cards={hand} />
+        </div>
+        <DragOverlay
+          dropAnimation={{
+            duration: 200,
+            easing: "cubic-bezier(0.18, 0.67, 0.6, 1.22)",
+          }}
+        >
+          {!complete && draggingCard != null && (
+            <div className="cursor-grab select-none h-25 md:h-30 flex flex-col justify-center">
+              <HandCard card={draggingCard.card.card}>
+                {draggingCard.card.card.cardType == "socket" &&
+                  !!sockettedCards["socket" + draggingCard.card.id] && (
+                    <HandCard
+                      card={
+                        sockettedCards["socket" + draggingCard.card.id].card
+                      }
+                    ></HandCard>
+                  )}
+              </HandCard>
+            </div>
+          )}
+        </DragOverlay>
+      </CardClickContextProvider>
     </DndContext>
   );
 }
