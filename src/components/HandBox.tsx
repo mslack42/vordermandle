@@ -18,11 +18,13 @@ export function HandBox(props: HandBoxProps) {
   const { setNodeRef } = useSortable({
     id: "hand",
     disabled: complete,
-    animateLayoutChanges: () => {return true}
+    animateLayoutChanges: () => {
+      return true;
+    },
   });
   const { draggingCard } = useContext(PlayingInterfaceContext);
-      const {handleCardClick} = useContext(CardClickContext)
-      return (
+  const { handleCardClick } = useContext(CardClickContext);
+  return (
     <SortableContext
       items={props.cards.map((c) => c.id)}
       strategy={rectSortingStrategy}
@@ -44,10 +46,18 @@ export function HandBox(props: HandBoxProps) {
             );
           }
           return (
-            <CardBox card={c} key={c.id} home={"hand"} disabled={complete} onClick={() => handleCardClick({
-              card: c,
-              cardHome: "hand"
-            })} />
+            <CardBox
+              card={c}
+              key={c.id}
+              home={"hand"}
+              disabled={complete}
+              onClick={() =>
+                handleCardClick({
+                  card: c,
+                  cardHome: "hand",
+                })
+              }
+            />
           );
         })}
       </div>

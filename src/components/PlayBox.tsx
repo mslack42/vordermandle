@@ -26,12 +26,20 @@ export function PlayBox(props: PlayBoxProps) {
     id: "play",
     disabled: complete,
   });
-        const {handleCardClick} = useContext(CardClickContext)
+  const { handleCardClick } = useContext(CardClickContext);
   let cardComponents = props.cards.map((c) => {
     if (c.id == draggingCard?.card.id) {
       return <CardBox card={c} home={"play"} key={c.id} grayed disabled />;
     }
-    return <CardBox card={c} key={c.id} home={"play"} disabled={complete} onClick={() => handleCardClick({card: c, cardHome: "play"})}/>;
+    return (
+      <CardBox
+        card={c}
+        key={c.id}
+        home={"play"}
+        disabled={complete}
+        onClick={() => handleCardClick({ card: c, cardHome: "play" })}
+      />
+    );
   });
   if (
     props.cards.length == 2 &&

@@ -12,14 +12,13 @@ type CardBoxProps = {
   onClick?: () => void;
 };
 export function CardBox(props: CardBoxProps) {
-  const { attributes, listeners, setNodeRef} =
-    useSortable({
-      id: props.card.id,
-      data: {
-        home: props.home,
-      },
-      disabled: props.disabled,
-    });
+  const { attributes, listeners, setNodeRef } = useSortable({
+    id: props.card.id,
+    data: {
+      home: props.home,
+    },
+    disabled: props.disabled,
+  });
   return (
     <div
       ref={setNodeRef}
@@ -28,13 +27,12 @@ export function CardBox(props: CardBoxProps) {
       className={
         (!props.isSocketted
           ? "h-25 md:h-30 flex flex-col justify-center "
-          : "") +
-        (props.grayed ? "cursor-none opacity-50" : " select-none")
+          : "") + (props.grayed ? "cursor-none opacity-50" : " select-none")
       }
       onClick={(e) => {
-        e.stopPropagation()
-        if (props.onClick){          
-          props.onClick()
+        e.stopPropagation();
+        if (props.onClick) {
+          props.onClick();
         }
       }}
     >

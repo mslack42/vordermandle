@@ -11,7 +11,7 @@ import {
   UniqueIdentifier,
 } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { HandBox } from "./HandBox";
 import { HandCard } from "./HandCard";
 import { PlayBox } from "./PlayBox";
@@ -48,7 +48,7 @@ export function CardPlayArea() {
       }
       case "socket": {
         cardMatches = Object.values(sockettedCards).filter(
-          (c) => c.id == event.active.id
+          (c) => c.id == event.active.id,
         );
         break;
       }
@@ -64,7 +64,7 @@ export function CardPlayArea() {
     droppingCard?: CardWithId,
     droppingCardHome?: CardHome,
     targetId?: UniqueIdentifier,
-    targetHome?: CardHome
+    targetHome?: CardHome,
   ) => {
     if (!droppingCard) return;
     let handCards = [...hand];
@@ -122,7 +122,7 @@ export function CardPlayArea() {
             return;
           }
           const currentKey = Object.entries(socketCards).filter(
-            (p) => p[1].id == currentId
+            (p) => p[1].id == currentId,
           )[0][0];
           delete socketCards[currentKey];
           socketCards[targetId!.toString()] = droppingCard;
@@ -142,7 +142,7 @@ export function CardPlayArea() {
         }
         case "socket": {
           const currentKey = Object.entries(socketCards).filter(
-            (p) => p[1].id == currentId
+            (p) => p[1].id == currentId,
           )[0][0];
           delete socketCards[currentKey];
           break;
@@ -196,7 +196,7 @@ export function CardPlayArea() {
       draggingCard?.card,
       draggingCard?.home,
       event.over?.id,
-      event.over?.data.current?.home
+      event.over?.data.current?.home,
     );
   };
   const mouseSensor = useSensor(MouseSensor, {

@@ -10,7 +10,7 @@ type SocketBoxProps = {
 };
 export function SocketBox(props: SocketBoxProps) {
   const { sockettedCards, draggingCard, complete } = useContext(
-    PlayingInterfaceContext
+    PlayingInterfaceContext,
   );
   const sockettedCard = sockettedCards["socket" + props.socketCard.id];
   const disableSocket =
@@ -40,7 +40,7 @@ export function SocketBox(props: SocketBoxProps) {
           isSocketted
           grayed={draggingCard?.card.id == sockettedCard.id}
           onClick={() => {
-            handleCardClick({card: sockettedCard, cardHome: "socket"})
+            handleCardClick({ card: sockettedCard, cardHome: "socket" });
           }}
         />
       )}

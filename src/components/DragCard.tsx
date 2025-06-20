@@ -4,4 +4,4 @@ export type DragCard = null | {
   card: CardWithId;
   home: CardHome;
 };
-export type CardHome = "hand" | "play" | "socket"
+export type CardHome = "hand" | "play" | "socket";
