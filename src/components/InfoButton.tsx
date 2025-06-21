@@ -254,7 +254,7 @@ type NonsenseExplained = {
 function NonsenseExplained(props: { explaination: NonsenseExplained }) {
   return (
     <div className="w-full flex flex-row justify-between gap-3 items-center">
-      {props.explaination.example}
+      <div>{props.explaination.example}</div>      
       <p>{props.explaination.explaination}</p>
     </div>
   );
