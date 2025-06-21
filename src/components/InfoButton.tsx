@@ -207,12 +207,10 @@ function mapNonsenseToExplainationData(
       return {
         nonsense,
         example: (
-         
-            <TargetDisplay
-              value={123}
-              modifier={{ modifierType: "increment", incrementBy: 1 }}
-            />
-      
+          <TargetDisplay
+            value={123}
+            modifier={{ modifierType: "increment", incrementBy: 1 }}
+          />
         ),
         explaination: "The target value will increment after each step.",
       };
@@ -222,12 +220,10 @@ function mapNonsenseToExplainationData(
       return {
         nonsense,
         example: (
-     
-            <TargetDisplay
-              value={123}
-              modifier={{ modifierType: "increment", incrementBy: -1 }}
-            />
-
+          <TargetDisplay
+            value={123}
+            modifier={{ modifierType: "increment", incrementBy: -1 }}
+          />
         ),
         explaination: "The target value will decrement after each step.",
       };
@@ -236,9 +232,7 @@ function mapNonsenseToExplainationData(
       return {
         nonsense,
         example: (
-       
-            <TargetDisplay value={123} modifier={{ modifierType: "reverse" }} />
-        
+          <TargetDisplay value={123} modifier={{ modifierType: "reverse" }} />
         ),
         explaination: "The target value will reverse after each step.",
       };
@@ -254,16 +248,21 @@ type NonsenseExplained = {
 };
 
 function NonsenseExplained(props: { explaination: NonsenseExplained }) {
-  if (props.explaination.nonsense.startsWith("target"))
-  {
-    return <div className="w-full flex flex-col justify-between items-center gap-1">
-      <div className="scale-75"><div>{props.explaination.example}</div></div>      
-      <p>{props.explaination.explaination}</p>
-    </div>
+  if (props.explaination.nonsense.startsWith("target")) {
+    return (
+      <div className="w-full flex flex-col justify-between items-center gap-1">
+        <div className="scale-75">
+          <div>{props.explaination.example}</div>
+        </div>
+        <p>{props.explaination.explaination}</p>
+      </div>
+    );
   }
   return (
     <div className="w-full flex flex-row justify-between gap-2 items-center">
-      <div className="scale-75"><div>{props.explaination.example}</div></div>      
+      <div className="scale-75">
+        <div>{props.explaination.example}</div>
+      </div>
       <p>{props.explaination.explaination}</p>
     </div>
   );
