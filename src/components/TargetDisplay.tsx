@@ -1,4 +1,6 @@
 import { TargetModifier } from "@/game/common/TargetModifier";
+import { faBackward, faRotateLeft } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as React from "react";
 type TargetDisplayProps = {
   value: number;
@@ -25,9 +27,17 @@ function Modifier({ modifier }: { modifier: TargetModifier }) {
   const contentFn = (mod: TargetModifier) => {
     switch (mod.modifierType) {
       case "reverse":
-        return <>rv</>;
+        return (
+          <>
+            <FontAwesomeIcon icon={faBackward} />
+          </>
+        );
       case "rotate":
-        return <>rt</>;
+        return (
+          <>
+            <FontAwesomeIcon icon={faRotateLeft} />
+          </>
+        );
       case "increment":
         return (
           <>

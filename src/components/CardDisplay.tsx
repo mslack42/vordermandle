@@ -1,5 +1,16 @@
 import { SocketFunction } from "@/game/common/Card";
 import { CardModifier } from "@/game/common/CardModifier";
+import {
+  faArrowLeft,
+  faArrowRight,
+  faBackward,
+  faClone,
+  faPlay,
+  faRotateLeft,
+  faSquare,
+} from "@fortawesome/free-solid-svg-icons";
+import { faSquare as emptySquare } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 type CardDisplayProps = {
   value: number;
@@ -55,9 +66,17 @@ const ModifierDisplay = (props: { modifier: CardModifier }) => {
       case "double":
         return <>x2</>;
       case "reverse":
-        return <>rv</>;
+        return (
+          <>
+            <FontAwesomeIcon icon={faBackward} />
+          </>
+        );
       case "rotate":
-        return <>rt</>;
+        return (
+          <>
+            <FontAwesomeIcon icon={faRotateLeft} />
+          </>
+        );
       case "increment":
         return (
           <>
@@ -94,23 +113,54 @@ export const SocketCardDisplay = (props: SocketDisplayProps) => {
   const headerFn = (def: SocketFunction) => {
     switch (def) {
       case "clone":
-        return <>CLONE</>;
+        return (
+          <>
+            <FontAwesomeIcon icon={faClone} />
+          </>
+        );
       case "parts":
-        return <>PARTS</>;
+        return (
+          <>
+            <FontAwesomeIcon icon={emptySquare} />{" "}
+            <FontAwesomeIcon icon={faSquare} />{" "}
+            <FontAwesomeIcon icon={faSquare} />
+          </>
+        );
       case "prime":
-        return <>PRIME</>;
+        return <>π</>;
       case "reverse":
-        return <>REV</>;
+        return (
+          <>
+            <FontAwesomeIcon icon={faBackward} />
+          </>
+        );
       case "rotate":
-        return <>ROT</>;
+        return (
+          <>
+            <FontAwesomeIcon icon={faRotateLeft} />
+          </>
+        );
       case "round":
         return <>~10</>;
       case "split":
-        return <>SPLIT</>;
+        return (
+          <>
+            <FontAwesomeIcon icon={faArrowLeft} />{" "}
+            <FontAwesomeIcon icon={faArrowRight} />
+          </>
+        );
       case "square":
-        return <>SQ</>;
+        return (
+          <>
+            <FontAwesomeIcon icon={faSquare} />
+          </>
+        );
       case "triangle":
-        return <>TRI</>;
+        return (
+          <>
+            <FontAwesomeIcon className="-rotate-90" icon={faPlay} />
+          </>
+        );
       default:
         <></>;
     }
