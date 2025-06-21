@@ -29,13 +29,15 @@ export function InfoButton() {
         <DialogHeader>
           <DialogTitle>Nonsense Explainer</DialogTitle>
         </DialogHeader>
-        <ul className="max-h-96 overflow-y-auto p-2 flex flex-col gap-5">
-          {explainations.map((n) => (
-            <li key={n.nonsense} className="w-full">
-              <NonsenseExplained explaination={n} />
-            </li>
-          ))}
-        </ul>
+        <div className="flex flex-row justify-center">
+          <ul className="max-h-96 overflow-auto p-2 flex flex-col gap-5 max-w-72">
+            {explainations.map((n) => (
+              <li key={n.nonsense} className="w-full">
+                <NonsenseExplained explaination={n} />
+              </li>
+            ))}
+          </ul>
+        </div>
       </DialogContent>
     </Dialog>
   );
@@ -205,12 +207,12 @@ function mapNonsenseToExplainationData(
       return {
         nonsense,
         example: (
-          <div className="scale-75">
+         
             <TargetDisplay
               value={123}
               modifier={{ modifierType: "increment", incrementBy: 1 }}
             />
-          </div>
+      
         ),
         explaination: "The target value will increment after each step.",
       };
@@ -220,12 +222,12 @@ function mapNonsenseToExplainationData(
       return {
         nonsense,
         example: (
-          <div className="scale-75">
+     
             <TargetDisplay
               value={123}
               modifier={{ modifierType: "increment", incrementBy: -1 }}
             />
-          </div>
+
         ),
         explaination: "The target value will decrement after each step.",
       };
@@ -234,9 +236,9 @@ function mapNonsenseToExplainationData(
       return {
         nonsense,
         example: (
-          <div className="scale-75">
+       
             <TargetDisplay value={123} modifier={{ modifierType: "reverse" }} />
-          </div>
+        
         ),
         explaination: "The target value will reverse after each step.",
       };
@@ -252,9 +254,16 @@ type NonsenseExplained = {
 };
 
 function NonsenseExplained(props: { explaination: NonsenseExplained }) {
+  if (props.explaination.nonsense.startsWith("target"))
+  {
+    return <div className="w-full flex flex-col justify-between items-center gap-1">
+      <div className="scale-75"><div>{props.explaination.example}</div></div>      
+      <p>{props.explaination.explaination}</p>
+    </div>
+  }
   return (
-    <div className="w-full flex flex-row justify-between gap-3 items-center">
-      <div>{props.explaination.example}</div>      
+    <div className="w-full flex flex-row justify-between gap-2 items-center">
+      <div className="scale-75"><div>{props.explaination.example}</div></div>      
       <p>{props.explaination.explaination}</p>
     </div>
   );

@@ -7,7 +7,7 @@ type TargetDisplayProps = {
   modifier?: TargetModifier;
 };
 export const TargetDisplay = (props: TargetDisplayProps) => (
-  <div className="relative w-60 h-18 bg-slate-400 border-6 border-foreground m-4">
+  <div className="relative w-60 h-18 bg-slate-400 border-6 border-foreground">
     <div className="bg-black w-full h-full">
       <div className="h-full w-full flex flex-col justify-center">
         <div className="flex flex-row justify-center">

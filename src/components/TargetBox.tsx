@@ -6,7 +6,7 @@ import { InfoButton } from "./InfoButton";
 export function TargetBox() {
   const { target } = useContext(PlayingInterfaceContext);
   return (
-    <div className="w-full flex flex-row justify-between select-none">
+    <div className="w-full flex flex-row justify-between select-none p-4">
       <span className="w-1/3"></span>
       <TargetDisplay value={target.value} modifier={target.modifier} />
       <span className="w-1/3">
