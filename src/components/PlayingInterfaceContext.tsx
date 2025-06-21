@@ -55,6 +55,7 @@ type PlayingInterfaceContextState = {
   offerClues: boolean;
   cluesGiven: number;
   onClueRequested: () => void;
+  gameDefinition: CountdownGame;
 };
 export const PlayingInterfaceContext =
   createContext<PlayingInterfaceContextState>({
@@ -80,6 +81,13 @@ export const PlayingInterfaceContext =
     offerClues: false,
     cluesGiven: 0,
     onClueRequested: () => {},
+    gameDefinition: {
+      target: {
+        value: 0,
+        modifier: undefined,
+      },
+      cards: [],
+    },
   });
 
 type PlayingInterfaceContextProviderProps = {
@@ -333,6 +341,7 @@ export const PlayingInterfaceContextProvider = (
     offerClues,
     cluesGiven,
     onClueRequested,
+    gameDefinition: game,
   };
 
   return (
