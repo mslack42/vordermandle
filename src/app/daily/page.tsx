@@ -1,7 +1,8 @@
+"use client"
 import Link from "next/link";
 import { DailyPuzzleButton } from "./DailyPuzzleButton";
 
-export default async function ListOfDailyGames() {
+export default function ListOfDailyGames() {
   const now = new Date(Date.now());
   const dates: Date[] = [];
   let iDate = new Date(
