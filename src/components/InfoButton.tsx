@@ -17,6 +17,9 @@ import { TargetDisplay } from "./TargetDisplay";
 export function InfoButton() {
   const { gameDefinition } = useContext(PlayingInterfaceContext);
   const nonsenseList = extractNonsense(gameDefinition);
+  if (nonsenseList.length == 0) {
+    return <></>
+  }
   const explainations = nonsenseList
     .map((n) => mapNonsenseToExplainationData(n))
     .filter((e) => !!e);
